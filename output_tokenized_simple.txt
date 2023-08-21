@@ -1,0 +1,1 @@
+Epoch 95: Cross-entropy: 1354.8608
