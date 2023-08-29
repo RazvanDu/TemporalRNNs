@@ -65,7 +65,7 @@ os.environ['RWKV_NUM_GPUS'] = '1' # num of GPUs to use
 # 'fp16' (fast & will overflow after training a large model for very long. can be solved in the future)
 # 'tf32' (decent speed & stable)
 # 'fp32' (!!!very slow!!! only for verification)
-os.environ['RWKV_FLOAT_MODE'] = 'bf16'
+os.environ['RWKV_FLOAT_MODE'] = 'tf32'
 
 os.environ['RWKV_DEEPSPEED'] = '1' # Use DeepSpeed? 0 = False, 1 = True
 
