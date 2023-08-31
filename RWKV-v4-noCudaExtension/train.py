@@ -217,7 +217,7 @@ if __name__ == '__main__':
         DEEPSPEED_CFG = {
             "zero_allow_untested_optimizer":True,
             "zero_optimization":{
-                "stage":2,
+                "stage":1,
                 "contiguous_gradients":True,
                 "overlap_comm":True,
                 "allgather_partitions":True,
