@@ -34,7 +34,7 @@ class TrainerConfig:
     warmup_tokens = 0
     final_tokens = 0
     epoch_save_frequency = 2
-    epoch_save_path = 'trained-'
+    epoch_save_path = 'trained-153M?-'
     num_workers = 0  # for DataLoader
 
     def __init__(self, **kwargs):
@@ -184,6 +184,10 @@ class Trainer(LightningLite):
             if self.cuda_id == 0:
                 log_file.write(f'{epoch+1+self.EPOCH_BEGIN} {self.avg_loss:.6f} {math.exp(self.avg_loss):.4f} {self.lr:.8f} {datetime.datetime.now()} {epoch+1} \n')
                 log_file.flush()
+
+                print("X " + str(self.config.epoch_save_frequency))
+                print("Y " + str((epoch+1) % self.config.epoch_save_frequency == 0))
+                print("Z " + str(epoch+1))
 
                 if (self.config.epoch_save_frequency > 0 and (epoch+1) % self.config.epoch_save_frequency == 0) or (epoch == config.max_epochs - 1):
                     raw_model = self.model.module if hasattr(self.model, "module") else self.model
