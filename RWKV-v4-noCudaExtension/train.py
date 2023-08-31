@@ -81,8 +81,8 @@ os.environ['USE_WANDB'] = '0' # wandb logging. 0 = False, 1 = True
 EPOCH_BEGIN = 0 # begins with miniEpoch = EPOCH_BEGIN
 LOAD_MODEL = False # shall we load the #EPOCH_BEGIN model and continue the training from it?
 
-n_layer = 20
-n_embd = 768
+n_layer = 16
+n_embd = 1024
 ctx_len = 1024 # increase T_MAX in src/model.py if your ctx_len is longer
 
 model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre' (sometimes better)
@@ -133,7 +133,7 @@ epoch_length_fixed = (10000 // batch_size) * batch_size # feel free to increase 
 
 # epoch_save_frequency 0 = never, 1 = every mini-epoch, 2 = every two mini-epochs, ...
 epoch_save_frequency = 2
-epoch_save_path = 'trained-153M??-'
+epoch_save_path = 'trained-N-'
 
 if EXPRESS_PILE_MODE:
     if EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-169M':
