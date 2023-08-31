@@ -81,7 +81,7 @@ os.environ['USE_WANDB'] = '0' # wandb logging. 0 = False, 1 = True
 EPOCH_BEGIN = 0 # begins with miniEpoch = EPOCH_BEGIN
 LOAD_MODEL = False # shall we load the #EPOCH_BEGIN model and continue the training from it?
 
-n_layer = 12
+n_layer = 16
 n_embd = 512
 ctx_len = 1024 # increase T_MAX in src/model.py if your ctx_len is longer
 
