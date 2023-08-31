@@ -24,7 +24,7 @@ if os.environ['RWKV_RUN_DEVICE'] == 'cuda':
 
     from torch.utils.cpp_extension import load
     wkv_cuda = load(name="wkv", sources=["cuda/wkv_op.cpp", "cuda/wkv_cuda.cu"],
-                    verbose=True, extra_cuda_cflags=['-res-usage', '--maxrregcount 60', '--use_fast_math', '-O3', '-Xptxas -O3', f'-DTmax={T_MAX}'])
+                    verbose=True, extra_cuda_cflags=['-res-usage', '--use_fast_math', '-O3', f'-DTmax={T_MAX}'])
 
     class WKV(torch.autograd.Function):
         @staticmethod
@@ -249,6 +249,7 @@ class RWKV_RNN(): # this is running in FP32 at this moment
 
         w = torch.load(MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
+
         for x in w.keys():
             w[x] = w[x].float()
             if '.time_' in x:

@@ -67,6 +67,9 @@ class Trainer(LightningLite):
                 del m2
         model.to(self.device)
 
+        total_params = sum(p.numel() for p in model.parameters())
+        print(f"Number of parameters: {total_params}")
+
         self.model = model
         self.train_dataset = train_dataset
         self.test_dataset = test_dataset
