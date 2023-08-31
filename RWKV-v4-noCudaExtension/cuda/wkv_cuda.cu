@@ -29,8 +29,8 @@ __global__ void kernel_forward(const int B, const int T, const int C,
         F B = exp(u + k[ii] - no);
         y[ii] = (A * p + B * v[ii]) / (A * q + B);
 
-        if(_offset == 0)
-            printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
+        //if(_offset == 0)
+        //    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
 
         no = max(w + o, k[ii]);
         A = exp(w + o - no);
