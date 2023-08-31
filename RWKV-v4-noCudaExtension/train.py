@@ -58,7 +58,7 @@ if EXPRESS_PILE_MODE:
 # 2) set RWKV_NUM_GPUS = '8' (or your #GPU), batch_size = single_gpu_batchsz * RWKV_NUM_GPUS,
 #    EPOCH_BEGIN = 1, LOAD_MODEL = True, and it will load 'trained-1.pth' and continue the training from it
 #
-os.environ['RWKV_NUM_GPUS'] = '2' # num of GPUs to use
+os.environ['RWKV_NUM_GPUS'] = '1' # num of GPUs to use
 
 #
 # 'bf16' (fast & stable)
@@ -217,7 +217,7 @@ if __name__ == '__main__':
         DEEPSPEED_CFG = {
             "zero_allow_untested_optimizer":True,
             "zero_optimization":{
-                "stage":3,
+                "stage":2,
                 "contiguous_gradients":True,
                 "overlap_comm":True,
                 "allgather_partitions":True,
