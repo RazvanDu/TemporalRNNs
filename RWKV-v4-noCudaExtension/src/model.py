@@ -98,7 +98,34 @@ class WKV(torch.autograd.Function):
             return (None, None, None, gw.bfloat16(), gu.bfloat16(), gk.bfloat16(), gv.bfloat16())
 
 def RUN_CUDA(B, T, C, w, u, k, v):
-    return WKV.apply(B, T, C, w.cuda(), u.cuda(), k.cuda(), v.cuda())
+
+    p = 0
+    q = 0
+    o = -123123123
+
+    y = torch.empty(T)
+
+    for i in range(T):
+
+        no = torch.Tensor(max(o, u + k[i]))
+
+        A = torch.exp(o - no)
+        B = torch.exp(u + k[i] - no)
+
+        y[i] = (A * p + B * v[i]) / (A * q + B)
+
+        #if(_offset == 0)
+        #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
+
+        no = max(w + o, k[i])
+        A = torch.exp(w + o - no)
+        B = torch.exp(k[i] - no)
+        p = A * p + B * v[i]
+        q = A * q + B
+        o = no
+
+    return y
+
 
 ########################################################################################################
 # RWKV: RWKV Time-mix + RWKV Channel-mix

@@ -34,7 +34,7 @@ class TrainerConfig:
     warmup_tokens = 0
     final_tokens = 0
     epoch_save_frequency = 2
-    epoch_save_path = 'trained-153M?-'
+    epoch_save_path = 'trained-experiment-'
     num_workers = 0  # for DataLoader
 
     def __init__(self, **kwargs):
@@ -191,4 +191,5 @@ class Trainer(LightningLite):
 
                 if (self.config.epoch_save_frequency > 0 and (epoch+1) % self.config.epoch_save_frequency == 0) or (epoch == config.max_epochs - 1):
                     raw_model = self.model.module if hasattr(self.model, "module") else self.model
-                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+                    #torch.save(raw_model.state_dict(), self.config.epoch_save_path + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '.pth')
