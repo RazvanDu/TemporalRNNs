@@ -103,29 +103,31 @@ def RUN_CUDA(B, T, C, w, u, k, v):
     q = 0
     o = -123123123
 
-    y = torch.empty(T)
+    y = torch.empty(T, C)
 
-    u = u[C]
-    W = w[C]
+    for i_C in range(C):
 
-    for i in range(T):
+        u = u[i_C]
+        W = w[i_C]
 
-        no = torch.Tensor(max(o, u + k[i]))
+        for i in range(T):
 
-        A = torch.exp(o - no)
-        B = torch.exp(u + k[i] - no)
+            no = torch.Tensor(max(o, u + k[i]))
 
-        y[i] = (A * p + B * v[i]) / (A * q + B)
+            A = torch.exp(o - no)
+            B = torch.exp(u + k[i] - no)
 
-        #if(_offset == 0)
-        #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
+            y[i][i_C] = (A * p + B * v[i]) / (A * q + B)
 
-        no = max(w + o, k[i])
-        A = torch.exp(w + o - no)
-        B = torch.exp(k[i] - no)
-        p = A * p + B * v[i]
-        q = A * q + B
-        o = no
+            #if(_offset == 0)
+            #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
+
+            no = max(w + o, k[i])
+            A = torch.exp(w + o - no)
+            B = torch.exp(k[i] - no)
+            p = A * p + B * v[i]
+            q = A * q + B
+            o = no
 
     return y
 
