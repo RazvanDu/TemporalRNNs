@@ -128,18 +128,18 @@ def RUN_CUDA(B, T, C, w, u, k, v):
                 no = torch.Tensor(max(o, u_C + k_V))
 
                 A = torch.exp(o - no)
-                B = torch.exp(u_C + k_V - no)
+                BB = torch.exp(u_C + k_V - no)
 
-                y[i_B][i][i_C] = (A * p + B * v[i_B][i][i_C]) / (A * q + B)
+                y[i_B][i][i_C] = (A * p + BB * v[i_B][i][i_C]) / (A * q + BB)
 
                 #if(_offset == 0)
                 #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
 
                 no = max(w_C + o, k_V)
                 A = torch.exp(w_C + o - no)
-                B = torch.exp(k_V - no)
-                p = A * p + B * v[i]
-                q = A * q + B
+                BB = torch.exp(k_V - no)
+                p = A * p + BB * v[i]
+                q = A * q + BB
                 o = no
 
     return y
