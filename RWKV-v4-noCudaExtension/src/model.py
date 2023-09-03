@@ -99,42 +99,45 @@ class WKV(torch.autograd.Function):
 
 def RUN_CUDA(B, T, C, w, u, k, v):
 
-    p = 0
-    q = 0
-    o = -123123123
+    y = torch.empty(B, T, C)
 
-    y = torch.empty(T, C)
+    for i_B in range(B):
 
-    print("XX " + str(B) + " + " + str(T) + " + " + str(C))
+        p = 0
+        q = 0
+        o = -123123123
 
-    for i_C in range(C):
+        #print("XX " + str(B) + " + " + str(T) + " + " + str(C))
 
-        u_C = u[i_C]
-        w_C = w[i_C]
+        for i_C in range(C):
 
-        print(np.shape(u_C))
-        print(np.shape(w_C))
+            u_C = u[i_C]
+            w_C = w[i_C]
 
-        for i in range(T):
+            #print(np.shape(u_C))
+           #print(np.shape(w_C))
 
-            print(np.shape(k))
+            for i in range(T):
 
-            no = torch.Tensor(max(o, u_C + k[i][i_C]))
+                k_V = k[i_B][i][i_C]
+                #print(np.shape(k))
 
-            A = torch.exp(o - no)
-            B = torch.exp(u_C + k[i][i_C] - no)
+                no = torch.Tensor(max(o, u_C + k_V))
 
-            y[i][i_C] = (A * p + B * v[i][i_C]) / (A * q + B)
+                A = torch.exp(o - no)
+                B = torch.exp(u_C + k_V - no)
 
-            #if(_offset == 0)
-            #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
+                y[i][i_C] = (A * p + B * v[i][i_C]) / (A * q + B)
 
-            no = max(w_C + o, k[i][i_C])
-            A = torch.exp(w_C + o - no)
-            B = torch.exp(k[i][i_C] - no)
-            p = A * p + B * v[i]
-            q = A * q + B
-            o = no
+                #if(_offset == 0)
+                #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
+
+                no = max(w_C + o, k_V)
+                A = torch.exp(w_C + o - no)
+                B = torch.exp(k_V - no)
+                p = A * p + B * v[i]
+                q = A * q + B
+                o = no
 
     return y
 
