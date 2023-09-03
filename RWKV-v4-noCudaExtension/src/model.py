@@ -115,7 +115,7 @@ def RUN_CUDA(B, T, C, w, u, k, v):
 
         for i in range(T):
 
-            print(np.shape(k[i][i_C]))
+            print(np.shape(k))
 
             no = torch.Tensor(max(o, u_C + k[i][i_C]))
 
