@@ -105,6 +105,8 @@ def RUN_CUDA(B, T, C, w, u, k, v):
 
     y = torch.empty(T, C)
 
+    print("XX " + str(B) + " + " + str(T) + " + " + str(C))
+
     for i_C in range(C):
 
         u_C = u[i_C]
