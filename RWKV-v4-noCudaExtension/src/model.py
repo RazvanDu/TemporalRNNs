@@ -127,7 +127,7 @@ def RUN_CUDA(B, T, C, w, u, k, v):
                 A = torch.exp(o - no)
                 B = torch.exp(u_C + k_V - no)
 
-                y[i][i_C] = (A * p + B * v[i][i_C]) / (A * q + B)
+                y[i_B][i][i_C] = (A * p + B * v[i][i_C]) / (A * q + B)
 
                 #if(_offset == 0)
                 #    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
