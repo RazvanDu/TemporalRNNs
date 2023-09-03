@@ -111,8 +111,8 @@ def RUN_CUDA(B, T, C, w, u, k, v):
 
         for i_C in range(C):
 
-            u_C = u[i_C]
-            w_C = w[i_C]
+            u_C = u[i_B][i_C]
+            w_C = w[i_B][i_C]
 
             #print(np.shape(u_C))
            #print(np.shape(w_C))
