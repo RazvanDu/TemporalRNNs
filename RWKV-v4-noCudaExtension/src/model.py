@@ -97,7 +97,7 @@ class WKV(torch.autograd.Function):
         elif os.environ['RWKV_FLOAT_MODE'] == 'bf16':
             return (None, None, None, gw.bfloat16(), gu.bfloat16(), gk.bfloat16(), gv.bfloat16())
 
- def RUN_CUDA(B, T, C, w, u, k, v):
+def RUN_CUDA(B, T, C, w, u, k, v):
      return WKV.apply(B, T, C, w.cuda(), u.cuda(), k.cuda(), v.cuda())
 
 def RUN_CUDA2(B, T, C, w, u, k, v):
