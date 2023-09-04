@@ -251,6 +251,7 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         self.receptance = nn.Linear(config.n_embd, attn_sz, bias=False)
 
         self.output = nn.Linear(attn_sz, config.n_embd, bias=False)
+        self.test = nn.Linear(1024, 128, bias=False)
 
         self.key.scale_init = 0
         self.receptance.scale_init = 0
