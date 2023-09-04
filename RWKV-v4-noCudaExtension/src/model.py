@@ -217,6 +217,8 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         self.ctx_len = config.ctx_len
         self.n_embd = config.n_embd
 
+        self.norm = nn.LayerNorm(config.n_embd)
+
         attn_sz = config.n_embd
 
         with torch.no_grad(): # fancy init
@@ -276,8 +278,13 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
 
         sr, k, v = self.jit_func(x)
 
-        rwkv = sr * RUN_CUDA(B, T, C, self.time_decay, self.time_first, k, v)
-        rwkv = self.output(rwkv)
+        w = self.time_decay
+        u = self.time_first
+
+        rr = self.norm(torch.sigmoid(self.norm(w*u + k)) * v)
+
+        #rwkv = sr * RUN_CUDA(B, T, C, self.time_decay, self.time_first, k, v)
+        rwkv = self.output(rr)
         return rwkv
 
 
