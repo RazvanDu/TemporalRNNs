@@ -281,7 +281,7 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         w = self.time_decay
         u = self.time_first
 
-        rr = self.norm(torch.sigmoid(self.norm(w*u + k)) * v)
+        rr = self.norm(torch.sigmoid(self.norm(w@torch.transpose(u, 0, 2) + k)) * v)
 
         #rwkv = sr * RUN_CUDA(B, T, C, self.time_decay, self.time_first, k, v)
         rwkv = self.output(rr)
