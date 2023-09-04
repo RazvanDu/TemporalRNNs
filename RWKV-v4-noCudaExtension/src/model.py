@@ -247,13 +247,12 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         self.time_shift = nn.ZeroPad2d((0, 0, 1, -1))
 
         self.key = nn.Linear(config.n_embd, attn_sz, bias=False)
+        self.key2 = nn.Linear(config.n_embd, attn_sz*8, bias=False)
         self.value = nn.Linear(config.n_embd, attn_sz, bias=False)
         self.receptance = nn.Linear(config.n_embd, attn_sz, bias=False)
 
         self.output = nn.Linear(attn_sz, config.n_embd, bias=False)
         self.test = nn.Linear(1024, 128, bias=False)
-
-        self.test2 = nn.MaxPool2d(8)
 
         self.key.scale_init = 0
         self.receptance.scale_init = 0
@@ -269,7 +268,7 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         xr = x * self.time_mix_r + xx * (1 - self.time_mix_r)
 
         # Use xk, xv, xr to produce k, v, r
-        k = self.key(xk)
+        k = self.key2(xk)
         v = self.value(xv)
         r = self.receptance(xr)
         sr = torch.sigmoid(r)
