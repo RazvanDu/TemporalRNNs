@@ -111,6 +111,8 @@ def RUN_CUDA(B, T, C, w, u, k, v):
 
         for i_C in range(C):
 
+            print("? " + str(B) + " + " + str(C))
+
             #print("u shape + " + str(np.shape(u)))
 
             u_C = u[i_C]
