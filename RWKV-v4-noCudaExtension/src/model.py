@@ -111,7 +111,7 @@ def RUN_CUDA(B, T, C, w, u, k, v):
 
         for i_C in range(C):
 
-            print("u shape + " + str(np.shape(u)))
+            #print("u shape + " + str(np.shape(u)))
 
             u_C = u[i_C]
             w_C = w[i_C]
@@ -122,10 +122,10 @@ def RUN_CUDA(B, T, C, w, u, k, v):
             for i in range(T):
 
                 k_V = k[i_B][i][i_C]
-                print(np.shape(y))
-                print(np.shape(y[i_B]))
-                print(np.shape(y[i_B][i]))
-                print(np.shape(y[i_B][i][i_C]))
+                #print(np.shape(y))
+                #print(np.shape(y[i_B]))
+                #print(np.shape(y[i_B][i]))
+                #print(np.shape(y[i_B][i][i_C]))
 
                 no = torch.Tensor(max(o, u_C + k_V))
 
