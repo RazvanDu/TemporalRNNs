@@ -285,6 +285,11 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
 
         rr = torch.einsum('i,j->ij', w, u)
 
+        print(np.shape(w))
+        print(np.shape(u))
+        print(np.shape(rr))
+        print(np.shape(k))
+
         rk = rr @ k
 
         rr = torch.sigmoid(rk) * v
