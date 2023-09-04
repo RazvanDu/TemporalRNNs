@@ -285,7 +285,7 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
 
         rr = torch.einsum('i,j->ij', w, u)
 
-        rk = self.test2(rr) @ k
+        rk = rr @ k
 
         rr = torch.sigmoid(rk) * v
 
