@@ -272,7 +272,7 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         k = self.key(xk)
         v = self.value(xv)
         r = self.receptance(xr)
-        sr = torch.sigmoid(r*v)
+        sr = torch.sigmoid(r)
 
         return sr, k, v
 
@@ -316,16 +316,17 @@ class RWKV_ChannelMix(torch.jit.ScriptModule):
 
     @torch.jit.script_method
     def forward(self, x):
-        xx = self.time_shift(x)
-        xk = x * self.time_mix_k + xx * (1 - self.time_mix_k)
-        xr = x * self.time_mix_r + xx * (1 - self.time_mix_r)
+        #xx = self.time_shift(x)
+        #xk = x * self.time_mix_k + xx * (1 - self.time_mix_k)
+        #xr = x * self.time_mix_r + xx * (1 - self.time_mix_r)
 
-        k = self.key(xk)
-        k = torch.square(torch.relu(k))
-        kv = self.value(k)
+        #k = self.key(xk)
+        #k = torch.square(torch.relu(k))
+        #kv = self.value(k)
 
-        rkv = torch.sigmoid(self.receptance(xr)) * kv
-        return rkv
+        #rkv = torch.sigmoid(self.receptance(xr)) * kv
+        #return rkv
+        return x
 
 ########################################################################################################
 # The GPT Model with our blocks
