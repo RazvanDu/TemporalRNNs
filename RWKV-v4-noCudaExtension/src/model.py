@@ -326,7 +326,13 @@ class RWKV_ChannelMix(torch.jit.ScriptModule):
 
         #rkv = torch.sigmoid(self.receptance(xr)) * kv
         #return rkv
-        return x
+
+        k = self.key(x)
+        k = torch.square(torch.relu(k))
+        kv = self.value(k)
+
+        rkv = torch.sigmoid(self.receptance(self.receptance(x))) * kv
+        return rkv
 
 ########################################################################################################
 # The GPT Model with our blocks
