@@ -140,7 +140,7 @@ def RUN_CUDA(B, T, C, w, u, k, v):
                 no = max(w_C + o, k_V)
                 A = torch.exp(w_C + o - no)
                 BB = torch.exp(k_V - no)
-                p = A * p + BB * v[i]
+                p = A * p + BB * v[i_B][i][i_C]
                 q = A * q + BB
                 o = no
 
