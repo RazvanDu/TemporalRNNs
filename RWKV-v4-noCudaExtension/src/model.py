@@ -253,6 +253,8 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         self.output = nn.Linear(attn_sz, config.n_embd, bias=False)
         self.test = nn.Linear(1024, 128, bias=False)
 
+        self.test2 = nn.MaxPool2d(8)
+
         self.key.scale_init = 0
         self.receptance.scale_init = 0
         self.output.scale_init = 0
@@ -284,7 +286,7 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
 
         rr = torch.einsum('i,j->ij', w, u)
 
-        rk = rr @ k
+        rk = self.test2(rr) @ k
 
         rr = torch.sigmoid(rk) * v
 
