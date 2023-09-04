@@ -247,12 +247,10 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         self.time_shift = nn.ZeroPad2d((0, 0, 1, -1))
 
         self.key = nn.Linear(config.n_embd, attn_sz, bias=False)
-        self.key2 = nn.Linear(config.n_embd, attn_sz*8, bias=False)
         self.value = nn.Linear(config.n_embd, attn_sz, bias=False)
         self.receptance = nn.Linear(config.n_embd, attn_sz, bias=False)
 
         self.output = nn.Linear(attn_sz, config.n_embd, bias=False)
-        self.test = nn.Linear(1024, 128, bias=False)
 
         self.key.scale_init = 0
         self.receptance.scale_init = 0
@@ -268,10 +266,10 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
         xr = x * self.time_mix_r + xx * (1 - self.time_mix_r)
 
         # Use xk, xv, xr to produce k, v, r
-        k = self.key2(xk)
+        k = self.key(xk)
         v = self.value(xv)
         r = self.receptance(xr)
-        sr = torch.sigmoid(r)
+        sr = torch.sigmoid(r*v)
 
         return sr, k, v
 
@@ -280,24 +278,11 @@ class RWKV_TimeMix(torch.jit.ScriptModule):
 
         sr, k, v = self.jit_func(x)
 
-        w = self.time_decay
-        u = self.time_first
-
-        rr = torch.einsum('i,j->ij', w, u)
-
-        print(np.shape(w))
-        print(np.shape(u))
-        print(np.shape(rr))
-        print(np.shape(k))
-
-        rk = rr @ k
-
-        rr = torch.sigmoid(rk) * v
-
         #rr = self.norm(torch.sigmoid(self.norm(w*u + k)) * v)
 
-        #rwkv = sr * RUN_CUDA(B, T, C, self.time_decay, self.time_first, k, v)
-        rwkv = self.output(rr)
+        rwkv = sr * RUN_CUDA(B, T, C, self.time_decay, self.time_first, k, v)
+
+        rwkv = self.output(rwkv)
         return rwkv
 
 
