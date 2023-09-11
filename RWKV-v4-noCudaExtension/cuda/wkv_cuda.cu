@@ -14,8 +14,8 @@ __global__ void kernel_forward(const int B, const int T, const int C,
 
     F u = _u[_c];
     F w = _w[_c];
-    F A = 0;
-    F B = 0;
+    //F A = 0;
+    //F B = 0;
     const F *__restrict__ const k = _k + _offset;
     const F *__restrict__ const v = _v + _offset;
     F *__restrict__ const y = _y + _offset;
