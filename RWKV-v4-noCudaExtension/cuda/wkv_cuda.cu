@@ -14,6 +14,8 @@ __global__ void kernel_forward(const int B, const int T, const int C,
 
     F u = _u[_c];
     F w = _w[_c];
+    F A = 0;
+    F B = 0;
     const F *__restrict__ const k = _k + _offset;
     const F *__restrict__ const v = _v + _offset;
     F *__restrict__ const y = _y + _offset;
@@ -23,7 +25,7 @@ __global__ void kernel_forward(const int B, const int T, const int C,
     for (int i = 0; i < T; i++) {
         const int ii = i * C;
 
-        F no = max(o, u + k[ii]);
+        /*F no = max(o, u + k[ii]);
 
         F A = exp(o - no);
         F B = exp(u + k[ii] - no);
@@ -37,7 +39,15 @@ __global__ void kernel_forward(const int B, const int T, const int C,
         B = exp(k[ii] - no);
         p = A * p + B * v[ii];
         q = A * q + B;
-        o = no;
+        o = no;*/
+        y[ii] = (A + exp(u + k[ii]) * v[ii]) / (B + exp(u+k[ii]);
+
+        A *= exp(-w);
+        A += exp(k[ii]) * v[ii];
+
+        B *= exp(-w);
+        B += exp(k[ii]);
+
     }
 }
 
