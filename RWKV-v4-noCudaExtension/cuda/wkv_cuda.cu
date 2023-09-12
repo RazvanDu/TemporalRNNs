@@ -132,6 +132,7 @@ __global__ void kernel_backward(const int B, const int T, const int C,
     _gu[_offsetBC] += gu;
 }
 
+template <typename F>
 void cuda_forward(int B, int T, int C, float *w, float *u, torch::PackedTensorAccessor32<F,1,torch::RestrictPtrTraits> k, float *v, float *y) {
     dim3 threadsPerBlock( min(C, 32) ); // requires --maxrregcount 60 for optimal performance
     assert(B * C % threadsPerBlock.x == 0);
