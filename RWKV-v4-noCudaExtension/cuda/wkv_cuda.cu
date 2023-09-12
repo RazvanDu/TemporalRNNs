@@ -3,6 +3,8 @@
 
 #define MIN_VALUE (-1e38)
 
+// 2 mins
+
 template <typename F>
 __global__ void kernel_forward(const int B, const int T, const int C,
                                const F *__restrict__ const _w, const F *__restrict__ const _u, const F *__restrict__ const _k, const F *__restrict__ const _v,
@@ -20,12 +22,14 @@ __global__ void kernel_forward(const int B, const int T, const int C,
     const F *__restrict__ const v = _v + _offset;
     F *__restrict__ const y = _y + _offset;
 
+    auto k_a = k.accessor<F, 1>();
+
     F p = 0, q = 0, o = MIN_VALUE;
     // p and q are running sums divided by exp(o) (to avoid overflows)
     for (int i = 0; i < T; i++) {
         const int ii = i * C;
 
-        F no = max(o, u + k[ii]);
+        F no = max(o, u + k_a[i]);
 
         F A = exp(o - no);
         F B = exp(u + k[ii] - no);
