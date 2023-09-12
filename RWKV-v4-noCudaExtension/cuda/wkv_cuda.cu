@@ -7,7 +7,7 @@
 
 template <typename F>
 __global__ void kernel_forward(const int B, const int T, const int C,
-                               const F *__restrict__ const _w, const F *__restrict__ const _u, const F *__restrict__ const _k, const F *__restrict__ const _v,
+                               const F *__restrict__ const _w, const F *__restrict__ const _u, torch::PackedTensorAccessor32<F,1,torch::RestrictPtrTraits> _k, const F *__restrict__ const _v,
                                F *__restrict__ const _y) {
     const int idx = blockIdx.x * blockDim.x + threadIdx.x;
     const int _b = idx / C;
@@ -22,14 +22,12 @@ __global__ void kernel_forward(const int B, const int T, const int C,
     const F *__restrict__ const v = _v + _offset;
     F *__restrict__ const y = _y + _offset;
 
-    auto k_a = k.accessor<F, 1>();
-
     F p = 0, q = 0, o = MIN_VALUE;
     // p and q are running sums divided by exp(o) (to avoid overflows)
     for (int i = 0; i < T; i++) {
         const int ii = i * C;
 
-        F no = max(o, u + k_a[i]);
+        F no = max(o, u + k[ii]);
 
         F A = exp(o - no);
         F B = exp(u + k[ii] - no);
@@ -128,7 +126,7 @@ __global__ void kernel_backward(const int B, const int T, const int C,
     _gu[_offsetBC] += gu;
 }
 
-void cuda_forward(int B, int T, int C, float *w, float *u, float *k, float *v, float *y) {
+void cuda_forward(int B, int T, int C, float *w, float *u, torch::PackedTensorAccessor32<F,1,torch::RestrictPtrTraits> k, float *v, float *y) {
     dim3 threadsPerBlock( min(C, 32) ); // requires --maxrregcount 60 for optimal performance
     assert(B * C % threadsPerBlock.x == 0);
     dim3 numBlocks(B * C / threadsPerBlock.x);
