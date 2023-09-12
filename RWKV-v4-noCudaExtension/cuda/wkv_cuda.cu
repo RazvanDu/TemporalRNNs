@@ -13,7 +13,7 @@
 
 template <typename F>
 __global__ void kernel_forward(const int B, const int T, const int C,
-                               const F *__restrict__ const _w, const F *__restrict__ const _u, torch::PackedTensorAccessor32<F,1,torch::RestrictPtrTraits> _k, const F *__restrict__ const _v,
+                               const F *__restrict__ const _w, const F *__restrict__ const _u, torch::PackedTensorAccessor32<F,1> _k, const F *__restrict__ const _v,
                                F *__restrict__ const _y) {
     const int idx = blockIdx.x * blockDim.x + threadIdx.x;
     const int _b = idx / C;
@@ -133,7 +133,7 @@ __global__ void kernel_backward(const int B, const int T, const int C,
 }
 
 template <typename F>
-void cuda_forward(int B, int T, int C, float *w, float *u, torch::PackedTensorAccessor32<F,1,torch::RestrictPtrTraits> k, float *v, float *y) {
+void cuda_forward(int B, int T, int C, float *w, float *u, torch::PackedTensorAccessor32<F,1> k, float *v, float *y) {
     dim3 threadsPerBlock( min(C, 32) ); // requires --maxrregcount 60 for optimal performance
     assert(B * C % threadsPerBlock.x == 0);
     dim3 numBlocks(B * C / threadsPerBlock.x);
