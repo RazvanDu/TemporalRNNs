@@ -33,18 +33,18 @@ __global__ void kernel_forward(const int B, const int T, const int C,
     for (int i = 0; i < T; i++) {
         const int ii = i * C;
 
-        F no = max(o, u + k[ii]);
+        F no = max(o, u + k[i]);
 
         F A = exp(o - no);
-        F B = exp(u + k[ii] - no);
+        F B = exp(u + k[i] - no);
         y[ii] = (A * p + B * v[ii]) / (A * q + B);
 
         //if(_offset == 0)
         //    printf("i=%d ii=%d -> o=%f u=%f kii=%f no=%f A=%f B=%f p=%f q=%f\n", i, ii, o, u, k[ii], no, A, B, p, q);
 
-        no = max(w + o, k[ii]);
+        no = max(w + o, k[i]);
         A = exp(w + o - no);
-        B = exp(k[ii] - no);
+        B = exp(k[i] - no);
         p = A * p + B * v[ii];
         q = A * q + B;
         o = no;
