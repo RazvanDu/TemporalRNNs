@@ -1,4 +1,4 @@
- ########################################################################################################
+########################################################################################################
 # The RWKV Language Model - https://github.com/BlinkDL/RWKV-LM
 ########################################################################################################
 
@@ -33,7 +33,7 @@ EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
 
 ########################################################################################################
 
-datafile = "../simplebooks/simplebooks-92/train.txt" # your data
+datafile = "../data/enwik8" # your data
 datafile_encoding = 'utf-8' # 'utf-8' / 'utf-16le' / 'numpy' (for fine-tuning pile models) / 'binidx' (the Megatron-LM 'binidx' format)
 
 # datafile = 'my-gpt_seq_document'
