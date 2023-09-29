@@ -23,7 +23,7 @@ np.set_printoptions(precision=4, suppress=True, linewidth=200)
 # Set TOKEN_MODE to 'pile' if you want to test pre-trained pile models.
 ########################################################################################################
 
-TOKEN_MODE = 'char' # char / bpe / pile
+TOKEN_MODE = 'pile' # char / bpe / pile
 
 n_layer = 6
 n_embd = 512
@@ -88,7 +88,8 @@ DEBUG_DEBUG = False  # True False --> show softmax output
 
 print(f'Loading {MODEL_NAME}...')
 from src.model_run import RWKV_RNN
-model = RWKV_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
+from src.model_run import GREBE_RNN
+model = GREBE_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=UNKNOWN_CHAR)
 
 ########################################################################################################

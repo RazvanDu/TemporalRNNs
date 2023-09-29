@@ -247,7 +247,7 @@ class RWKV_RNN(): # this is running in FP32 at this moment
 
         self.w = types.SimpleNamespace()
 
-        w = torch.load(MODEL_NAME + '.pth',
+        w = torch.load('weights/' + MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
         for x in w.keys():
             w[x] = w[x].float()
@@ -387,6 +387,205 @@ class RWKV_RNN(): # this is running in FP32 at this moment
                 x[ctx[i]] += c[i]
         else:
             x = w.head.weight @ x
+            x = x.cpu().numpy().tolist()
+
+        return x
+
+
+
+
+
+class GREBE_RNN(): # this is running in FP32 at this moment
+    def __init__(self, MODEL_NAME, RUN_DEVICE, model_type, n_layer, n_embd, ctx_len):
+        self.RUN_DEVICE = RUN_DEVICE
+        self.model_type = model_type
+        self.n_layer = n_layer
+        self.n_embd = n_embd
+        self.ctx_len = ctx_len
+        self.number_persp = 4
+        self.exp_persp = 0.8
+        self.result = torch.empty(self.number_persp, self.n_embd)
+
+        self.w = types.SimpleNamespace()
+
+        w = torch.load('weights/' + MODEL_NAME + '.pth',
+                       map_location=torch.device(RUN_DEVICE))
+
+        for x in w.keys():
+            w[x] = w[x].float()
+            #print(x)
+            #print(w[x].size())
+            if '.receptance' in x:
+                #print("receptance")
+                copyy = w[x]
+                w[x] = torch.empty(self.number_persp, self.n_embd, self.n_embd)
+                w[x][0] = copy.deepcopy(copyy)
+                for i in range(1, self.number_persp):
+                    w[x][i] = w[x][i-1] * self.exp_persp
+
+            if '.time_' in x:
+                w[x] = w[x].squeeze()
+            if '.time_decay' in x:
+                w[x] = -torch.exp(w[x])
+            if DEBUG_TIME and '.time_' in x:
+                print(x, w[x].squeeze().cpu().numpy())
+
+            xx = x.split('.')
+            here = self.w
+            for i in range(len(xx)):
+                if xx[i].isdigit():
+                    ii = int(xx[i])
+                    if ii not in here:
+                        here[ii] = types.SimpleNamespace()
+                    here = here[ii]
+                else:
+                    if i == len(xx) - 1:
+                        setattr(here, xx[i], w[x])
+                    elif not hasattr(here, xx[i]):
+                        if xx[i+1].isdigit():
+                            setattr(here, xx[i], {})
+                        else:
+                            setattr(here, xx[i], types.SimpleNamespace())
+                    here = getattr(here, xx[i])
+
+        #self.recpt =w.receptance.weight       self.clear()
+
+    def clear(self):
+        self.xx = {}
+        self.aa = {}
+        self.bb = {}
+        self.pp = {}
+        self.hk = None
+
+    def save(self, target):
+        target.xx = copy.deepcopy(self.xx)
+        target.aa = copy.deepcopy(self.aa)
+        target.bb = copy.deepcopy(self.bb)
+        target.pp = copy.deepcopy(self.pp)
+        target.hk = copy.deepcopy(self.hk)
+
+    def load(self, target):
+        self.xx = copy.deepcopy(target.xx)
+        self.aa = copy.deepcopy(target.aa)
+        self.bb = copy.deepcopy(target.bb)
+        self.pp = copy.deepcopy(target.pp)
+        self.hk = copy.deepcopy(target.hk)
+
+    def LN(self, xx, w):
+        return F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
+
+    def FF(self, xx, w, name):
+
+        if name not in self.xx:
+            self.xx[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
+
+        for i in range(self.number_persp):
+
+            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
+            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
+            self.xx[name] = xx
+
+            r = torch.sigmoid(w.receptance.weight[i] @ xr)
+            k = torch.square(torch.relu(w.key.weight @ xk))
+            kv = w.value.weight @ k
+
+            self.result[i] = r * kv
+
+        return self.result
+
+    def SA(self, xx, w, name):
+
+        if name not in self.xx:
+            self.xx[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
+            self.aa[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
+            self.bb[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
+            self.pp[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30
+
+        for i in range(self.number_persp):
+
+            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
+            xv = xx[i] * w.time_mix_v + self.xx[name][i] * (1 - w.time_mix_v)
+            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
+            self.xx[name] = xx
+
+            r = torch.sigmoid(w.receptance.weight[i] @ xr)
+
+            k = w.key.weight @ xk
+            v = w.value.weight @ xv
+
+            pp = self.pp[name][i]
+            aa = self.aa[name][i]
+            bb = self.bb[name][i]
+            ww = w.time_first + k
+            p = torch.maximum(pp, ww)
+            e1 = torch.exp(pp - p)
+            e2 = torch.exp(ww - p)
+            a = e1 * aa + e2 * v
+            b = e1 * bb + e2
+            ww = pp + w.time_decay
+            p = torch.maximum(ww, k)
+            e1 = torch.exp(ww - p)
+            e2 = torch.exp(k - p)
+            self.aa[name][i] = e1 * aa + e2 * v
+            self.bb[name][i] = e1 * bb + e2
+            self.pp[name][i] = p
+
+            rwkv = r * a / b
+
+            self.result[i] = w.output.weight @ rwkv
+
+        return self.result
+
+    def run(self, ctx):
+        w = self.w
+        x = w.emb.weight[ctx[-1]]
+
+        copyy = x
+        x = torch.empty(self.number_persp, self.n_embd)
+
+        for i in range(self.number_persp):
+            x[i] = copy.deepcopy(copyy)
+
+        for i in range(self.n_layer):
+            if i == 0:
+                x = self.LN(x, w.blocks[i].ln0)
+            if i == 0 and self.model_type == 'RWKV-ffnPre':
+                x = x + self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
+            else:
+                x = x + self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
+            x = x + self.FF(self.LN(x, w.blocks[i].ln2), w.blocks[i].ffn, f'ffn.{i}')
+
+        x = self.LN(x, w.ln_out)
+
+        if RWKV_HEAD_QK_DIM > 0:
+            if self.hk == None:
+                self.hk = (w.head_k.weight @ x).unsqueeze(0)
+            else:
+                self.hk = torch.cat(
+                    [self.hk, (w.head_k.weight @ x).unsqueeze(0)], dim=0)
+            if self.hk.shape[0] > self.ctx_len:
+                self.hk = self.hk[-self.ctx_len:, :]
+
+            q = w.head_q.weight @ x
+
+            x = w.head.weight @ x
+            x = x.cpu().numpy().tolist()
+
+            c = (self.hk @ q) / RWKV_HEAD_QK_DIM
+            for i in range(len(c)):
+                x[ctx[i]] += c[i]
+        else:
+
+            sum = 0
+
+            weigths = [0.5, 0.25, 0.125, 0.125]
+
+            for i in range(self.number_persp):
+                sum += x[i] * weigths[i]
+
+            sum /= self.number_persp
+
+            x = w.head.weight @ sum
             x = x.cpu().numpy().tolist()
 
         return x
