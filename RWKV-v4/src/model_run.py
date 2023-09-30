@@ -405,7 +405,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 2
+        self.number_persp = 1
         self.exp_persp = 1
 
         self.w = types.SimpleNamespace()
@@ -430,7 +430,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                     w[x][i] = nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True)
 
                 self.example1 = w[x][0]
-                self.example2 = w[x][1]
+                #self.example2 = w[x][1]
 
                 self.target.append(w[x])
 
@@ -506,6 +506,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             #with torch.no_grad():
             result[i].data = r * kv
 
+        print("FF " + str(result))
+
         return result
 
     def SA(self, xx, w, name):
@@ -553,6 +555,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             #with torch.no_grad():
             result[i].data = w.output.weight @ rwkv
+
+        print("SA " + str(result))
 
         return result
 

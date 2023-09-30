@@ -165,7 +165,7 @@ for epoch in range(n_epochs):
         print("Loss: " + str(np.average(list_values)))
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        print("EXAMPLE2: " + str(torch.sum(model.example2)))
+        #print("EXAMPLE2: " + str(torch.sum(model.example2)))
 
         optimizer.zero_grad()
         loss.backward()
