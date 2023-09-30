@@ -487,6 +487,11 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         return F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
 
     def FF(self, xx, w, name):
+        #print("xx: ", xx)
+
+        #print("w:", w)
+
+        #print("name: ", name)
 
         if name not in self.xx:
             self.xx[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
@@ -580,15 +585,31 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         for i in range(self.n_layer):
             if i == 0:
-                x = self.LN(x, w.blocks[i].ln0)
+                temp_x = self.LN(x, w.blocks[i].ln0)
+
+                for j in range(self.number_persp):
+                    x[j] = temp_x[j]
             if i == 0 and self.model_type == 'RWKV-ffnPre':
-                x = self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
+                temp_x = self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
+
+                for j in range(self.number_persp):
+                    x[j] += temp_x[j]
             else:
-                x = self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
+                temp_x = self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
+
+                for j in range(self.number_persp):
+                    x[j] += temp_x[j]
+
+            #print("ln1: ", w.blocks[i].ln1)
+            #print("ln2: ", w.blocks[i].ln2)
+
             print("Y + " + str(i) + " + " + str(x))
             temp = self.LN(x, w.blocks[i].ln2)
+
+            temp_ff = self.FF(temp, w.blocks[i].ffn, f'ffn.{i}')
             print("W " + str(temp))
-            x = self.FF(temp, w.blocks[i].ffn, f'ffn.{i}')
+            for j in range(self.number_persp):
+                x[j] += temp_ff[j]
             print("U + " + str(i) + " + " + str(x))
 
         x = self.LN(x, w.ln_out)
