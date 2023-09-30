@@ -8,6 +8,7 @@ import torch
 import math, os
 from torch.nn import functional as F
 import torch.nn as nn
+import numpy
 
 RWKV_HEAD_QK_DIM = 0
 print(f'\nRWKV_HEAD_QK_DIM {RWKV_HEAD_QK_DIM}\n')
@@ -395,21 +396,24 @@ class RWKV_RNN(): # this is running in FP32 at this moment
 
 
 
-class GREBE_RNN(): # this is running in FP32 at this moment
+class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def __init__(self, MODEL_NAME, RUN_DEVICE, model_type, n_layer, n_embd, ctx_len):
+        super().__init__()
+        self.clear()
         self.RUN_DEVICE = RUN_DEVICE
         self.model_type = model_type
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 4
-        self.exp_persp = 0.8
-        self.result = torch.empty(self.number_persp, self.n_embd)
+        self.number_persp = 2
+        self.exp_persp = 1
 
         self.w = types.SimpleNamespace()
 
         w = torch.load('weights/' + MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
+
+        self.target = []
 
         for x in w.keys():
             w[x] = w[x].float()
@@ -417,11 +421,18 @@ class GREBE_RNN(): # this is running in FP32 at this moment
             #print(w[x].size())
             if '.receptance' in x:
                 #print("receptance")
-                copyy = w[x]
+                self.a = nn.Parameter(w[x], requires_grad=True)
+                #copyy = self.a
                 w[x] = torch.empty(self.number_persp, self.n_embd, self.n_embd)
-                w[x][0] = copy.deepcopy(copyy)
+                #w[x] = nn.Linear(self.number_persp, self.n_embd, self.n_embd)
+                w[x][0] = self.a
                 for i in range(1, self.number_persp):
-                    w[x][i] = w[x][i-1] * self.exp_persp
+                    w[x][i] = nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True)
+
+                self.example1 = w[x][0]
+                self.example2 = w[x][1]
+
+                self.target.append(w[x])
 
             if '.time_' in x:
                 w[x] = w[x].squeeze()
@@ -448,6 +459,7 @@ class GREBE_RNN(): # this is running in FP32 at this moment
                             setattr(here, xx[i], types.SimpleNamespace())
                     here = getattr(here, xx[i])
 
+        self.target2 = nn.ParameterList(self.target)
         #self.recpt =w.receptance.weight       self.clear()
 
     def clear(self):
@@ -472,12 +484,14 @@ class GREBE_RNN(): # this is running in FP32 at this moment
         self.hk = copy.deepcopy(target.hk)
 
     def LN(self, xx, w):
-        return F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
+        return torch.tensor(F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias), requires_grad=True)
 
     def FF(self, xx, w, name):
 
         if name not in self.xx:
             self.xx[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
+
+        result = torch.empty(self.number_persp, self.n_embd, requires_grad=True)
 
         for i in range(self.number_persp):
 
@@ -489,9 +503,10 @@ class GREBE_RNN(): # this is running in FP32 at this moment
             k = torch.square(torch.relu(w.key.weight @ xk))
             kv = w.value.weight @ k
 
-            self.result[i] = r * kv
+            with torch.no_grad():
+                result[i] = r * kv
 
-        return self.result
+        return result
 
     def SA(self, xx, w, name):
 
@@ -500,6 +515,8 @@ class GREBE_RNN(): # this is running in FP32 at this moment
             self.aa[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
             self.bb[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
             self.pp[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30
+
+        result = torch.empty(self.number_persp, self.n_embd, requires_grad=True)
 
         for i in range(self.number_persp):
 
@@ -520,8 +537,10 @@ class GREBE_RNN(): # this is running in FP32 at this moment
             p = torch.maximum(pp, ww)
             e1 = torch.exp(pp - p)
             e2 = torch.exp(ww - p)
-            a = e1 * aa + e2 * v
-            b = e1 * bb + e2
+            #a =
+            a = torch.tensor(e1 * aa + e2 * v, requires_grad=False)
+            #print("X " + str(numpy.shape(a)))
+            b = torch.tensor(e1 * bb + e2, requires_grad=False)
             ww = pp + w.time_decay
             p = torch.maximum(ww, k)
             e1 = torch.exp(ww - p)
@@ -532,16 +551,19 @@ class GREBE_RNN(): # this is running in FP32 at this moment
 
             rwkv = r * a / b
 
-            self.result[i] = w.output.weight @ rwkv
+            with torch.no_grad():
+                result[i] = w.output.weight @ rwkv
 
-        return self.result
+        return result
 
-    def run(self, ctx):
+    def forward(self, ctx):
         w = self.w
         x = w.emb.weight[ctx[-1]]
 
         copyy = x
         x = torch.empty(self.number_persp, self.n_embd)
+
+        #print(str(copyy.size()) + " + " + str(x.size()))
 
         for i in range(self.number_persp):
             x[i] = copy.deepcopy(copyy)
@@ -578,14 +600,14 @@ class GREBE_RNN(): # this is running in FP32 at this moment
 
             sum = 0
 
-            weigths = [0.5, 0.25, 0.125, 0.125]
+            weights = [0.5, 0.25, 0.125, 0.125]
 
             for i in range(self.number_persp):
-                sum += x[i] * weigths[i]
+                sum += x[i] * weights[i]
 
             sum /= self.number_persp
 
             x = w.head.weight @ sum
-            x = x.cpu().numpy().tolist()
+            #x = x.cpu().detach().numpy().tolist()
 
-        return x
+        return x#torch.tensor(x)
