@@ -484,7 +484,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.hk = copy.deepcopy(target.hk)
 
     def LN(self, xx, w):
-        return torch.tensor(F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias), requires_grad=True)
+        return F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
 
     def FF(self, xx, w, name):
 
@@ -506,7 +506,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             #with torch.no_grad():
             result[i].data = r * kv
 
-        print("FF " + str(result))
+        #print("FF " + str(result))
 
         return result
 
@@ -535,6 +535,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             pp = self.pp[name][i]
             aa = self.aa[name][i]
             bb = self.bb[name][i]
+
             ww = w.time_first + k
             p = torch.maximum(pp, ww)
             e1 = torch.exp(pp - p)
@@ -550,13 +551,18 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             self.aa[name][i] = e1 * aa + e2 * v
             self.bb[name][i] = e1 * bb + e2
             self.pp[name][i] = p
-
             rwkv = r * a / b
 
             #with torch.no_grad():
             result[i].data = w.output.weight @ rwkv
 
-        print("SA " + str(result))
+            #print("SA R " + str(r))
+            #print("SA A " + str(a))
+            #print("SA B " + str(b))
+            #print("SA RWKV " + str(rwkv))
+            #print("SA D " + str(result[i].data))
+
+        #print("SA " + str(result))
 
         return result
 
@@ -576,10 +582,11 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             if i == 0:
                 x = self.LN(x, w.blocks[i].ln0)
             if i == 0 and self.model_type == 'RWKV-ffnPre':
-                x = x + self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
+                x = self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
             else:
-                x = x + self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
-            x = x + self.FF(self.LN(x, w.blocks[i].ln2), w.blocks[i].ffn, f'ffn.{i}')
+                x = self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
+            x = self.FF(self.LN(x, w.blocks[i].ln2), w.blocks[i].ffn, f'ffn.{i}')
+            print("U + " + str(i) + " + " + str(x))
 
         x = self.LN(x, w.ln_out)
 
@@ -607,11 +614,15 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             #weights = [0.5, 0.25, 0.125, 0.125]
 
             for i in range(self.number_persp):
-                sum += x[i]# * weights[i]
+                sum += x[i] / self.number_persp# * weights[i]
 
-            sum /= self.number_persp
+            #sum /= self.number_persp
+
+            print("Q " + str(sum))
 
             x = w.head.weight @ sum
             #x = x.cpu().detach().numpy().tolist()
 
-        return x#torch.tensor(x)
+        print("T " + str(x))
+
+        return F.softmax(x, dim=0)#torch.tensor(x)

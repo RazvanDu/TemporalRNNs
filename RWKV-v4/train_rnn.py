@@ -148,9 +148,9 @@ for epoch in range(n_epochs):
         #print("X " + str(y_pred.size()) + " + " +
         #y_pred.clamp(min=1e-4)
         #y_batch[0].clamp(min=1e-4)
-        for temp in y_pred:
-            if not torch.isnan(temp):
-                print("X " + str(temp))
+        #for temp in y_pred:
+        #    if not torch.isnan(temp):
+        #        print("X " + str(temp))
         print(torch.sum(y_pred))
         print(y_batch[0].float())
         loss = loss_fn(y_pred.float(), y_batch[0].float())
