@@ -503,8 +503,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             k = torch.square(torch.relu(w.key.weight @ xk))
             kv = w.value.weight @ k
 
-            with torch.no_grad():
-                result[i] = r * kv
+            #with torch.no_grad():
+            result[i].data = r * kv
 
         return result
 
@@ -551,8 +551,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             rwkv = r * a / b
 
-            with torch.no_grad():
-                result[i] = w.output.weight @ rwkv
+            #with torch.no_grad():
+            result[i].data = w.output.weight @ rwkv
 
         return result
 
@@ -600,10 +600,10 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             sum = 0
 
-            weights = [0.5, 0.25, 0.125, 0.125]
+            #weights = [0.5, 0.25, 0.125, 0.125]
 
             for i in range(self.number_persp):
-                sum += x[i] * weights[i]
+                sum += x[i]# * weights[i]
 
             sum /= self.number_persp
 
