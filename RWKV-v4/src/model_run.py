@@ -585,7 +585,10 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 x = self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
             else:
                 x = self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
-            x = self.FF(self.LN(x, w.blocks[i].ln2), w.blocks[i].ffn, f'ffn.{i}')
+            print("Y + " + str(i) + " + " + str(x))
+            temp = self.LN(x, w.blocks[i].ln2)
+            print("W " + str(temp))
+            x = self.FF(temp, w.blocks[i].ffn, f'ffn.{i}')
             print("U + " + str(i) + " + " + str(x))
 
         x = self.LN(x, w.ln_out)
