@@ -180,7 +180,8 @@ for epoch in range(n_epochs):
     #print("EXAMPLE2: " + str(torch.sum(model.example2)))
 
         optimizer.zero_grad()
-        loss.backward()
+        # TODO: RETAIN GRAPH HAS TO GO AWAY!
+        loss.backward(retain_graph=True)
         optimizer.step()
 
         current_index += 1

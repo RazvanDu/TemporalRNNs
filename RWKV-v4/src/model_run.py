@@ -516,6 +516,9 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         self.xx[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
 
+        if len(self.xx[name]) > 2:
+            self.xx[name].pop(0)
+
         result = []
 
         for i in range(self.number_persp):
@@ -547,6 +550,12 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.aa[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
         self.bb[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
         self.pp[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30])
+
+        if len(self.xx[name]) > 2:
+            self.xx[name].pop(0)
+            self.aa[name].pop(0)
+            self.bb[name].pop(0)
+            self.pp[name].pop(0)
 
         result = []
 
