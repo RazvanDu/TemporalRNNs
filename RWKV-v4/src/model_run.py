@@ -301,7 +301,8 @@ class RWKV_RNN(): # this is running in FP32 at this moment
         self.hk = copy.deepcopy(target.hk)
 
     def LN(self, xx, w):
-        return F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
+        temp = F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
+        return temp
 
     def FF(self, xx, w, name):
         if name not in self.xx:
@@ -423,16 +424,25 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 #print("receptance")
                 self.a = nn.Parameter(w[x], requires_grad=True)
                 #copyy = self.a
-                w[x] = torch.empty(self.number_persp, self.n_embd, self.n_embd)
+                w[x] = []
                 #w[x] = nn.Linear(self.number_persp, self.n_embd, self.n_embd)
-                w[x][0] = self.a
+                replaced = x.replace(".", "")
+                w[x].append(self.a)
+                #setattr(self, replaced + "0", w[x][0])
+                #print("TESTTT ", replaced + "0")
+                self.target.append(w[x][0])
                 for i in range(1, self.number_persp):
-                    w[x][i] = nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True)
+                    w[x].append(nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True))
+                    #setattr(self, replaced + str(i), w[x][i])
+                    #self.target.append(w[x][i])
+
+                for i in range(self.number_persp):
+                    self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
                 #self.example2 = w[x][1]
 
-                self.target.append(w[x])
+                #self.target.append(w[x])
 
             if '.time_' in x:
                 w[x] = w[x].squeeze()
@@ -459,7 +469,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                             setattr(here, xx[i], types.SimpleNamespace())
                     here = getattr(here, xx[i])
 
-        self.target2 = nn.ParameterList(self.target)
+        #self.target2 = nn.ParameterList(self.target)
         #self.recpt =w.receptance.weight       self.clear()
 
     def clear(self):
@@ -484,7 +494,15 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.hk = copy.deepcopy(target.hk)
 
     def LN(self, xx, w):
-        return F.layer_norm(xx, (self.n_embd,), weight=w.weight, bias=w.bias)
+
+        result = []
+
+        for i in range(self.number_persp):
+            result.append(F.layer_norm(xx[i].clone(), (self.n_embd,), weight=w.weight, bias=w.bias))
+
+        tt = xx[0]
+
+        return torch.stack(result)
 
     def FF(self, xx, w, name):
         #print("xx: ", xx)
@@ -494,94 +512,95 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         #print("name: ", name)
 
         if name not in self.xx:
-            self.xx[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
+            self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
 
-        result = torch.empty(self.number_persp, self.n_embd, requires_grad=True)
+        self.xx[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
+
+        result = []
 
         for i in range(self.number_persp):
 
-            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
-            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
-            self.xx[name] = xx
+            xk = xx[i] * w.time_mix_k + self.xx[name][-2][i] * (1 - w.time_mix_k)
+            xr = xx[i] * w.time_mix_r + self.xx[name][-2][i] * (1 - w.time_mix_r)
+            self.xx[name][-1] = xx
 
-            r = torch.sigmoid(w.receptance.weight[i] @ xr)
+            r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
             k = torch.square(torch.relu(w.key.weight @ xk))
             kv = w.value.weight @ k
 
             #with torch.no_grad():
-            result[i].data = r * kv
+            result.append(r * kv)
 
         #print("FF " + str(result))
 
-        return result
+        return torch.stack(result)
 
     def SA(self, xx, w, name):
 
         if name not in self.xx:
-            self.xx[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
-            self.aa[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
-            self.bb[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)
-            self.pp[name] = torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30
+            self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
+            self.aa[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
+            self.bb[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
+            self.pp[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30]
 
-        result = torch.empty(self.number_persp, self.n_embd, requires_grad=True)
+        self.xx[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
+        self.aa[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
+        self.bb[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
+        self.pp[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30])
+
+        result = []
 
         for i in range(self.number_persp):
 
-            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
-            xv = xx[i] * w.time_mix_v + self.xx[name][i] * (1 - w.time_mix_v)
-            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
-            self.xx[name] = xx
+            xk = xx[i] * w.time_mix_k + self.xx[name][-2][i] * (1 - w.time_mix_k)
+            xv = xx[i] * w.time_mix_v + self.xx[name][-2][i] * (1 - w.time_mix_v)
+            xr = xx[i] * w.time_mix_r + self.xx[name][-2][i] * (1 - w.time_mix_r)
+            self.xx[name][-1] = xx
 
-            r = torch.sigmoid(w.receptance.weight[i] @ xr)
+            r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
 
             k = w.key.weight @ xk
             v = w.value.weight @ xv
 
-            pp = self.pp[name][i]
-            aa = self.aa[name][i]
-            bb = self.bb[name][i]
+            pp = self.pp[name][-2][i]
+            aa = self.aa[name][-2][i]
+            bb = self.bb[name][-2][i]
 
             ww = w.time_first + k
             p = torch.maximum(pp, ww)
             e1 = torch.exp(pp - p)
             e2 = torch.exp(ww - p)
             #a =
-            a = torch.tensor(e1 * aa + e2 * v, requires_grad=False)
+            a = torch.tensor(e1 * aa + e2 * v, requires_grad=True)
             #print("X " + str(numpy.shape(a)))
-            b = torch.tensor(e1 * bb + e2, requires_grad=False)
+            b = torch.tensor(e1 * bb + e2, requires_grad=True)
             ww = pp + w.time_decay
             p = torch.maximum(ww, k)
             e1 = torch.exp(ww - p)
             e2 = torch.exp(k - p)
-            self.aa[name][i] = e1 * aa + e2 * v
-            self.bb[name][i] = e1 * bb + e2
-            self.pp[name][i] = p
+            self.aa[name][-1][i] = (e1 * aa + e2 * v)
+            self.bb[name][-1][i] = (e1 * bb + e2)
+            self.pp[name][-1][i] = (p)
             rwkv = r * a / b
 
             #with torch.no_grad():
-            result[i].data = w.output.weight @ rwkv
+            result.append(w.output.weight @ rwkv)
 
-            #print("SA R " + str(r))
-            #print("SA A " + str(a))
-            #print("SA B " + str(b))
-            #print("SA RWKV " + str(rwkv))
-            #print("SA D " + str(result[i].data))
-
-        #print("SA " + str(result))
-
-        return result
+        return torch.stack(result)
 
     def forward(self, ctx):
         w = self.w
         x = w.emb.weight[ctx[-1]]
 
         copyy = x
-        x = torch.empty(self.number_persp, self.n_embd)
+        x = []
 
         #print(str(copyy.size()) + " + " + str(x.size()))
 
         for i in range(self.number_persp):
-            x[i] = copy.deepcopy(copyy)
+            x.append(copy.deepcopy(copyy))
+
+        x = torch.stack(x)
 
         for i in range(self.n_layer):
             if i == 0:
@@ -603,14 +622,10 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             #print("ln1: ", w.blocks[i].ln1)
             #print("ln2: ", w.blocks[i].ln2)
 
-            print("Y + " + str(i) + " + " + str(x))
-            temp = self.LN(x, w.blocks[i].ln2)
+            temp_ff = self.FF(self.LN(x, w.blocks[i].ln2), w.blocks[i].ffn, f'ffn.{i}')
 
-            temp_ff = self.FF(temp, w.blocks[i].ffn, f'ffn.{i}')
-            print("W " + str(temp))
             for j in range(self.number_persp):
                 x[j] += temp_ff[j]
-            print("U + " + str(i) + " + " + str(x))
 
         x = self.LN(x, w.ln_out)
 
@@ -641,12 +656,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 sum += x[i] / self.number_persp# * weights[i]
 
             #sum /= self.number_persp
-
-            print("Q " + str(sum))
-
             x = w.head.weight @ sum
             #x = x.cpu().detach().numpy().tolist()
-
-        print("T " + str(x))
 
         return F.softmax(x, dim=0)#torch.tensor(x)

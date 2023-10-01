@@ -89,7 +89,7 @@ DEBUG_DEBUG = False  # True False --> show softmax output
 print(f'Loading {MODEL_NAME}...')
 from src.model_run import RWKV_RNN
 from src.model_run import GREBE_RNN
-model = GREBE_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
+model = RWKV_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=UNKNOWN_CHAR)
 
 ########################################################################################################

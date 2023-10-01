@@ -129,7 +129,7 @@ loss_fn = torch.nn.CrossEntropyLoss()
 
 dataset = GrebeDataset(tokenized, seq_length, len(tokenized), tokenizer.tokenizer)
 
-train_loader = DataLoader(dataset,shuffle=True,batch_size=batch_size)
+train_loader = DataLoader(dataset,shuffle=True, batch_size=batch_size)
 
 best_model = None
 best_loss = np.inf
@@ -141,6 +141,12 @@ for epoch in range(n_epochs):
     moving_average = 0
     current_index = 0
     moving_amount = 100
+
+    #for param in model.parameters():
+    #    print("TEST1 ", param)
+    #    print("TEST2 ", torch.sum(param))
+
+    #print("XXX ", model.blocks0attreceptanceweight0)
 
     for X_batch, y_batch in train_loader:
 
@@ -165,7 +171,13 @@ for epoch in range(n_epochs):
         print("Loss: " + str(np.average(list_values)))
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        #print("EXAMPLE2: " + str(torch.sum(model.example2)))
+
+        #for param in model.parameters():
+        #    if param.grad:
+        #        print("X ", param.grad.data.sum())
+
+
+    #print("EXAMPLE2: " + str(torch.sum(model.example2)))
 
         optimizer.zero_grad()
         loss.backward()
