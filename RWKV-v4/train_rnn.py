@@ -13,6 +13,12 @@ from torch import optim, nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
+from datetime import datetime
+
+now = datetime.now() # current date and time
+
+date_time = now.strftime("%m-%d-%Y-%H-%M-%S")
+
 from src.utils import TOKENIZER, GrebeDataset
 
 torch.backends.cudnn.benchmark = True
@@ -188,6 +194,9 @@ for epoch in range(n_epochs):
         optimizer.step()
 
         current_index += 1
+
+        if current_index % 50 == 0:
+            torch.save(model.state_dict(), 'saves/' + str(date_time))
 
     # Validation
     model.eval()
