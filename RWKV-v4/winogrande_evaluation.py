@@ -1,3 +1,4 @@
+import types
 import json
 import numpy as np
 import os
@@ -28,18 +29,31 @@ def load_winogrande_data(file_path):
     return data
 
 
-def evaluate_example(model, tokenizer, example, ctx_len=1024):
+def evaluate_example(model, tokenizer, example):
     sentence = example['sentence'].replace('_', '{}')
     options = [example['option1'], example['option2']]
     logits = []
 
     for option in options:
-        context = "Who is referred to by the blank space? " + sentence.format(
-            option) + " Who is referred to by the blank space?"
+        context = "Who is referred to by the blank space? " + sentence.format(option) + " Who is referred to by the blank space?"
         ctx = tokenizer.tokenizer.encode(context)
-        x = ctx[-ctx_len:]
-        out = model.run(x)
-        logits.append(out[-1])
+        model.clear()
+
+        init_state = types.SimpleNamespace()
+        src_len = len(ctx)
+        src_ctx = ctx.copy()
+
+        for i in range(src_len):
+            x = ctx[:i+1]
+            if i == src_len - 1:
+                init_state.out = model.run(x)
+            else:
+                model.run(x)
+
+        model.save(init_state)
+        model.load(init_state)
+
+        logits.append(init_state.out[-1])
 
     return logits
 
