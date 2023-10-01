@@ -493,6 +493,26 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.pp = copy.deepcopy(target.pp)
         self.hk = copy.deepcopy(target.hk)
 
+    def dettachh(self):
+
+        for name in self.xx.keys():
+            for i in range(len(self.xx[name])):
+                for value in self.xx[name][i]:
+                    self.xx[name][i] = value.detach()
+        for name in self.aa.keys():
+            for i in range(len(self.aa[name])):
+                for value in self.aa[name][i]:
+                    self.aa[name][i] = value.detach()
+        for name in self.bb.keys():
+            for i in range(len(self.bb[name])):
+                for value in self.bb[name][i]:
+                    self.bb[name][i] = value.detach()
+        for name in self.pp.keys():
+            for i in range(len(self.pp[name])):
+                for value in self.pp[name][i]:
+                    self.pp[name][i] = value.detach()
+            # TODO: DETACH HK?
+
     def LN(self, xx, w):
 
         result = []
@@ -667,5 +687,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             #sum /= self.number_persp
             x = w.head.weight @ sum
             #x = x.cpu().detach().numpy().tolist()
+
+        self.dettachh()
 
         return F.softmax(x, dim=0)#torch.tensor(x)

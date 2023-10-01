@@ -181,7 +181,7 @@ for epoch in range(n_epochs):
 
         optimizer.zero_grad()
         # TODO: RETAIN GRAPH HAS TO GO AWAY!
-        loss.backward(retain_graph=True)
+        loss.backward()
         optimizer.step()
 
         current_index += 1
