@@ -165,6 +165,9 @@ for epoch in range(n_epochs):
         #        print("X " + str(temp))
         print(torch.sum(y_pred))
         print(y_batch[0].float())
+
+        print("ANS ", tokenizer.tokenizer.decode(torch.argmax(y_pred)), " + ", tokenizer.tokenizer.decode(torch.argmax(y_batch[0])))
+
         loss = loss_fn(y_pred.float(), y_batch[0].float())
 
         list_values.append(loss.item())
