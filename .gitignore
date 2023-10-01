@@ -1,0 +1,6 @@
+
+.idea/modules.xml
+.idea/RNNWins.iml
+RWKV-v4/src/__pycache__/model_run.cpython-310.pyc
+RWKV-v4/src/__pycache__/utils.cpython-310.pyc
+RWKV-v4/weights/RWKV-4-Pile-169M-20220807-8023.pth
