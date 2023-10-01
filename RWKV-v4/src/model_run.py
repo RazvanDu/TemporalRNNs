@@ -406,7 +406,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 1
+        self.number_persp = 4
         self.exp_persp = 1
 
         self.w = types.SimpleNamespace()
