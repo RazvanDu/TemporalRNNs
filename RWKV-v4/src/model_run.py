@@ -406,7 +406,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 4
+        self.number_persp = 1
         self.exp_persp = 1
 
         self.w = types.SimpleNamespace()
@@ -440,9 +440,9 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                     self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
-                self.example2 = w[x][1]
-                self.example3 = w[x][2]
-                self.example4 = w[x][3]
+                #self.example2 = w[x][1]
+                #self.example3 = w[x][2]
+                #self.example4 = w[x][3]
 
                 #self.target.append(w[x])
 
@@ -536,7 +536,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         if name not in self.xx:
             self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
 
-        self.xx[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
+        self.xx[name].append(xx.clone())
 
         if len(self.xx[name]) > 2:
             self.xx[name].pop(0)
@@ -547,9 +547,13 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             xk = xx[i] * w.time_mix_k + self.xx[name][-2][i] * (1 - w.time_mix_k)
             xr = xx[i] * w.time_mix_r + self.xx[name][-2][i] * (1 - w.time_mix_r)
-            self.xx[name][-1] = xx
+            #self.xx[name][-1] = xx
 
             r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
+
+            #if i == 0 and name == "ffn.10":
+                #print(name, " + ", w.receptance.weight[i])
+
             k = torch.square(torch.relu(w.key.weight @ xk))
             kv = w.value.weight @ k
 
@@ -568,7 +572,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             self.bb[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
             self.pp[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30]
 
-        self.xx[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
+        self.xx[name].append(xx.clone())
         self.aa[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
         self.bb[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
         self.pp[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30)
@@ -586,7 +590,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             xk = xx[i] * w.time_mix_k + self.xx[name][-2][i] * (1 - w.time_mix_k)
             xv = xx[i] * w.time_mix_v + self.xx[name][-2][i] * (1 - w.time_mix_v)
             xr = xx[i] * w.time_mix_r + self.xx[name][-2][i] * (1 - w.time_mix_r)
-            self.xx[name][-1] = xx
+            #self.xx[name][-1] = xx
 
             r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
 
@@ -622,6 +626,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def forward(self, ctx):
         w = self.w
         x = w.emb.weight[ctx[-1]]
+
+        #print("T ", x)
 
         copyy = x
         x = []
@@ -692,4 +698,4 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         self.dettachh()
 
-        return F.softmax(x, dim=0)#torch.tensor(x)
+        return x#torch.tensor(x)
