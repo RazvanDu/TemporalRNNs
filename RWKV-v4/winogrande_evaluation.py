@@ -3,10 +3,11 @@ import json
 import numpy as np
 import os
 from sklearn.metrics import accuracy_score
+from datetime import datetime
 
 os.environ['RWKV_RUN_DEVICE'] = 'cpu'
 
-from src.model_run import RWKV_RNN
+from src.model_run import RWKV_RNN, GREBE_RNN
 from src.utils import TOKENIZER
 
 
@@ -17,6 +18,8 @@ N_LAYER = 12
 N_EMBD = 768
 CTX_LEN = 1024
 
+current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+filename = f"evaluation_logs/{MODEL_NAME}_{current_time}.txt"
 
 def load_winogrande_data(file_path):
     data = []
@@ -67,22 +70,32 @@ def main():
     predictions = []
     labels = []
 
-    for example in data:
-        logits = evaluate_example(model, tokenizer, example)
-        prediction = np.argmax(logits) + 1
-        ground_truth = example['answer']
+    with open(filename, "w") as f:
+        for example in data:
+            logits = evaluate_example(model, tokenizer, example)
+            prediction = np.argmax(logits) + 1
+            ground_truth = example['answer']
 
-        print(f"Question ID: {example['qID']}")
-        print(f"Sentence: {example['sentence']}")
-        print(f"Option 1: {example['option1']}, Option 2: {example['option2']}")
-        print(f"Logits:  {logits}")
-        print(f"Prediction: {prediction}, Ground Truth: {ground_truth} \n")
+            output_text = (
+                f"Question ID: {example['qID']}\n"
+                f"Sentence: {example['sentence']}\n"
+                f"Option 1: {example['option1']}, Option 2: {example['option2']}\n"
+                f"Logits:  {logits}\n"
+                f"Prediction: {prediction}, Ground Truth: {ground_truth}\n"
+            )
 
-        predictions.append(str(prediction))
-        labels.append(ground_truth)
+            print(output_text)
+            f.write(output_text + '\n')
 
-    accuracy = accuracy_score(labels, predictions)
-    print(f"Accuracy: {accuracy:.4f}")
+            predictions.append(str(prediction))
+            labels.append(ground_truth)
+
+        accuracy = accuracy_score(labels, predictions)
+        accuracy_text = f"Accuracy: {accuracy:.4f}"
+
+        print(accuracy_text)
+
+        f.write('\n' + accuracy_text)
 
 
 if __name__ == '__main__':
