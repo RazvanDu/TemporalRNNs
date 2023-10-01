@@ -171,6 +171,9 @@ for epoch in range(n_epochs):
         print("Loss: " + str(np.average(list_values)))
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
+        print("EXAMPLE2: " + str(torch.sum(model.example2)))
+        print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         #for param in model.parameters():
         #    if param.grad:

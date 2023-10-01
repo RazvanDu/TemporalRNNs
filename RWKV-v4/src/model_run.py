@@ -406,7 +406,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 1
+        self.number_persp = 4
         self.exp_persp = 1
 
         self.w = types.SimpleNamespace()
@@ -440,7 +440,9 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                     self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
-                #self.example2 = w[x][1]
+                self.example2 = w[x][1]
+                self.example3 = w[x][2]
+                self.example4 = w[x][3]
 
                 #self.target.append(w[x])
 
@@ -534,7 +536,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         if name not in self.xx:
             self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
 
-        self.xx[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
+        self.xx[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
 
         if len(self.xx[name]) > 2:
             self.xx[name].pop(0)
@@ -566,10 +568,10 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             self.bb[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
             self.pp[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30]
 
-        self.xx[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
-        self.aa[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
-        self.bb[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)])
-        self.pp[name].append([torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30])
+        self.xx[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
+        self.aa[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
+        self.bb[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
+        self.pp[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30)
 
         if len(self.xx[name]) > 2:
             self.xx[name].pop(0)
