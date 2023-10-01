@@ -130,7 +130,7 @@ print("Total Patterns: ", n_patterns)
 n_epochs = 40
 batch_size = 1
 
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.01)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 dataset = GrebeDataset(tokenized, seq_length, len(tokenized), tokenizer.tokenizer)
