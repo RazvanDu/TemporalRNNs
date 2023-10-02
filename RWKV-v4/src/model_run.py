@@ -423,8 +423,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             if '.receptance' in x:
 
                 self.a = nn.Parameter(w[x], requires_grad=True)
-                print("QQ ", str(w[x]))
-                print("WW ", str(self.a))
+                #print("QQ ", str(w[x]))
+                #print("WW ", str(self.a))
 
                 w[x] = []
                 replaced = x.replace(".", "")

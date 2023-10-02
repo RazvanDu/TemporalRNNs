@@ -61,10 +61,10 @@ elif TOKEN_MODE == 'pile':
 
     # ---> you can set MODEL_NAME to your fine-tuned model <---
 
-    MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+    MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
     # MODEL_NAME = 'trained-11'
-    n_layer = 12
-    n_embd = 768
+    n_layer = 24
+    n_embd = 2048
     ctx_len = 1024
 
     # MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
