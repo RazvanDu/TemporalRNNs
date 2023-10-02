@@ -61,10 +61,13 @@ elif TOKEN_MODE == 'pile':
 
     # ---> you can set MODEL_NAME to your fine-tuned model <---
 
-    MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
+    MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+    #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
     # MODEL_NAME = 'trained-11'
-    n_layer = 24
-    n_embd = 2048
+    #n_layer = 24
+    n_layer = 12
+    #n_embd = 2048
+    n_embd = 768
     ctx_len = 1024
 
     # MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
@@ -80,6 +83,8 @@ elif TOKEN_MODE == 'pile':
 os.environ['RWKV_FLOAT_MODE'] = 'fp32'  # 'bf16' / 'fp16' / 'fp32' (note: only using fp32 at this moment)
 os.environ['RWKV_RUN_DEVICE'] = 'cpu'  # 'cpu' (already very fast) or 'cuda'
 model_type = 'RWKV'  # 'RWKV' or 'RWKV-ffnPre'
+
+ACTUAL_DEVICE = 'cuda'
 
 ########################################################################################################
 # Step 2: set prompt & sampling stuffs
@@ -101,10 +106,18 @@ DEBUG_DEBUG = False  # True False --> show softmax output
 ########################################################################################################
 
 print(f'Loading {MODEL_NAME}...')
+
+print("Here0")
+
 from src.model_run import RWKV_RNN
 from src.model_run import GREBE_RNN
 
-model = GREBE_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
+#print("Here1")
+
+model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len)
+
+#print("Here2")
+
 tokenizer = GREBE_TOKENIZER(WORD_NAME)
 
 import numpy as np
@@ -178,6 +191,9 @@ for epoch in range(n_epochs):
         bef = char
 
         print("ANS ", tokenizer.tokenizer.decode(int(X_batch[0])), " + ", tokenizer.tokenizer.decode(int(char)), " + ", tokenizer.tokenizer.decode(torch.argmax(y_batch[0])))
+
+        if ACTUAL_DEVICE == 'cuda':
+            y_batch = y_batch.cuda()
 
         loss = loss_fn(y_pred.float(), y_batch[0].float())
 

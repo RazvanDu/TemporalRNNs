@@ -151,7 +151,7 @@ class GREBE_TOKENIZER():
 
         lastChar = int(x)
 
-        probs = F.softmax(torch.tensor(out), dim=-1)
+        probs = F.softmax(torch.tensor(out.cpu()), dim=-1)
 
         if self.charMode:
             if self.itos[lastChar] == '\n':

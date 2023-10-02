@@ -609,13 +609,13 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         x = []
 
         for i in range(self.number_persp):
-            x.append(copy.deepcopy(copyy))
+            x.append(copyy.clone())
 
         x = torch.stack(x)
 
         for i in range(self.n_layer):
             if i == 0:
-                temp_x = self.LN(x, w.blocks[i].ln0)
+                temp_x = numpy.add(self.LN(x, w.blocks[i].ln0), x)
 
                 for j in range(self.number_persp):
                     x[j] = temp_x[j]
