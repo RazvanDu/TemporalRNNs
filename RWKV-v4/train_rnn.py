@@ -19,7 +19,11 @@ now = datetime.now() # current date and time
 
 date_time = now.strftime("%m-%d-%Y-%H-%M-%S")
 
-from src.utils import TOKENIZER, GrebeDataset
+from src.utils import GREBE_TOKENIZER, GrebeDataset
+
+TEMPERATURE = 1.0
+top_p = 0.7
+top_p_newline = 0.9 # only used in TOKEN_MODE = char
 
 torch.backends.cudnn.benchmark = True
 torch.backends.cudnn.allow_tf32 = True
@@ -101,7 +105,7 @@ from src.model_run import RWKV_RNN
 from src.model_run import GREBE_RNN
 
 model = GREBE_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
-tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=UNKNOWN_CHAR)
+tokenizer = GREBE_TOKENIZER(WORD_NAME)
 
 import numpy as np
 
@@ -160,6 +164,8 @@ for epoch in range(n_epochs):
 
     #print("XXX ", model.blocks0attreceptanceweight0)
 
+    bef = 0
+
     for X_batch, y_batch in train_loader:
 
         y_pred = model(X_batch)
@@ -172,7 +178,12 @@ for epoch in range(n_epochs):
         print(torch.sum(y_pred))
         print(y_batch[0].float())
 
-        print("ANS ", tokenizer.tokenizer.decode(torch.argmax(y_pred)), " + ", tokenizer.tokenizer.decode(torch.argmax(y_batch[0])))
+        char = tokenizer.sample_logits_bef(y_pred, bef, temperature=TEMPERATURE,
+                                       top_p_usual=top_p, top_p_newline=top_p_newline)
+        char = char.item()
+        bef = char
+
+        print("ANS ", tokenizer.tokenizer.decode(int(X_batch[0])), " + ", tokenizer.tokenizer.decode(int(char)), " + ", tokenizer.tokenizer.decode(torch.argmax(y_batch[0])))
 
         loss = loss_fn(y_pred.float(), y_batch[0].float())
 

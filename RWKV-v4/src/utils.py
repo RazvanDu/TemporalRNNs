@@ -146,6 +146,42 @@ class GREBE_TOKENIZER():
 
         return torch.multinomial(probs, num_samples=1)[0]
 
+    def sample_logits_bef(self, out, x, temperature=1.0, top_p_usual=None, top_p_newline=None):
+        # out[self.UNKNOWN_CHAR] = -float('Inf')
+
+        lastChar = int(x)
+
+        probs = F.softmax(torch.tensor(out), dim=-1)
+
+        if self.charMode:
+            if self.itos[lastChar] == '\n':
+                top_p = top_p_newline
+            else:
+                top_p = top_p_usual
+        else:
+            top_p = top_p_usual
+
+        sorted_probs, s_index = torch.sort(probs, descending=True)
+
+        # for j in range(30):
+        #     pp = sorted_probs[j].item()
+        #     if pp < 0.005:
+        #         break
+        #     ss = self.itos[int(s_index[j])].replace('\n','_')
+        #     print(f'{math.floor(pp*100):>3.0f}{ss}', end='')
+        # print('')
+
+        cumulative_probs = torch.cumsum(sorted_probs, dim=-1).numpy()
+        cutoff = float(sorted_probs[np.argmax(cumulative_probs > top_p)])
+
+        probs[probs < cutoff] = 0
+        # print("[" + str(round(cutoff,4)) + ' ' + str(round(to_float(sum(probs)),3)) + "]", end = "")
+
+        if temperature != 1.0:
+            probs = probs.pow(1.0 / temperature)
+
+        return torch.multinomial(probs, num_samples=1)[0]
+
 
 class Dataset(Dataset):
     def __init__(self, data, ctx_len, epoch_length_fixed):

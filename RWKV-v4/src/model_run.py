@@ -417,24 +417,21 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.target = []
 
         for x in w.keys():
+
             w[x] = w[x].float()
-            #print(x)
-            #print(w[x].size())
+
             if '.receptance' in x:
-                #print("receptance")
+
                 self.a = nn.Parameter(w[x], requires_grad=True)
-                #copyy = self.a
+                print("QQ ", str(w[x]))
+                print("WW ", str(self.a))
+
                 w[x] = []
-                #w[x] = nn.Linear(self.number_persp, self.n_embd, self.n_embd)
                 replaced = x.replace(".", "")
                 w[x].append(self.a)
-                #setattr(self, replaced + "0", w[x][0])
-                #print("TESTTT ", replaced + "0")
-                self.target.append(w[x][0])
+
                 for i in range(1, self.number_persp):
                     w[x].append(nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True))
-                    #setattr(self, replaced + str(i), w[x][i])
-                    #self.target.append(w[x][i])
 
                 for i in range(self.number_persp):
                     self.register_parameter(replaced + str(i), w[x][i])
@@ -443,8 +440,6 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 #self.example2 = w[x][1]
                 #self.example3 = w[x][2]
                 #self.example4 = w[x][3]
-
-                #self.target.append(w[x])
 
             if '.time_' in x:
                 w[x] = w[x].squeeze()
@@ -524,7 +519,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         tt = xx[0]
 
-        return torch.stack(result)
+        return result
 
     def FF(self, xx, w, name):
         #print("xx: ", xx)
@@ -536,7 +531,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         if name not in self.xx:
             self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
 
-        self.xx[name].append(xx.clone())
+        self.xx[name].append(xx)
 
         if len(self.xx[name]) > 2:
             self.xx[name].pop(0)
@@ -562,7 +557,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         #print("FF " + str(result))
 
-        return torch.stack(result)
+        return result
 
     def SA(self, xx, w, name):
 
@@ -572,7 +567,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             self.bb[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
             self.pp[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30]
 
-        self.xx[name].append(xx.clone())
+        self.xx[name].append(xx)
         self.aa[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
         self.bb[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
         self.pp[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30)
@@ -621,7 +616,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             #with torch.no_grad():
             result.append(w.output.weight @ rwkv)
 
-        return torch.stack(result)
+        return result
 
     def forward(self, ctx):
         w = self.w
