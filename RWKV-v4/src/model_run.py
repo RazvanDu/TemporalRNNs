@@ -615,7 +615,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         for i in range(self.n_layer):
             if i == 0:
-                temp_x = numpy.add(self.LN(x, w.blocks[i].ln0), x)
+                temp_x = self.LN(x, w.blocks[i].ln0)
 
                 for j in range(self.number_persp):
                     x[j] = temp_x[j]
