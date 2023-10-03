@@ -398,7 +398,7 @@ class RWKV_RNN(): # this is running in FP32 at this moment
 
 
 class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
-    def __init__(self, MODEL_NAME, RUN_DEVICE, model_type, n_layer, n_embd, ctx_len):
+    def __init__(self, MODEL_NAME, RUN_DEVICE, model_type, n_layer, n_embd, ctx_len, load):
         super().__init__()
         self.clear()
         self.RUN_DEVICE = RUN_DEVICE
@@ -406,15 +406,23 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 4
+        self.number_persp = 16
         self.exp_persp = 1
+
+        #self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
+        #self.linear_2 = nn.Linear(self.n_embd * self.number_persp, self.n_embd, device=RUN_DEVICE)
+        #self.linear_3 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
 
         self.w = types.SimpleNamespace()
 
-        w = torch.load('weights/' + MODEL_NAME + '.pth',
-                       map_location=torch.device(RUN_DEVICE))
+        #w = torch.load('weights/' + MODEL_NAME + '.pth', map_location=torch.device(RUN_DEVICE))
+        w = torch.load('weights/' + MODEL_NAME + '.pth', map_location=torch.device(RUN_DEVICE))
 
         self.target = []
+
+        if load:
+            self.loaded = torch.load('saves/' + 'best_hopefully_16persp', map_location=torch.device(RUN_DEVICE))
+            print("Loading trained weights...")
 
         for x in w.keys():
 
@@ -422,7 +430,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             if '.receptance' in x:
 
-                self.a = nn.Parameter(w[x], requires_grad=True)
+                self.a = nn.Parameter(w[x], requires_grad=False)
                 #print("QQ ", str(w[x]))
                 #print("WW ", str(self.a))
 
@@ -431,9 +439,11 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 w[x].append(self.a)
 
                 for i in range(1, self.number_persp):
-                    w[x].append(nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True))
+                    w[x].append(nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=False))
 
                 for i in range(self.number_persp):
+                    if load:
+                        w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=False)
                     self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]

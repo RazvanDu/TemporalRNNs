@@ -114,7 +114,7 @@ from src.model_run import GREBE_RNN
 
 #print("Here1")
 
-model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len)
+model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, False)
 
 #print("Here2")
 
@@ -123,7 +123,7 @@ tokenizer = GREBE_TOKENIZER(WORD_NAME)
 import numpy as np
 
 # load ascii text and covert to lowercase
-filename = "../simplebooks/simplebooks-92/train.txt"
+filename = "../wonderland.txt"
 raw_text = open(filename, 'r', encoding='utf-8').read()
 
 tokenized = tokenizer.tokenizer.encode(raw_text)
