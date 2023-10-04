@@ -370,8 +370,6 @@ class RWKV_RNN(): # this is running in FP32 at this moment
 
         x = self.LN(x, w.ln_out)
 
-        print("T ", x)
-
         if RWKV_HEAD_QK_DIM > 0:
             if self.hk == None:
                 self.hk = (w.head_k.weight @ x).unsqueeze(0)
@@ -392,6 +390,7 @@ class RWKV_RNN(): # this is running in FP32 at this moment
         else:
             x = w.head.weight @ x
             x = x.cpu().numpy().tolist()
+
 
         return x
 
@@ -505,22 +504,25 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def dettachh(self):
 
         for name in self.xx.keys():
-            for i in range(len(self.xx[name])):
-                for value in self.xx[name][i]:
-                    self.xx[name][i] = value.detach()
+            self.xx[name] = torch.stack([torch.stack(self.xx[name][j]) for j in range(len(self.xx[name]))]).detach()
         for name in self.aa.keys():
-            for i in range(len(self.aa[name])):
-                for value in self.aa[name][i]:
-                    self.aa[name][i] = value.detach()
+            self.aa[name] = torch.stack([torch.stack(self.aa[name][j]) for j in range(len(self.aa[name]))]).detach()
         for name in self.bb.keys():
-            for i in range(len(self.bb[name])):
-                for value in self.bb[name][i]:
-                    self.bb[name][i] = value.detach()
+            self.bb[name] = torch.stack([torch.stack(self.bb[name][j]) for j in range(len(self.bb[name]))]).detach()
         for name in self.pp.keys():
-            for i in range(len(self.pp[name])):
-                for value in self.pp[name][i]:
-                    self.pp[name][i] = value.detach()
-            # TODO: DETACH HK?
+            self.pp[name] = torch.stack([torch.stack(self.pp[name][j]) for j in range(len(self.pp[name]))]).detach()
+
+    def initt(self):
+
+        for name in self.xx.keys():
+            self.xx[name] = [[value_n for value_n in value] for value in self.xx[name]]
+        for name in self.aa.keys():
+            self.aa[name] = [[value_n for value_n in value] for value in self.aa[name]]
+        for name in self.bb.keys():
+            self.bb[name] = [[value_n for value_n in value] for value in self.bb[name]]
+        for name in self.pp.keys():
+            self.pp[name] = [[value_n for value_n in value] for value in self.pp[name]]
+        # TODO: DETACH HK?
 
     def LN(self, xx, w):
 
@@ -534,7 +536,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def FF(self, xx, w, name):
 
         if name not in self.xx:
-            self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
+            self.xx[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
 
         self.xx[name].append(xx)
 
@@ -560,15 +562,15 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def SA(self, xx, w, name):
 
         if name not in self.xx:
-            self.xx[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
-            self.aa[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
-            self.bb[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE)]
-            self.pp[name] = [torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30]
+            self.xx[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
+            self.aa[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
+            self.bb[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
+            self.pp[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30 for _ in range(self.number_persp)]]
 
         self.xx[name].append(xx)
-        self.aa[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
-        self.bb[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE))
-        self.pp[name].append(torch.zeros(self.number_persp, self.n_embd, device=self.RUN_DEVICE) - 1e30)
+        self.aa[name].append([torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)])
+        self.bb[name].append([torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)])
+        self.pp[name].append([torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30 for _ in range(self.number_persp)])
 
         if len(self.xx[name]) > 2:
             self.xx[name].pop(0)
@@ -614,6 +616,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
     def forward(self, ctx):
 
+        self.initt()
+
         w = self.w
         x = w.emb.weight[ctx[-1]]
 
@@ -649,8 +653,6 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         x = self.LN(x, w.ln_out)
 
-        print("T ", x)
-
         if RWKV_HEAD_QK_DIM > 0:
             if self.hk == None:
                 self.hk = (w.head_k.weight @ x).unsqueeze(0)
@@ -674,7 +676,6 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             for i in range(self.number_persp):
                 sum += x[i] / self.number_persp
-
             x = w.head.weight @ sum
 
         self.dettachh()

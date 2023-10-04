@@ -146,9 +146,5 @@ for TRIAL in range(1 if DEBUG_DEBUG else NUM_TRIALS):
             print(tokenizer.tokenizer.decode(int(char)), end='', flush=True)
         ctx += [char]
 
-        break
-
-    break
-
     t_end = time.time_ns()
     print("\n----------", round((t_end - t_begin) / (10 ** 9), 2), end='s ')

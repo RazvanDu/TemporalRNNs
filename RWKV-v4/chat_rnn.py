@@ -114,7 +114,7 @@ from src.model_run import GREBE_RNN
 
 #print("Here1")
 
-model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, False)
+model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, True)
 
 #print("Here2")
 
@@ -140,7 +140,7 @@ next_token = prompt_tokenized[-1]
 
 print(prompt)
 
-for i in range(10):
+for i in range(100):
 
     y_pred = model([next_token])
 
