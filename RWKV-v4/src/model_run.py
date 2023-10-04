@@ -444,7 +444,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 for i in range(self.number_persp):
                     if load:
                         w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=True)
-                    self.register_parameter(replaced + str(i), w[x][i])
+                    #self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
                 #self.example2 = w[x][1]

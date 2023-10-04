@@ -123,7 +123,7 @@ tokenizer = GREBE_TOKENIZER(WORD_NAME)
 import numpy as np
 
 # load ascii text and covert to lowercase
-filename = "../simplebooks/simplebooks-92/train.txt"
+filename = "../wonderland.txt"
 raw_text = open(filename, 'r', encoding='utf-8').read()
 
 tokenized = tokenizer.tokenizer.encode(raw_text)
