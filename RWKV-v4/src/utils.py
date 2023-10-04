@@ -151,7 +151,7 @@ class GREBE_TOKENIZER():
 
         lastChar = int(x)
 
-        probs = F.softmax(out.cpu(), dim=-1)
+        probs = F.softmax(out.clone().detach().cpu(), dim=-1)
 
         if self.charMode:
             if self.itos[lastChar] == '\n':

@@ -126,10 +126,15 @@ prompt = "\nWhat do you think about pandas? "
 
 prompt_tokenized = tokenizer.tokenizer.encode(prompt)
 
+aa = {}
+bb = {}
+pp = {}
+xx = {}
+
 for i in range(len(prompt_tokenized)):
     if i == len(prompt_tokenized)-1:
         break
-    model([prompt_tokenized[i]])
+    x, xx, aa, bb, pp = model([prompt_tokenized[i]], xx, aa, bb, pp)
 
 #train_loader = DataLoader(dataset, shuffle=False, batch_size=batch_size)
 
@@ -142,7 +147,7 @@ print(prompt)
 
 for i in range(100):
 
-    y_pred = model([next_token])
+    y_pred, xx, aa, bb, pp = model([next_token], xx, aa, bb, pp)
 
     char = tokenizer.sample_logits_bef(y_pred, 0, temperature=TEMPERATURE,
                                    top_p_usual=top_p, top_p_newline=top_p_newline)

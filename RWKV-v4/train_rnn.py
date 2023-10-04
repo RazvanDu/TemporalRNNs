@@ -116,6 +116,8 @@ from src.model_run import GREBE_RNN
 
 model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, False)
 
+#print("Q ", model.parameters())
+
 #print("Here2")
 
 tokenizer = GREBE_TOKENIZER(WORD_NAME)
@@ -178,10 +180,14 @@ for epoch in range(n_epochs):
     #print("XXX ", model.blocks0attreceptanceweight0)
 
     bef = 0
+    xx = {}
+    aa = {}
+    bb = {}
+    pp = {}
 
     for X_batch, y_batch in train_loader:
 
-        y_pred = model(X_batch)
+        y_pred, xx, aa, bb, pp = model(X_batch, xx, aa, bb, pp)
         print(torch.sum(y_pred))
         print(y_batch[0].float())
 
