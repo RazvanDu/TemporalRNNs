@@ -421,7 +421,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.target = []
 
         if load:
-            self.loaded = torch.load('saves/' + 'best_hopefully_16persp', map_location=torch.device(RUN_DEVICE))
+            self.loaded = torch.load('saves/' + '10-04-2023-01-33-17', map_location=torch.device(RUN_DEVICE))
             print("Loading trained weights...")
 
         for x in w.keys():
