@@ -149,7 +149,7 @@ print("Total Patterns: ", n_patterns)
 n_epochs = 40
 batch_size = 1
 
-optimizer = optim.Adam(model.parameters(), lr=0.0005)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 #for token in tokenized:
