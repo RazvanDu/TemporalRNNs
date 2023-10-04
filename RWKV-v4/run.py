@@ -73,7 +73,7 @@ model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre'
 # context = 'A'
 # context = "\nIn the"
 # context = '\nSugar:'
-context = '\nIn a shocking finding, scientist discovered a herd of dragons living in a remote, previously unexplored valley, in Tibet. Even more surprising to the researchers was the fact that the dragons spoke perfect Chinese.'
+context = '\nWhat do you think about pandas? '
 
 NUM_TRIALS = 999
 LENGTH_PER_TRIAL = 333
@@ -145,6 +145,10 @@ for TRIAL in range(1 if DEBUG_DEBUG else NUM_TRIALS):
         else:
             print(tokenizer.tokenizer.decode(int(char)), end='', flush=True)
         ctx += [char]
+
+        break
+
+    break
 
     t_end = time.time_ns()
     print("\n----------", round((t_end - t_begin) / (10 ** 9), 2), end='s ')

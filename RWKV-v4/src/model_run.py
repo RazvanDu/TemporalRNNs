@@ -370,6 +370,8 @@ class RWKV_RNN(): # this is running in FP32 at this moment
 
         x = self.LN(x, w.ln_out)
 
+        print("T ", x)
+
         if RWKV_HEAD_QK_DIM > 0:
             if self.hk == None:
                 self.hk = (w.head_k.weight @ x).unsqueeze(0)
@@ -646,6 +648,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 x[j] += temp_ff[j]
 
         x = self.LN(x, w.ln_out)
+
+        print("T ", x)
 
         if RWKV_HEAD_QK_DIM > 0:
             if self.hk == None:
