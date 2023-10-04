@@ -406,7 +406,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 16
+        self.number_persp = 4
         self.exp_persp = 1
 
         #self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
@@ -475,6 +475,13 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                         else:
                             setattr(here, xx[i], types.SimpleNamespace())
                     here = getattr(here, xx[i])
+
+            # TODO: MAKE ALL THE NETWORK TRAIN_ABLE
+
+            #if '.receptance' not in x:
+                #eplaced = x.replace(".", "")
+                #w[x] = nn.Parameter(w[x], requires_grad=True)
+                #self.register_parameter(replaced, w[x])
 
         #self.target2 = nn.ParameterList(self.target)
         #self.recpt =w.receptance.weight       self.clear()
