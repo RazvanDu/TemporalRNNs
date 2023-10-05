@@ -69,7 +69,7 @@ class WinograndeDataset(torch.utils.data.Dataset):
 
 
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
-train_loader = DataLoader(dataset, shuffle=True, batch_size=BATCH_SIZE)
+train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
 optimizer = optim.Adam(model.parameters(), lr=0.0005)
 loss_fn = torch.nn.CrossEntropyLoss()
@@ -78,6 +78,8 @@ loss_fn = torch.nn.CrossEntropyLoss()
 n_epochs = 40
 
 loss_list = []
+acc_list = []
+acc_list_total = []
 
 for epoch in range(n_epochs):
     for i, (tokenizedC, tokenized1, tokenized2, label) in enumerate(train_loader):
@@ -133,9 +135,13 @@ for epoch in range(n_epochs):
         optimizer.step()
 
         if logits[label] > logits[1-label]:
+            acc_list.append(1)
             print("CORRECT")
         else:
+            acc_list.append(0)
             print("WRONG")
+
+        acc_list_total.append(acc_list[-1])
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
 
@@ -145,8 +151,12 @@ for epoch in range(n_epochs):
 
         if len(loss_list) > 100:
             loss_list.pop(0)
+        if len(acc_list) > 100:
+            acc_list.pop(0)
 
         print(f"Epoch {epoch + 1}, Iteration {i}, Loss: {np.average(loss_list)}")
+        print("Running accuracy ", np.sum(acc_list)/len(acc_list))
+        print("Total accuracy ", np.sum(acc_list_total)/len(acc_list_total))
 
         if i % 50 == 0:
             torch.save(model.state_dict(), 'saves/winogrande_' + str(date_time))
