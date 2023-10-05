@@ -92,13 +92,13 @@ for epoch in range(n_epochs):
         logits = []
 
         for token in tokenizedC:
-            logits, xx, aa, bb, pp = model(token, xx, aa, bb, pp)
+            logits = model(token)
 
         logits_temp = logits
-        xx_temp = xx
-        aa_temp = aa
-        bb_temp = bb
-        pp_temp = pp
+        xx_temp = model.xx
+        aa_temp = model.aa
+        bb_temp = model.bb
+        pp_temp = model.pp
 
         logits1 = []
         logits2 = []
@@ -110,13 +110,13 @@ for epoch in range(n_epochs):
             logits1.append(logits[token])
             if not first:
                 logits1[-1] *= mult
-            logits, xx, aa, bb, pp = model(token, xx, aa, bb, pp)
+            logits = model(token)
 
         logits = logits_temp
-        xx = xx_temp
-        aa = aa_temp
-        bb = bb_temp
-        pp = pp_temp
+        model.xx = xx_temp
+        model.aa = aa_temp
+        model.bb = bb_temp
+        model.pp = pp_temp
 
         first = True
 
@@ -124,7 +124,7 @@ for epoch in range(n_epochs):
             logits2.append(logits[token])
             if not first:
                 logits1[-1] *= mult
-            logits, xx, aa, bb, pp = model(token, xx, aa, bb, pp)
+            logits = model(token)
 
         logits = torch.stack([torch.mean(torch.stack(logits1)), torch.mean(torch.stack(logits2))], dim=0)
 

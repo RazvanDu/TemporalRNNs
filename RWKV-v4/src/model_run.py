@@ -406,7 +406,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 16
+        self.number_persp = 8
         self.exp_persp = 1
 
         #self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
@@ -620,14 +620,9 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         return result
 
-    def forward(self, ctx, xx, aa, bb, pp):
+    def forward(self, ctx):
 
         #self.initt()
-
-        self.xx = xx
-        self.aa = aa
-        self.bb = bb
-        self.pp = pp
 
         w = self.w
         x = w.emb.weight[ctx[-1]]
@@ -704,7 +699,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             for key in range(len(self.pp[name])):
                 self.pp[name][key] = [value_v.detach() for value_v in self.pp[name][key]]
 
-        return x, self.xx, self.aa, self.bb, self.pp
+        return x
 
 
 # class GREBE_RNN(nn.Module): # this is running in FP32 at this moment

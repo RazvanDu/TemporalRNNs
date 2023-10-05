@@ -114,7 +114,7 @@ from src.model_run import GREBE_RNN
 
 #print("Here1")
 
-model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, True)
+model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, False)
 
 #print("Here2")
 
@@ -126,15 +126,10 @@ prompt = "\nWhat do you think about pandas? "
 
 prompt_tokenized = tokenizer.tokenizer.encode(prompt)
 
-aa = {}
-bb = {}
-pp = {}
-xx = {}
-
 for i in range(len(prompt_tokenized)):
     if i == len(prompt_tokenized)-1:
         break
-    x, xx, aa, bb, pp = model([prompt_tokenized[i]], xx, aa, bb, pp)
+    x = model([prompt_tokenized[i]])
 
 #train_loader = DataLoader(dataset, shuffle=False, batch_size=batch_size)
 
@@ -147,7 +142,7 @@ print(prompt)
 
 for i in range(100):
 
-    y_pred, xx, aa, bb, pp = model([next_token], xx, aa, bb, pp)
+    y_pred = model([next_token])
 
     char = tokenizer.sample_logits_bef(y_pred, 0, temperature=TEMPERATURE,
                                    top_p_usual=top_p, top_p_newline=top_p_newline)

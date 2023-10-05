@@ -159,11 +159,6 @@ dataset = GrebeDataset(tokenized, seq_length, len(tokenized), tokenizer.tokenize
 
 train_loader = DataLoader(dataset, shuffle=False, batch_size=batch_size)
 
-aa = {}
-bb = {}
-pp = {}
-xx = {}
-
 best_model = None
 best_loss = np.inf
 for epoch in range(n_epochs):
@@ -185,7 +180,7 @@ for epoch in range(n_epochs):
 
     for X_batch, y_batch in train_loader:
 
-        y_pred, xx, aa, bb, pp = model(X_batch, xx, aa, bb, pp)
+        y_pred = model(X_batch)
         print(torch.sum(y_pred))
         print(y_batch[0].float())
 
