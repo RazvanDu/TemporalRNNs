@@ -26,7 +26,7 @@ SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
 
 # Initialize model and tokenizer
-model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, False)
+model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, False)
 #model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=None)
 
