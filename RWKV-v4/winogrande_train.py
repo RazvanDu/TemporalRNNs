@@ -143,7 +143,7 @@ for epoch in range(n_epochs):
 
         loss_list.append(loss.item())
 
-        if len(loss_list) > 10:
+        if len(loss_list) > 100:
             loss_list.pop(0)
 
         print(f"Epoch {epoch + 1}, Iteration {i}, Loss: {np.average(loss_list)}")
