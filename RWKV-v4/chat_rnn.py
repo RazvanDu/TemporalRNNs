@@ -122,7 +122,7 @@ tokenizer = GREBE_TOKENIZER(WORD_NAME)
 
 import numpy as np
 
-prompt = "\nWhat do you think about pandas? "
+prompt = "\nJoseph was lazier than Brian, and so _ had a rougher surface left on their varnished woodworking project.\n _ can be replaced by "
 
 prompt_tokenized = tokenizer.tokenizer.encode(prompt)
 

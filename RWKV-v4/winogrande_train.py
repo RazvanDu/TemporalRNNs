@@ -16,11 +16,11 @@ from src.model_run import RWKV_RNN, GREBE_RNN
 from src.utils import TOKENIZER
 
 # Define constants
-MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040.pth'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/train_l.jsonl'
-N_LAYER = 12
-N_EMBD = 768
+N_LAYER = 24
+N_EMBD = 1024
 CTX_LEN = 1024
 SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
@@ -53,7 +53,7 @@ class WinograndeDataset(torch.utils.data.Dataset):
 
         sentence = item['sentence']
         option1, option2 = item['option1'], item['option2']
-        context1 = "Who is referred to by the blank space? " + sentence + " Who is referred to by the blank space?"
+        context1 = sentence + " What can _ be replaced by? "
         #context2 = "Who is referred to by the blank space? " + sentence.format(option2) + " Who is referred to by the blank space?"
 
         tokenized1 = tokenizer.tokenizer.encode(context1)
@@ -95,10 +95,10 @@ for epoch in range(n_epochs):
             logits = model(token)
 
         logits_temp = logits
-        xx_temp = model.xx
-        aa_temp = model.aa
-        bb_temp = model.bb
-        pp_temp = model.pp
+        xx_temp = model.xx.clone()
+        aa_temp = model.aa.clone()
+        bb_temp = model.bb.clone()
+        pp_temp = model.pp.clone()
 
         logits1 = []
         logits2 = []
@@ -130,9 +130,9 @@ for epoch in range(n_epochs):
 
         loss = loss_fn(logits.unsqueeze(0), label.cuda())
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        #optimizer.zero_grad()
+        #loss.backward()
+        #optimizer.step()
 
         if logits[label] > logits[1-label]:
             acc_list.append(1)
