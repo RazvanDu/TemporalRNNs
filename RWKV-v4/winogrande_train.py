@@ -19,8 +19,10 @@ from src.utils import TOKENIZER
 MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/train_l.jsonl'
+#N_LAYER = 12
+#N_EMBD = 768
 N_LAYER = 24
-N_EMBD = 1024
+N_EMBD = 2048
 CTX_LEN = 1024
 SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
