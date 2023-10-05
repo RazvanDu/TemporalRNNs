@@ -114,7 +114,7 @@ from src.model_run import GREBE_RNN
 
 #print("Here1")
 
-model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, True)
+model = GREBE_RNN(MODEL_NAME, ACTUAL_DEVICE, model_type, n_layer, n_embd, ctx_len, False)
 
 #print("Here2")
 

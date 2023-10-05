@@ -73,6 +73,7 @@ def main():
     with open(filename, "w") as f:
         for example in data:
             logits = evaluate_example(model, tokenizer, example)
+            print(np.shape(logits))
             prediction = np.argmax(logits) + 1
             ground_truth = example['answer']
 
