@@ -6,7 +6,11 @@ import numpy as np
 from torch.utils.data import DataLoader
 
 os.environ['RWKV_RUN_DEVICE'] = 'cpu'
+from datetime import datetime
 
+now = datetime.now() # current date and time
+
+date_time = now.strftime("%m-%d-%Y-%H-%M-%S")
 # Your existing imports
 from src.model_run import RWKV_RNN, GREBE_RNN
 from src.utils import TOKENIZER
@@ -143,5 +147,8 @@ for epoch in range(n_epochs):
             loss_list.pop(0)
 
         print(f"Epoch {epoch + 1}, Iteration {i}, Loss: {np.average(loss_list)}")
+
+        if i % 50 == 0:
+            torch.save(model.state_dict(), 'saves/winogrande_' + str(date_time))
 
 print("Training complete")
