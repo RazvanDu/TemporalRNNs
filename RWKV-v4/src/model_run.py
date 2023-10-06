@@ -415,7 +415,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
         self.n_embd = n_embd
         self.ctx_len = ctx_len
         self.number_persp = 1
-        self.exp_persp = 1
+        self.exp_persp = 4
 
         # self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
         # self.linear_2 = nn.Linear(self.n_embd * self.number_persp, self.n_embd, device=RUN_DEVICE)

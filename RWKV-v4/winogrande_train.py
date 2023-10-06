@@ -76,7 +76,7 @@ class WinograndeDataset(torch.utils.data.Dataset):
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0)
+optimizer = optim.Adam(model.parameters(), lr=0.008)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
@@ -116,15 +116,15 @@ for epoch in range(n_epochs):
             logits = model(tokenized2[j])
             sum2 += logits[tokenized2[j+1]]
 
-        logits = torch.stack([sum1, sum2], dim=0)
+        logits = torch.stack([-sum1, -sum2], dim=0)
 
         print("L ", logits)
 
         loss = loss_fn(logits.unsqueeze(0), label.cuda().unsqueeze(0))
 
-        #optimizer.zero_grad()
-        #loss.backward()
-        #optimizer.step()
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
 
         opt = -1
 
