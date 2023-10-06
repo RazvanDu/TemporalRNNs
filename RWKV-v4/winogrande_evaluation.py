@@ -13,7 +13,7 @@ from src.utils import TOKENIZER
 
 MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
-DATA_FILE = '../winogrande_1.1/train_s.jsonl'
+DATA_FILE = '../winogrande_1.1/test.jsonl'
 N_LAYER = 12
 N_EMBD = 768
 CTX_LEN = 1024

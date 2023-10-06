@@ -21,7 +21,7 @@ from src.utils import TOKENIZER
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
-DATA_FILE = '../winogrande_1.1/train_l.jsonl'
+DATA_FILE = '../winogrande_1.1/train_m.jsonl'
 N_LAYER = 12
 N_EMBD = 768
 #N_LAYER = 24
@@ -31,7 +31,7 @@ SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
 
 # Initialize model and tokenizer
-model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, False)
+model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, 'winogrande_10-06-2023-05-43-02')
 #model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=None)
 
@@ -76,7 +76,7 @@ class WinograndeDataset(torch.utils.data.Dataset):
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0.0008)
+optimizer = optim.Adam(model.parameters(), lr=0)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
@@ -122,9 +122,9 @@ for epoch in range(n_epochs):
 
         loss = loss_fn(logits.unsqueeze(0), label.cuda().unsqueeze(0))
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        #optimizer.zero_grad()
+        #loss.backward()
+        #optimizer.step()
 
         opt = -1
 
@@ -132,6 +132,9 @@ for epoch in range(n_epochs):
             opt = 0
         else:
             opt = 1
+
+        print("O ", opt)
+        print("L ", label)
 
         if opt == label:
             acc_list.append(1)
@@ -143,9 +146,9 @@ for epoch in range(n_epochs):
         acc_list_total.append(acc_list[-1])
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        #print("EXAMPLE2: " + str(torch.sum(model.example2)))
+        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 
