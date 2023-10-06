@@ -21,7 +21,7 @@ from src.utils import TOKENIZER
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
-DATA_FILE = '../winogrande_1.1/train_m.jsonl'
+DATA_FILE = '../winogrande_1.1/train_l.jsonl'
 N_LAYER = 12
 N_EMBD = 768
 #N_LAYER = 24
@@ -31,7 +31,7 @@ SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
 
 # Initialize model and tokenizer
-model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, 'winogrande_10-06-2023-05-43-02')
+model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, None)
 #model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=None)
 
