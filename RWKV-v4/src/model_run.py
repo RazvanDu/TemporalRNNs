@@ -9,6 +9,7 @@ import math, os
 from torch.nn import functional as F
 import torch.nn as nn
 import numpy
+import torch.nn.init as init
 
 RWKV_HEAD_QK_DIM = 0
 print(f'\nRWKV_HEAD_QK_DIM {RWKV_HEAD_QK_DIM}\n')
@@ -439,7 +440,12 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 w[x].append(a)
 
                 for i in range(1, self.number_persp):
-                    w[x].append(nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True))
+                    w[x].append(w[x][i-1] * self.exp_persp)
+
+                for i in range(1, self.number_persp):
+                    xavier_matrix = torch.empty_like(w[x][i], requires_grad=False)
+                    init.xavier_uniform_(xavier_matrix)
+                    w[x][i] = nn.Parameter(w[x][i-1] + xavier_matrix, requires_grad=True)
 
                 for i in range(self.number_persp):
                     if load:
