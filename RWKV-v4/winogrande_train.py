@@ -144,8 +144,8 @@ for epoch in range(n_epochs):
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
         print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 
