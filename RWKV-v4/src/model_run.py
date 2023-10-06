@@ -542,19 +542,15 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def FF(self, xx, w, name):
 
         if name not in self.xx:
-            self.xx[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
-
-        self.xx[name].append(xx)
-
-        if len(self.xx[name]) > 2:
-            self.xx[name].pop(0)
+            self.xx[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]
 
         result = []
 
         for i in range(self.number_persp):
 
-            xk = xx[i] * w.time_mix_k + self.xx[name][-2][i] * (1 - w.time_mix_k)
-            xr = xx[i] * w.time_mix_r + self.xx[name][-2][i] * (1 - w.time_mix_r)
+            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
+            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
+            self.xx[name] = xx
 
             r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
 
@@ -568,38 +564,28 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
     def SA(self, xx, w, name):
 
         if name not in self.xx:
-            self.xx[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
-            self.aa[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
-            self.bb[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]]
-            self.pp[name] = [[torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30 for _ in range(self.number_persp)]]
-
-        self.xx[name].append(xx)
-        self.aa[name].append([torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)])
-        self.bb[name].append([torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)])
-        self.pp[name].append([torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30 for _ in range(self.number_persp)])
-
-        if len(self.xx[name]) > 2:
-            self.xx[name].pop(0)
-            self.aa[name].pop(0)
-            self.bb[name].pop(0)
-            self.pp[name].pop(0)
+            self.xx[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]
+            self.aa[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]
+            self.bb[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.number_persp)]
+            self.pp[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30 for _ in range(self.number_persp)]
 
         result = []
 
         for i in range(self.number_persp):
 
-            xk = xx[i] * w.time_mix_k + self.xx[name][-2][i] * (1 - w.time_mix_k)
-            xv = xx[i] * w.time_mix_v + self.xx[name][-2][i] * (1 - w.time_mix_v)
-            xr = xx[i] * w.time_mix_r + self.xx[name][-2][i] * (1 - w.time_mix_r)
+            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
+            xv = xx[i] * w.time_mix_v + self.xx[name][i] * (1 - w.time_mix_v)
+            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
+            self.xx[name] = xx
 
             r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
 
             k = w.key.weight @ xk
             v = w.value.weight @ xv
 
-            pp = self.pp[name][-2][i]
-            aa = self.aa[name][-2][i]
-            bb = self.bb[name][-2][i]
+            pp = self.pp[name][i]
+            aa = self.aa[name][i]
+            bb = self.bb[name][i]
 
             ww = w.time_first + k
             p = torch.maximum(pp, ww)
@@ -611,9 +597,9 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
             p = torch.maximum(ww, k)
             e1 = torch.exp(ww - p)
             e2 = torch.exp(k - p)
-            self.aa[name][-1][i] = (e1 * aa + e2 * v)
-            self.bb[name][-1][i] = (e1 * bb + e2)
-            self.pp[name][-1][i] = (p)
+            self.aa[name][i] = (e1 * aa + e2 * v)
+            self.bb[name][i] = (e1 * bb + e2)
+            self.pp[name][i] = (p)
             rwkv = r * a / b
 
             result.append(w.output.weight @ rwkv)
@@ -688,16 +674,16 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
         for name in self.xx:
             for key in range(len(self.xx[name])):
-                self.xx[name][key] = [value_v.detach() for value_v in self.xx[name][key]]
+                self.xx[name][key] = self.xx[name][key].detach()
         for name in self.aa:
             for key in range(len(self.aa[name])):
-                self.aa[name][key] = [value_v.detach() for value_v in self.aa[name][key]]
+                self.aa[name][key] = self.aa[name][key].detach()
         for name in self.bb:
             for key in range(len(self.bb[name])):
-                self.bb[name][key] = [value_v.detach() for value_v in self.bb[name][key]]
+                self.bb[name][key] = self.bb[name][key].detach()
         for name in self.pp:
             for key in range(len(self.pp[name])):
-                self.pp[name][key] = [value_v.detach() for value_v in self.pp[name][key]]
+                self.pp[name][key] = self.pp[name][key].detach()
 
         return x
 
