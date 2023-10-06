@@ -19,11 +19,11 @@ from src.utils import TOKENIZER
 
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
-MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
+MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/train_l.jsonl'
-N_LAYER = 24
-N_EMBD = 1024
+N_LAYER = 12
+N_EMBD = 768
 #N_LAYER = 24
 #N_EMBD = 2048
 CTX_LEN = 1024
@@ -76,7 +76,7 @@ class WinograndeDataset(torch.utils.data.Dataset):
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0008)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
@@ -144,8 +144,8 @@ for epoch in range(n_epochs):
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
         print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 

@@ -406,7 +406,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 2
+        self.number_persp = 8
         self.exp_persp = 1
 
         #self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
@@ -448,8 +448,8 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
                 self.example1 = w[x][0]
                 self.example2 = w[x][1]
-                #self.example3 = w[x][2]
-                #self.example4 = w[x][3]
+                self.example3 = w[x][2]
+                self.example4 = w[x][3]
 
             if '.time_' in x:
                 w[x] = w[x].squeeze()
