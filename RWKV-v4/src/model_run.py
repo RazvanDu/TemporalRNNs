@@ -452,9 +452,9 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                 for i in range(1, self.number_persp):
                     xavier_matrix = torch.empty_like(w[x][i], requires_grad=False)
                     init.xavier_uniform_(xavier_matrix)
-                    w[x][i] = nn.Parameter(w[x][i - 1] + xavier_matrix, requires_grad=True)
+                    w[x][i] = nn.Parameter(xavier_matrix, requires_grad=True)
 
-                for i in range(self.number_persp):
+                for i in range(1, self.number_persp):
                     if load:
                         w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=True)
                     self.register_parameter(replaced + str(i), w[x][i])
