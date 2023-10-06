@@ -460,9 +460,9 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                     self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
-                self.example2 = w[x][1]
-                self.example3 = w[x][2]
-                self.example4 = w[x][3]
+                #self.example2 = w[x][1]
+                #self.example3 = w[x][2]
+                #self.example4 = w[x][3]
 
             if '.time_' in x:
                 w[x] = w[x].squeeze()
@@ -562,14 +562,15 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
         for i in range(self.number_persp):
             xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
             xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
-            self.xx[name] = xx
 
-            r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
+            r = torch.sigmoid(w.receptance.weight[i] @ xr)
 
             k = torch.square(torch.relu(w.key.weight @ xk))
             kv = w.value.weight @ k
 
             result.append(r * kv)
+
+        self.xx[name] = xx
 
         return result
 
@@ -587,9 +588,8 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
             xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
             xv = xx[i] * w.time_mix_v + self.xx[name][i] * (1 - w.time_mix_v)
             xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
-            self.xx[name] = xx
 
-            r = torch.sigmoid(w.receptance.weight[i].clone() @ xr)
+            r = torch.sigmoid(w.receptance.weight[i] @ xr)
 
             k = w.key.weight @ xk
             v = w.value.weight @ xv
@@ -614,6 +614,8 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
             rwkv = r * a / b
 
             result.append(w.output.weight @ rwkv)
+
+        self.xx[name] = xx
 
         return result
 
@@ -683,18 +685,20 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
 
         # self.dettachh()
 
-        for name in self.xx:
-            for key in range(len(self.xx[name])):
-                self.xx[name][key] = self.xx[name][key].detach()
-        for name in self.aa:
-            for key in range(len(self.aa[name])):
-                self.aa[name][key] = self.aa[name][key].detach()
-        for name in self.bb:
-            for key in range(len(self.bb[name])):
-                self.bb[name][key] = self.bb[name][key].detach()
-        for name in self.pp:
-            for key in range(len(self.pp[name])):
-                self.pp[name][key] = self.pp[name][key].detach()
+        with torch.no_grad():
+
+            for name in self.xx:
+                for key in range(len(self.xx[name])):
+                    self.xx[name][key] = self.xx[name][key].detach()
+            for name in self.aa:
+                for key in range(len(self.aa[name])):
+                    self.aa[name][key] = self.aa[name][key].detach()
+            for name in self.bb:
+                for key in range(len(self.bb[name])):
+                  self.bb[name][key] = self.bb[name][key].detach()
+            for name in self.pp:
+                for key in range(len(self.pp[name])):
+                    self.pp[name][key] = self.pp[name][key].detach()
 
         return x
 

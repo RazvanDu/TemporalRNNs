@@ -6,7 +6,7 @@ import numpy as np
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from torch.nn import functional as F
-
+import gc
 os.environ['RWKV_RUN_DEVICE'] = 'cpu'
 from datetime import datetime
 
@@ -35,6 +35,13 @@ model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, None)
 #model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=None)
 
+def print_tensors_in_memory():
+    for obj in gc.get_objects():
+        try:
+            if torch.is_tensor(obj) or (hasattr(obj, 'data') and torch.is_tensor(obj.data)):
+                print(type(obj), obj.size())
+        except Exception as e:
+            pass
 
 def load_winogrande_data(file_path):
     data = []
@@ -146,9 +153,9 @@ for epoch in range(n_epochs):
         acc_list_total.append(acc_list[-1])
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        #print("EXAMPLE2: " + str(torch.sum(model.example2)))
+        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 
@@ -165,5 +172,8 @@ for epoch in range(n_epochs):
 
         if i % 50 == 0:
             torch.save(model.state_dict(), 'saves/winogrande_' + str(date_time))
+
+        torch.cuda.empty_cache()
+
 
 print("Training complete")
