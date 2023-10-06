@@ -631,7 +631,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
         x = []
 
         for i in range(self.number_persp):
-            x.append(copyy.clone())
+            x.append(copyy)
 
         x = torch.stack(x)
 

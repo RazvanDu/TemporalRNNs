@@ -89,7 +89,7 @@ acc_list_total = []
 for epoch in range(n_epochs):
 
     model.train()
-    torch.autograd.set_detect_anomaly(True)
+    #torch.autograd.set_detect_anomaly(True)
 
     for i, (tokenized1, tokenized2, label) in enumerate(train_loader):
 
