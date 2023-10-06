@@ -430,13 +430,13 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
 
             if '.receptance' in x:
 
-                self.a = nn.Parameter(w[x], requires_grad=True)
+                a = nn.Parameter(w[x], requires_grad=True)
                 #print("QQ ", str(w[x]))
                 #print("WW ", str(self.a))
 
                 w[x] = []
                 replaced = x.replace(".", "")
-                w[x].append(self.a)
+                w[x].append(a)
 
                 for i in range(1, self.number_persp):
                     w[x].append(nn.Parameter(w[x][i-1] * self.exp_persp, requires_grad=True))
@@ -444,7 +444,7 @@ class GREBE_RNN(nn.Module): # this is running in FP32 at this moment
                 for i in range(self.number_persp):
                     if load:
                         w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=True)
-                    #self.register_parameter(replaced + str(i), w[x][i])
+                    self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
                 #self.example2 = w[x][1]
