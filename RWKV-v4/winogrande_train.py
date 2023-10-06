@@ -146,9 +146,9 @@ for epoch in range(n_epochs):
         acc_list_total.append(acc_list[-1])
 
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        #print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        print("EXAMPLE2: " + str(torch.sum(model.example2)))
+        print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 

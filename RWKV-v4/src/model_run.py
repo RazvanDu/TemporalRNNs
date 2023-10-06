@@ -460,9 +460,9 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                     self.register_parameter(replaced + str(i), w[x][i])
 
                 self.example1 = w[x][0]
-                #self.example2 = w[x][1]
-                #self.example3 = w[x][2]
-                #self.example4 = w[x][3]
+                self.example2 = w[x][1]
+                self.example3 = w[x][2]
+                self.example4 = w[x][3]
 
             if '.time_' in x:
                 w[x] = w[x].squeeze()
