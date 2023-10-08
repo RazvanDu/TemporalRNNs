@@ -1,7 +1,7 @@
 import os
 import json
 import torch
-from torch import optim
+from torch import optim, nn
 import numpy as np
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
@@ -21,12 +21,13 @@ from src.utils import TOKENIZER
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
-DATA_FILE = '../winogrande_1.1/train_l.jsonl'
+DATA_FILE = '../winogrande_1.1/dev.jsonl'
 N_LAYER = 12
 N_EMBD = 768
-#N_LAYER = 24
-#N_EMBD = 2048
-CTX_LEN = 1024
+#N_LAYER = 32
+#N_EMBD = 2560
+CTX_LEN = 4096
+#CTX_LEN = 1024
 SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
 
@@ -83,22 +84,27 @@ class WinograndeDataset(torch.utils.data.Dataset):
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0.0005)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
-n_epochs = 40
+n_epochs = 1
 
-loss_list = []
-acc_list = []
-acc_list_total = []
+softmax = nn.Softmax(dim=0)
 
 for epoch in range(n_epochs):
 
     model.train()
     #torch.autograd.set_detect_anomaly(True)
 
+    loss_list = []
+    acc_list = []
+    acc_list_total = []
+
     for i, (tokenized1, tokenized2, label) in enumerate(train_loader):
+
+        #if i < 300:
+        #    continue
 
         sum1 = 0
         sum2 = 0
@@ -110,8 +116,9 @@ for epoch in range(n_epochs):
         model.pp = {}
 
         for j in range(len(tokenized1)-1):
-            logits = model(tokenized1[j])
-            sum1 += logits[tokenized1[j+1]]
+            logits = softmax(model(tokenized1[j]))
+            sum1 += torch.log(logits[tokenized1[j+1]])
+            #print("X ", torch.log(logits[tokenized1[j+1]]), " - ", logits[tokenized1[j+1]])
 
         logits = []
         model.xx = {}
@@ -120,12 +127,12 @@ for epoch in range(n_epochs):
         model.pp = {}
 
         for j in range(len(tokenized2)-1):
-            logits = model(tokenized2[j])
-            sum2 += logits[tokenized2[j+1]]
+            logits = softmax(model(tokenized2[j]))
+            sum2 += torch.log(logits[tokenized2[j+1]])
 
         logits = torch.stack([-sum1, -sum2], dim=0)
 
-        print("L ", logits)
+        print("LO ", logits)
 
         loss = loss_fn(logits.unsqueeze(0), label.cuda().unsqueeze(0))
 
@@ -152,7 +159,7 @@ for epoch in range(n_epochs):
 
         acc_list_total.append(acc_list[-1])
 
-        print("EXAMPLE1: " + str(torch.sum(model.example1)))
+        #print("EXAMPLE1: " + str(torch.sum(model.example1)))
         #print("EXAMPLE2: " + str(torch.sum(model.example2)))
         #print("EXAMPLE3: " + str(torch.sum(model.example3)))
         #print("EXAMPLE4: " + str(torch.sum(model.example4)))

@@ -8,7 +8,6 @@ import time
 import types
 import copy
 import torch
-from lightning_lite.utilities import data
 from torch import optim, nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
@@ -61,14 +60,12 @@ elif TOKEN_MODE == 'pile':
 
     # ---> you can set MODEL_NAME to your fine-tuned model <---
 
-    MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
-    #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
-    # MODEL_NAME = 'trained-11'
-    #n_layer = 24
-    n_layer = 12
-    #n_embd = 2048
-    n_embd = 768
-    ctx_len = 1024
+    MODEL_NAME = 'RWKV-4-Pile-3B-20221008-8023'
+    # N_LAYER = 12
+    # N_EMBD = 768
+    n_layer = 32
+    n_embd = 2560
+    ctx_len = 4096
 
     # MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
     # n_layer = 24
@@ -122,7 +119,7 @@ tokenizer = GREBE_TOKENIZER(WORD_NAME)
 
 import numpy as np
 
-prompt = "\nWhat do you think about pandas? "
+prompt = "\nShe chose the black car over the green car, because the _ has more brighter color. The _ can be replaced by "
 
 prompt_tokenized = tokenizer.tokenizer.encode(prompt)
 

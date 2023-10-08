@@ -46,11 +46,12 @@ elif TOKEN_MODE == 'pile':
 
     #---> you can set MODEL_NAME to your fine-tuned model <---
 
-    MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
-    # MODEL_NAME = 'trained-11'
-    n_layer = 12
-    n_embd = 768
-    ctx_len = 1024
+    MODEL_NAME = 'RWKV-4-Pile-3B-20221008-8023'
+    # N_LAYER = 12
+    # N_EMBD = 768
+    n_layer = 32
+    n_embd = 2560
+    ctx_len = 4096
 
     # MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
     # n_layer = 24
@@ -73,7 +74,7 @@ model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre'
 # context = 'A'
 # context = "\nIn the"
 # context = '\nSugar:'
-context = '\nWhat do you think about pandas? '
+context = "\nShe chose the black car over the green car, because the _ has more brighter color. The _ can be replaced by "
 
 NUM_TRIALS = 999
 LENGTH_PER_TRIAL = 333

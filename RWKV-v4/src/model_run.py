@@ -459,7 +459,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                         w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=True)
                     self.register_parameter(replaced + str(i), w[x][i])
 
-                self.example1 = w[x][0]
+                #self.example1 = w[x][0]
                 #self.example2 = w[x][1]
                 #self.example3 = w[x][2]
                 #self.example4 = w[x][3]
@@ -560,6 +560,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
         result = []
 
         for i in range(self.number_persp):
+
             xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
             xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
 
