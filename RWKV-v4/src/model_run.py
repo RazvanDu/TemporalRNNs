@@ -414,7 +414,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
-        self.number_persp = 4
+        self.number_persp = 8
         self.exp_persp = 1
 
         # self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
@@ -436,9 +436,12 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
 
             w[x] = w[x].float()
 
-            if '.receptance' in x:
+            if '.time_' in x:
+                w[x] = w[x].squeeze()
 
-                a = nn.Parameter(w[x], requires_grad=True)
+            if '.time_mix' in x:
+
+                a = nn.Parameter(w[x], requires_grad=False)
                 # print("QQ ", str(w[x]))
                 # print("WW ", str(self.a))
 
@@ -450,11 +453,12 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                     w[x].append(w[x][i - 1] * self.exp_persp)
 
                 for i in range(1, self.number_persp):
-                    xavier_matrix = torch.empty_like(w[x][i], requires_grad=False)
-                    init.xavier_uniform_(xavier_matrix)
-                    w[x][i] = nn.Parameter(xavier_matrix, requires_grad=True)
+                    #xavier_matrix = torch.empty_like(w[x][i], requires_grad=False)
+                    #init.xavier_uniform_(xavier_matrix)
+                    noise = torch.tensor(numpy.random.normal(0, 1, w[x][i].size()), dtype=torch.float).cuda()
+                    w[x][i] = nn.Parameter(noise, requires_grad=True)
 
-                for i in range(1, self.number_persp):
+                for i in range(self.number_persp):
                     if load:
                         w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=True)
                     self.register_parameter(replaced + str(i), w[x][i])
@@ -462,10 +466,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                 self.example1 = w[x][0]
                 self.example2 = w[x][1]
                 self.example3 = w[x][2]
-                self.example4 = w[x][3]
-
-            if '.time_' in x:
-                w[x] = w[x].squeeze()
+                #self.example4 = w[x][3]
             if '.time_decay' in x:
                 w[x] = -torch.exp(w[x])
             if DEBUG_TIME and '.time_' in x:
@@ -561,10 +562,10 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
 
         for i in range(self.number_persp):
 
-            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
-            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
+            xk = xx[i] * w.time_mix_k[i] + self.xx[name][i] * (1 - w.time_mix_k[i])
+            xr = xx[i] * w.time_mix_r[i] + self.xx[name][i] * (1 - w.time_mix_r[i])
 
-            r = torch.sigmoid(w.receptance.weight[i] @ xr)
+            r = torch.sigmoid(w.receptance.weight @ xr)
 
             k = torch.square(torch.relu(w.key.weight @ xk))
             kv = w.value.weight @ k
@@ -586,11 +587,11 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
         result = []
 
         for i in range(self.number_persp):
-            xk = xx[i] * w.time_mix_k + self.xx[name][i] * (1 - w.time_mix_k)
-            xv = xx[i] * w.time_mix_v + self.xx[name][i] * (1 - w.time_mix_v)
-            xr = xx[i] * w.time_mix_r + self.xx[name][i] * (1 - w.time_mix_r)
+            xk = xx[i] * w.time_mix_k[i] + self.xx[name][i] * (1 - w.time_mix_k[i])
+            xv = xx[i] * w.time_mix_v[i] + self.xx[name][i] * (1 - w.time_mix_v[i])
+            xr = xx[i] * w.time_mix_r[i] + self.xx[name][i] * (1 - w.time_mix_r[i])
 
-            r = torch.sigmoid(w.receptance.weight[i] @ xr)
+            r = torch.sigmoid(w.receptance.weight @ xr)
 
             k = w.key.weight @ xk
             v = w.value.weight @ xv

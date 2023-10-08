@@ -19,11 +19,11 @@ from src.utils import TOKENIZER
 
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
-MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/dev.jsonl'
-N_LAYER = 12
-N_EMBD = 768
+N_LAYER = 24
+N_EMBD = 1024
 #N_LAYER = 32
 #N_EMBD = 2560
 CTX_LEN = 4096
@@ -84,11 +84,11 @@ class WinograndeDataset(torch.utils.data.Dataset):
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0.0001)
+optimizer = optim.Adam(model.parameters(), lr=0.00004)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
-n_epochs = 10
+n_epochs = 100
 
 softmax = nn.Softmax(dim=0)
 
@@ -108,6 +108,11 @@ for epoch in range(n_epochs):
 
         if i >= 20 and epoch != n_epochs-1:
             break
+
+        if i == 20:
+            loss_list = []
+            acc_list = []
+            acc_list_total = []
 
         sum1 = 0
         sum2 = 0
@@ -167,7 +172,7 @@ for epoch in range(n_epochs):
         print("EXAMPLE1: " + str(torch.sum(model.example1)))
         print("EXAMPLE2: " + str(torch.sum(model.example2)))
         print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 
