@@ -88,7 +88,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
-n_epochs = 1
+n_epochs = 10
 
 softmax = nn.Softmax(dim=0)
 
@@ -105,6 +105,9 @@ for epoch in range(n_epochs):
 
         #if i < 300:
         #    continue
+
+        if i >= 20 and epoch != n_epochs-1:
+            break
 
         sum1 = 0
         sum2 = 0
@@ -130,15 +133,17 @@ for epoch in range(n_epochs):
             logits = softmax(model(tokenized2[j]))
             sum2 += torch.log(logits[tokenized2[j+1]])
 
-        logits = torch.stack([-sum1, -sum2], dim=0)
+        logits = torch.stack([sum1, sum2], dim=0)
 
         print("LO ", logits)
 
         loss = loss_fn(logits.unsqueeze(0), label.cuda().unsqueeze(0))
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        if i < 20:
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
         opt = -1
 
@@ -159,10 +164,10 @@ for epoch in range(n_epochs):
 
         acc_list_total.append(acc_list[-1])
 
-        #print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        #print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
-        #print("EXAMPLE4: " + str(torch.sum(model.example4)))
+        print("EXAMPLE1: " + str(torch.sum(model.example1)))
+        print("EXAMPLE2: " + str(torch.sum(model.example2)))
+        print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
 
