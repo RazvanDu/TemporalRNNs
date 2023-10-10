@@ -439,7 +439,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
             if '.time_' in x:
                 w[x] = w[x].squeeze()
 
-            if '.time_mix' in x:
+            if '.time_mix' in x:# or '.receptance' in x:
 
                 a = nn.Parameter(w[x], requires_grad=False)
                 # print("QQ ", str(w[x]))
@@ -456,16 +456,22 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                     #xavier_matrix = torch.empty_like(w[x][i], requires_grad=False)
                     #init.xavier_uniform_(xavier_matrix)
                     noise = torch.tensor(numpy.random.normal(0, 1, w[x][i].size()), dtype=torch.float).cuda()
-                    w[x][i] = nn.Parameter(noise, requires_grad=True)
+                    w[x][i] = nn.Parameter(w[x][i] + noise/10, requires_grad=True)
 
                 for i in range(self.number_persp):
                     if load:
                         w[x][i] = nn.Parameter(self.loaded[replaced + str(i)].float(), requires_grad=True)
                     self.register_parameter(replaced + str(i), w[x][i])
 
-                self.example1 = w[x][0]
-                self.example2 = w[x][1]
-                self.example3 = w[x][2]
+                self.examples = []
+
+                for i in range(int(self.number_persp/2)):
+                    self.examples.append(w[x][i])
+
+                #if '.time_mix' in x:
+                #    self.example1 = w[x][1]
+                #if '.receptance' in x:
+                #    self.example2 = w[x][1]
                 #self.example4 = w[x][3]
             if '.time_decay' in x:
                 w[x] = -torch.exp(w[x])

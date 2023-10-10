@@ -10,6 +10,15 @@ import gc
 os.environ['RWKV_RUN_DEVICE'] = 'cpu'
 from datetime import datetime
 
+import nlpaug.augmenter.char as nac
+import nlpaug.augmenter.word as naw
+import nlpaug.augmenter.sentence as nas
+import nlpaug.flow as nafc
+
+from nlpaug.util import Action
+
+SEED = 42
+
 now = datetime.now() # current date and time
 
 date_time = now.strftime("%m-%d-%Y-%H-%M-%S")
@@ -19,11 +28,11 @@ from src.utils import TOKENIZER
 
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
-MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
+MODEL_NAME = 'RWKV-4-Pile-1B5-20220814-4526'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/dev.jsonl'
 N_LAYER = 24
-N_EMBD = 1024
+N_EMBD = 2048
 #N_LAYER = 32
 #N_EMBD = 2560
 CTX_LEN = 4096
@@ -31,6 +40,9 @@ CTX_LEN = 4096
 SEQ_LEN = 100  # You may adjust this
 BATCH_SIZE = 1  # You may adjust this
 
+aug = naw.RandomWordAug(action="swap")
+
+np.random.seed(SEED)
 # Initialize model and tokenizer
 model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, None)
 #model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN)
@@ -66,11 +78,19 @@ class WinograndeDataset(torch.utils.data.Dataset):
 
         sentence = item['sentence']
         option1, option2 = item['option1'], item['option2']
+
+        sentence = sentence.replace(option1, "^").replace(option2, "~")
+
+        sentence = aug.augment(sentence)[0].replace("^", option1).replace("~", option2)
+
         context1 = sentence
         #context2 = "Who is referred to by the blank space? " + sentence.format(option2) + " Who is referred to by the blank space?"
 
         tokenized1 = tokenizer.tokenizer.encode(context1.replace("_", option1))
         tokenized2 = tokenizer.tokenizer.encode(context1.replace("_", option2))
+
+        tokenized3 = tokenizer.tokenizer.encode(item['sentence'].replace("_", option1))
+        tokenized4 = tokenizer.tokenizer.encode(item['sentence'].replace("_", option2))
 
         label = int(item['answer']) - 1  # Converting 1-indexed to 0-indexed
 
@@ -78,13 +98,13 @@ class WinograndeDataset(torch.utils.data.Dataset):
         print("OPT1 ", option1)
         print("OPT2 ", option2)
 
-        return tokenized1, tokenized2, label
+        return tokenized3, tokenized4, tokenized1, tokenized2, label
 
 
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0.00004)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
@@ -101,10 +121,11 @@ for epoch in range(n_epochs):
     acc_list = []
     acc_list_total = []
 
-    for i, (tokenized1, tokenized2, label) in enumerate(train_loader):
+    for i, (tokenized1, tokenized2, tokenized3, tokenized4, label) in enumerate(train_loader):
 
-        #if i < 300:
-        #    continue
+        if i < 0:
+            tokenized1 = tokenized3
+            tokenized2 = tokenized4
 
         if i >= 20 and epoch != n_epochs-1:
             break
@@ -169,9 +190,15 @@ for epoch in range(n_epochs):
 
         acc_list_total.append(acc_list[-1])
 
-        print("EXAMPLE1: " + str(torch.sum(model.example1)))
-        print("EXAMPLE2: " + str(torch.sum(model.example2)))
-        print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        for example in model.examples:
+            print(f"EXAMPLE{i} {torch.sum(example)}")
+
+        #print("EXAMPLE1: " + str(torch.sum(model.example1)) + str(model.example1.shape))
+        #print("EXAMPLE2: " + str(torch.sum(model.example2)) + str(model.example2.shape))
+        #print("EXAMPLE1: " + str(torch.sum(model.example3)))
+        #print("EXAMPLE2: " + str(torch.sum(model.example3)))
+        #print("EXAMPLE3: " + str(torch.sum(model.example3)))
+        #print("EXAMPLE4: " + str(torch.sum(model.example3)))
         #print("EXAMPLE4: " + str(torch.sum(model.example4)))
 
         print("Step: ", i, "/", len(train_loader))
