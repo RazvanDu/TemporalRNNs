@@ -104,17 +104,18 @@ class WinograndeDataset(torch.utils.data.Dataset):
 dataset = WinograndeDataset(load_winogrande_data(DATA_FILE), tokenizer)
 train_loader = DataLoader(dataset, shuffle=False, batch_size=BATCH_SIZE)
 
-optimizer = optim.Adam(model.parameters(), lr=0.0001)
+optimizer = optim.Adam(model.parameters(), lr=0.00005)
 loss_fn = torch.nn.CrossEntropyLoss()
 
 # Training loop
-n_epochs = 100
+n_epochs = 20
 
 softmax = nn.Softmax(dim=0)
 
+model.train()
+
 for epoch in range(n_epochs):
 
-    model.train()
     #torch.autograd.set_detect_anomaly(True)
 
     loss_list = []
@@ -192,6 +193,8 @@ for epoch in range(n_epochs):
 
         for example in model.examples:
             print(f"EXAMPLE{i} {torch.sum(example)}")
+
+        print("RECEPTANCE: ", str(torch.sum(model.recept)))
 
         #print("EXAMPLE1: " + str(torch.sum(model.example1)) + str(model.example1.shape))
         #print("EXAMPLE2: " + str(torch.sum(model.example2)) + str(model.example2.shape))

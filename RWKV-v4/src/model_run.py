@@ -417,6 +417,8 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
         self.number_persp = 8
         self.exp_persp = 1
 
+        self.classifier = nn.Linear(self.number_persp * self.n_embd, self.n_embd).cuda()
+
         # self.linear_1 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
         # self.linear_2 = nn.Linear(self.n_embd * self.number_persp, self.n_embd, device=RUN_DEVICE)
         # self.linear_3 = nn.Linear(self.n_embd, self.n_embd, device=RUN_DEVICE)
@@ -456,7 +458,7 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
                     #xavier_matrix = torch.empty_like(w[x][i], requires_grad=False)
                     #init.xavier_uniform_(xavier_matrix)
                     noise = torch.tensor(numpy.random.normal(0, 1, w[x][i].size()), dtype=torch.float).cuda()
-                    w[x][i] = nn.Parameter(w[x][i] + noise/10, requires_grad=True)
+                    w[x][i] = nn.Parameter(w[x][i] + noise/5, requires_grad=True)
 
                 for i in range(self.number_persp):
                     if load:
@@ -599,6 +601,8 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
 
             r = torch.sigmoid(w.receptance.weight @ xr)
 
+            self.recept = w.key.weight
+
             k = w.key.weight @ xk
             v = w.value.weight @ xv
 
@@ -690,6 +694,8 @@ class GREBE_RNN(nn.Module):  # this is running in FP32 at this moment
             for i in range(self.number_persp):
                 sum += x[i] / self.number_persp
             x = w.head.weight @ sum
+
+            #x = self.classifier()
 
         # self.dettachh()
 
