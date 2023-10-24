@@ -232,14 +232,24 @@ class Dataset(Dataset):
         # we are cheating: pick a random spot in dataset
         #
         index = np.random.randint(0, self.data_size)
-        i = np.random.randint(0, len(self.data[index]['text']) - (self.ctx_len + 1))
+        i = np.random.randint(0, len(self.data[index]['text'])-1)
         if self.hugging_face:
-            dix = self.data[i:i + self.ctx_len + 1]
-            #print("QQQ ", self.data[i:i + self.ctx_len])
-            temp = self.data[index][i:i + self.ctx_len]
-            temp = temp['text']
-            print(temp)
-            return torch.tensor(temp, dtype=torch.long), torch.tensor(self.data[index][i+1 : i+self.ctx_len + 1]['text'], dtype=torch.long)
+
+            padding = 0
+
+            if i < self.ctx_len:
+                padding = self.ctx_len - i
+
+            padding = torch.tensor(padding, dtype=torch.long)
+
+            lower_bound = max(i - self.ctx_len, 0)
+
+            temp = self.data[index]['text'][lower_bound:i]
+            padding = (padding, 0)
+            temp = F.pad(temp, padding, "constant", 0)
+            temp2 = self.data[index]['text'][lower_bound+1:i+1]
+            temp2 = F.pad(temp2, padding, "constant", 0)
+            return torch.tensor(temp, dtype=torch.long), torch.tensor(temp2, dtype=torch.long)
         elif 'MMapIndexedDataset' in str(type(self.data)):
             dix = self.data.get(idx=0, offset=i, length=self.ctx_len + 1).astype(int)
         elif 'numpy' in str(type(self.data)):

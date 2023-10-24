@@ -102,7 +102,7 @@ class Trainer(LightningLite):
             data.cuda_id = self.cuda_id
             
             if config.num_workers > 0:
-                loader = DataLoader(data, shuffle=False, pin_memory=True,
+                loader = DataLoader(data, shuffle=False, pin_memory=False, # PIN SHOULD BE TRUE
                                     batch_size=config.batch_size // NUM_GPUS,
                                     num_workers=config.num_workers)
             else:

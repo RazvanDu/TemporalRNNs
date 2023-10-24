@@ -63,7 +63,6 @@ if datafile_encoding == 'huggingface':
             #print("TEST ", example)
             return example
 
-
         print(datafile)
 
         dataset = datafile['train'].remove_columns(['id', 'url', 'title']).map(tokenization, batched=True)
@@ -145,7 +144,7 @@ elif EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-1B5':
 ########################################################################################################
 
 # if you see "CUDA out of memory", reduce batch_size. Use nvidia-smi to find the highest value for your GPU.
-batch_size = 12 * int(os.environ['RWKV_NUM_GPUS'])
+batch_size = 8 * int(os.environ['RWKV_NUM_GPUS'])
 assert (batch_size % int(os.environ['RWKV_NUM_GPUS']) == 0)
 
 # By default we are using exponential LR decay.
