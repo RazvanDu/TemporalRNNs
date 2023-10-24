@@ -8,7 +8,7 @@ from src.utils import Dataset
 import torch
 import numpy as np
 from src.binidx import MMapIndexedDataset
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
 
 np.set_printoptions(precision=4, suppress=True, linewidth=200)
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -27,6 +27,9 @@ EXPRESS_PILE_MODE = False # True: express mode for fine-tuning a pile model // F
 
 EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
+
+device = 'cuda'
+
 # EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
 # EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-430M'
 # EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
@@ -41,11 +44,14 @@ tokenizer = PreTrainedTokenizerFast(tokenizer_file='20B_tokenizer.json')
 tokenized = True
 if tokenized:
     # input_ids for the tokenized ids
-    datafile = load_dataset("../data/saved", cache_dir="/home/gigi/hdd/RNNWins/data/to_remove")
+    datafile = load_from_disk("../data/final_saved")
+    print("DOING")
+    #datafile = datafile['text']
+    #datafile.save_to_disk("../data/new_saved2")
 else:
     datafile = load_dataset("wikipedia", "20220301.en", cache_dir="/home/gigi/hdd/RNNWins/data")
 
-print('X ', datafile)
+print('X ', datafile, ' ', len(datafile))
 datafile_encoding = 'huggingface' # 'utf-8' / 'utf-16le' / 'numpy' (for fine-tuning pile models) / 'binidx' (the Megatron-LM 'binidx' format)
 
 if datafile_encoding == 'huggingface':
@@ -53,12 +59,19 @@ if datafile_encoding == 'huggingface':
     if not tokenized:
 
         def tokenization(example):
-            example['text'] = tokenizer(example['text'])
+            example['text'] = tokenizer(example['text']).input_ids
+            #print("TEST ", example)
             return example
 
-        dataset = datafile.map(tokenization)
 
-        dataset.save_to_disk("../data/saved")
+        print(datafile)
+
+        dataset = datafile['train'].remove_columns(['id', 'url', 'title']).map(tokenization, batched=True)
+
+        dataset.save_to_disk("../data/final_saved")
+
+        with open('data/wikipedia.npy', 'wb') as f:
+            np.save(f, dataset['text'])
 
 # datafile = 'my-gpt_seq_document'
 # datafile_encoding = 'binidx'
@@ -113,20 +126,19 @@ model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre' (sometimes better)
 # set it to 256, then it's using my headQK trick (a tiny attention) to improve loss
 # set it to 0, then it's a pure RNN (attention-free)
 
-if EXPRESS_PILE_MODE:
-    LOAD_MODEL = True
-    if EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-169M':
-        n_layer = 12
-        n_embd = 768
-        ctx_len = 1024
-    elif EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-430M':
-        n_layer = 24
-        n_embd = 1024
-        ctx_len = 1024
-    elif EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-1B5':
-        n_layer = 24
-        n_embd = 2048
-        ctx_len = 1024
+LOAD_MODEL = True
+if EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-169M':
+    n_layer = 12
+    n_embd = 768
+    ctx_len = 1024
+elif EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-430M':
+    n_layer = 24
+    n_embd = 1024
+    ctx_len = 1024
+elif EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-1B5':
+    n_layer = 24
+    n_embd = 2048
+    ctx_len = 1024
 
 ########################################################################################################
 # Step 3: set batch size & learning rate etc.
@@ -158,17 +170,17 @@ epoch_save_frequency = 10
 epoch_save_path = 'trained-'
 
 if EXPRESS_PILE_MODE:
-    if EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-169M':
-        lr_init = 2e-5
-    else:
-        lr_init = 1e-5
+    #if EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-169M':
+    #    lr_init = 2e-5
+    #else:
+    lr_init = 1e-5
     lr_final = 1e-5
     n_epoch = 100000
 
 ### misc stuffs ########################################################################################
 
 if LOAD_MODEL and EPOCH_BEGIN > 0: # we are not saving gradients, so let's have some warmup if we load a model
-    warmup_tokens = 50 * ctx_len * batch_size // NUM_GPUS
+    warmup_tokens = 50 * ctx_len * batch_size // int(os.environ['RWKV_NUM_GPUS'])
 else:
     warmup_tokens = 0
 
@@ -179,11 +191,10 @@ num_workers = 1 # DataLoader worker. I only tested num_workers = 1
 
 NUM_GPUS = int(os.environ['RWKV_NUM_GPUS'])
 os.environ['RWKV_LOAD_MODEL'] = str(LOAD_MODEL)
-MODEL_NAME = epoch_save_path + str(EPOCH_BEGIN)
+#MODEL_NAME = epoch_save_path + str(EPOCH_BEGIN)
 
-if EXPRESS_PILE_MODE:
-    betas = (0.9, 0.999)
-    MODEL_NAME = EXPRESS_PILE_MODEL_NAME
+betas = (0.9, 0.999)
+MODEL_NAME = 'weights/' + EXPRESS_PILE_MODEL_NAME
 
 torch.backends.cudnn.benchmark = True
 if os.environ['RWKV_FLOAT_MODE'] == 'fp32':
@@ -195,7 +206,7 @@ else:
 
 ########################################################################################################
 # Load data
-########################################################################################################
+####t####################################################################################################
 
 print(f'loading {datafile_encoding} data... ' + str(datafile))
 if datafile_encoding == 'binidx':
@@ -203,7 +214,8 @@ if datafile_encoding == 'binidx':
 elif datafile_encoding == 'numpy':
     train_dataset = Dataset(np.load(datafile).astype('int'), ctx_len, epoch_length_fixed)
 elif datafile_encoding == 'huggingface':
-    train_dataset = Dataset(datafile, ctx_len, epoch_length_fixed)
+    train_dataset = Dataset(datafile.with_format("torch", device=device), ctx_len, epoch_length_fixed, hugging_face=True)
+    #train_dataset = Dataset(datafile, ctx_len, epoch_length_fixed, True)
 else:
     train_dataset = Dataset(open(datafile, "r", encoding=datafile_encoding).read(), ctx_len, epoch_length_fixed)
 
@@ -212,12 +224,15 @@ else:
 ########################################################################################################
 
 if __name__ == '__main__':
+
+    torch.multiprocessing.set_start_method('spawn', force=True)
+
     from src.trainer import Trainer, TrainerConfig
 
     print('\nmodel', model_type, os.environ['RWKV_FLOAT_MODE'], 'epoch', n_epoch, 'batchsz', batch_size, 'betas',
           betas, 'eps', eps, 'ctx', ctx_len, 'layer', n_layer, 'embd', n_embd, '\n')
 
-    tconf = TrainerConfig(model_type=model_type, max_epochs=n_epoch, batch_size=batch_size,
+    tconf = TrainerConfig(model_type=model_type, max_epochs=n_epoch, batch_size=batch_size, ctx_len=ctx_len, vocab_size=int(os.environ['VOCAB_SIZE']),
                           learning_rate=lr_init, lr_decay=True, lr_final=lr_final, betas=betas, eps=eps,
                           warmup_tokens=warmup_tokens, final_tokens=n_epoch*len(train_dataset)*ctx_len, num_workers=num_workers, epoch_save_frequency=epoch_save_frequency, epoch_save_path=epoch_save_path)
     m_cfg = types.SimpleNamespace()

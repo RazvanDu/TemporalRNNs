@@ -36,6 +36,8 @@ class TrainerConfig:
     epoch_save_frequency = 0
     epoch_save_path = 'trained-'
     num_workers = 0  # for DataLoader
+    ctx_len = 0
+    vocab_size = 0
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -56,7 +58,7 @@ class Trainer(LightningLite):
     def run(self, m_cfg, train_dataset, test_dataset, config):
         self.cuda_id = int(str(self.device).strip('cuda:'))
         print('[0]')
-        model = GPT(GPTConfig(train_dataset.vocab_size, train_dataset.ctx_len, model_type=m_cfg.model_type,
+        model = GPT(GPTConfig(config.vocab_size, config.ctx_len, model_type=m_cfg.model_type,
                         n_layer=m_cfg.n_layer, n_embd=m_cfg.n_embd))
         print('[1]')
         with torch.no_grad():
