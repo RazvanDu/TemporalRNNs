@@ -8,6 +8,7 @@ from src.utils import Dataset
 import torch
 import numpy as np
 from src.binidx import MMapIndexedDataset
+from datasets import load_dataset
 
 np.set_printoptions(precision=4, suppress=True, linewidth=200)
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -33,8 +34,31 @@ EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
 
 ########################################################################################################
 
-datafile = "../data/enwik8" # your data
-datafile_encoding = 'utf-8' # 'utf-8' / 'utf-16le' / 'numpy' (for fine-tuning pile models) / 'binidx' (the Megatron-LM 'binidx' format)
+from transformers import PreTrainedTokenizerFast
+tokenizer = PreTrainedTokenizerFast(tokenizer_file='20B_tokenizer.json')
+
+#datafile = "../data/enwik8" # your data
+tokenized = True
+if tokenized:
+    # input_ids for the tokenized ids
+    datafile = load_dataset("../data/saved", cache_dir="/home/gigi/hdd/RNNWins/data/to_remove")
+else:
+    datafile = load_dataset("wikipedia", "20220301.en", cache_dir="/home/gigi/hdd/RNNWins/data")
+
+print('X ', datafile)
+datafile_encoding = 'huggingface' # 'utf-8' / 'utf-16le' / 'numpy' (for fine-tuning pile models) / 'binidx' (the Megatron-LM 'binidx' format)
+
+if datafile_encoding == 'huggingface':
+
+    if not tokenized:
+
+        def tokenization(example):
+            example['text'] = tokenizer(example['text'])
+            return example
+
+        dataset = datafile.map(tokenization)
+
+        dataset.save_to_disk("../data/saved")
 
 # datafile = 'my-gpt_seq_document'
 # datafile_encoding = 'binidx'
@@ -48,9 +72,7 @@ if EXPRESS_PILE_MODE:
 # set VOCAB_SIZE = 50277 for fine-tuning pile models
 # set VOCAB_SIZE = your_vocab_size for 'binidx' data
 #
-os.environ['VOCAB_SIZE'] = '0'
-if EXPRESS_PILE_MODE:
-    os.environ['VOCAB_SIZE'] = '50277'
+os.environ['VOCAB_SIZE'] = '50277'
 
 #
 # Currently it's slow to initialize a new model. Hence I suggest this procedure for multi-GPU training:
@@ -175,11 +197,13 @@ else:
 # Load data
 ########################################################################################################
 
-print(f'loading {datafile_encoding} data... ' + datafile)
+print(f'loading {datafile_encoding} data... ' + str(datafile))
 if datafile_encoding == 'binidx':
     train_dataset = Dataset(MMapIndexedDataset(datafile), ctx_len, epoch_length_fixed)
 elif datafile_encoding == 'numpy':
     train_dataset = Dataset(np.load(datafile).astype('int'), ctx_len, epoch_length_fixed)
+elif datafile_encoding == 'huggingface':
+    train_dataset = Dataset(datafile, ctx_len, epoch_length_fixed)
 else:
     train_dataset = Dataset(open(datafile, "r", encoding=datafile_encoding).read(), ctx_len, epoch_length_fixed)
 

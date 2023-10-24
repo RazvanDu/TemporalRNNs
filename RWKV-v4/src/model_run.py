@@ -119,7 +119,7 @@ class RWKV_ChannelMix(nn.Module):
 
         rkv = torch.sigmoid(self.receptance(xr)) * kv
         return rkv
-
+4
 
 class RWKV_TimeMix(nn.Module):
     def __init__(self, layer_id):
