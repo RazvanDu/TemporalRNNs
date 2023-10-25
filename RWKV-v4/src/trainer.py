@@ -44,7 +44,8 @@ class TrainerConfig:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-from src.model_ours import GPT, GPTConfig
+import src.model as modell
+import src.model_ours as model_ours
 
 class Trainer(LightningLite):
 
@@ -59,19 +60,25 @@ class Trainer(LightningLite):
     def run(self, m_cfg, train_dataset, test_dataset, config):
         self.cuda_id = int(str(self.device).strip('cuda:'))
         print('[0]')
-        model = GPT(GPTConfig(config.vocab_size, config.ctx_len, model_type=m_cfg.model_type,
-                        n_layer=m_cfg.n_layer, n_embd=m_cfg.n_embd, n_persp=config.n_persp))
+        if config.ours:
+            model = model_ours.GPT(model_ours.GPTConfig(config.vocab_size, config.ctx_len, model_type=m_cfg.model_type,
+                            n_layer=m_cfg.n_layer, n_embd=m_cfg.n_embd, n_persp=config.n_persp))
+        else:
+            model = modell.GPT(modell.GPTConfig(config.vocab_size, config.ctx_len, model_type=m_cfg.model_type,
+                                                      n_layer=m_cfg.n_layer, n_embd=m_cfg.n_embd,
+                                                      n_persp=config.n_persp))
         print('[1]')
         with torch.no_grad():
             if m_cfg.LOAD_MODEL:
                 print('loading', m_cfg.MODEL_NAME)
                 print(model.state_dict().keys())
                 m2 = torch.load(m_cfg.MODEL_NAME + '.pth', map_location='cpu')
-                for param in m2:
-                    if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
-                        m2[param] = nn.Parameter(torch.stack([m2[param].clone() for _ in range(config.n_persp)], dim=0))
-                    #else:
-                    #    m2[param] = nn.Parameter(m2[param], requires_grad=False)
+                if config.ours:
+                    for param in m2:
+                        if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
+                            m2[param] = nn.Parameter(torch.stack([m2[param].clone() for _ in range(config.n_persp)], dim=0), requires_grad=False)
+                        else:
+                            m2[param] = nn.Parameter(m2[param], requires_grad=False)
                 model.load_state_dict(m2)
                 del m2
         model.to(self.device)
@@ -104,7 +111,7 @@ class Trainer(LightningLite):
         def run_epoch(split):
             is_train = split == 'train'
             model.train(is_train)
-            data = self.train_dataset if is_train else self.test_dataset
+            data = self.train_dataset# if is_train else self.test_dataset
             data.idx_begin = self.steps * config.batch_size + 1
             data.cuda_id = self.cuda_id
             

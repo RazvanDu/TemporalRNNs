@@ -232,7 +232,7 @@ if __name__ == '__main__':
           betas, 'eps', eps, 'ctx', ctx_len, 'layer', n_layer, 'embd', n_embd, '\n')
 
     tconf = TrainerConfig(model_type=model_type, max_epochs=n_epoch, batch_size=batch_size, ctx_len=ctx_len, vocab_size=int(os.environ['VOCAB_SIZE']),
-                          learning_rate=lr_init, lr_decay=True, lr_final=lr_final, betas=betas, eps=eps, n_persp=1,
+                          learning_rate=lr_init, lr_decay=True, lr_final=lr_final, betas=betas, eps=eps, n_persp=4, ours=True,
                           warmup_tokens=warmup_tokens, final_tokens=n_epoch*len(train_dataset)*ctx_len, num_workers=num_workers, epoch_save_frequency=epoch_save_frequency, epoch_save_path=epoch_save_path)
     m_cfg = types.SimpleNamespace()
     m_cfg.model_type = model_type
