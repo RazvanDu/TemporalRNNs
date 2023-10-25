@@ -14,6 +14,7 @@ import datetime
 import math
 from pytorch_lightning.lite import LightningLite
 import gc
+import torch.nn as nn
 
 logger = logging.getLogger(__name__)
 
@@ -59,12 +60,18 @@ class Trainer(LightningLite):
         self.cuda_id = int(str(self.device).strip('cuda:'))
         print('[0]')
         model = GPT(GPTConfig(config.vocab_size, config.ctx_len, model_type=m_cfg.model_type,
-                        n_layer=m_cfg.n_layer, n_embd=m_cfg.n_embd))
+                        n_layer=m_cfg.n_layer, n_embd=m_cfg.n_embd, n_persp=config.n_persp))
         print('[1]')
         with torch.no_grad():
             if m_cfg.LOAD_MODEL:
                 print('loading', m_cfg.MODEL_NAME)
+                print(model.state_dict().keys())
                 m2 = torch.load(m_cfg.MODEL_NAME + '.pth', map_location='cpu')
+                for param in m2:
+                    if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
+                        m2[param] = nn.Parameter(torch.stack([m2[param].clone() for _ in range(config.n_persp)], dim=0))
+                    #else:
+                    #    m2[param] = nn.Parameter(m2[param], requires_grad=False)
                 model.load_state_dict(m2)
                 del m2
         model.to(self.device)
