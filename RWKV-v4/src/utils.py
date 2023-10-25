@@ -249,7 +249,7 @@ class Dataset(Dataset):
             temp = F.pad(temp, padding, "constant", 0)
             temp2 = self.data[index]['text'][lower_bound+1:i+1]
             temp2 = F.pad(temp2, padding, "constant", 0)
-            return torch.tensor(temp, dtype=torch.long), torch.tensor(temp2, dtype=torch.long)
+            return temp, temp2
         elif 'MMapIndexedDataset' in str(type(self.data)):
             dix = self.data.get(idx=0, offset=i, length=self.ctx_len + 1).astype(int)
         elif 'numpy' in str(type(self.data)):

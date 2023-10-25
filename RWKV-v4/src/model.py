@@ -409,6 +409,8 @@ class GPT(nn.Module):
 
         loss = None
         if targets is not None:
+            print("Q ", x.view(-1, x.size(-1)).size())
+            print("W ", targets.to(x.device).view(-1).size())
             loss = F.cross_entropy(x.view(-1, x.size(-1)), targets.to(x.device).view(-1))
 
         return L2Wrap.apply(loss, x)

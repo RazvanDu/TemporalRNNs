@@ -43,7 +43,7 @@ class TrainerConfig:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-from src.model import GPT, GPTConfig
+from src.model_ours import GPT, GPTConfig
 
 class Trainer(LightningLite):
 
