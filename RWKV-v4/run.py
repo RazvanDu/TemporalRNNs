@@ -80,7 +80,7 @@ ctx_len = CTX_LEN
 # context = 'A'
 # context = "\nIn the"
 # context = '\nSugar:'
-context = "\nShe chose the black car over the green car, because the _ has more brighter color. The _ can be replaced by "
+context = "\nI'm going to the supermarket to buy some "
 
 NUM_TRIALS = 999
 LENGTH_PER_TRIAL = 333
