@@ -232,7 +232,7 @@ class Dataset(Dataset):
         # we are cheating: pick a random spot in dataset
         #
         index = np.random.randint(0, self.data_size)
-        i = np.random.randint(0, len(self.data[index]['text'])-1)
+        i = np.random.randint(0, len(self.data[index]['text']))
         if self.hugging_face:
 
             padding = 0
@@ -247,8 +247,12 @@ class Dataset(Dataset):
             temp = self.data[index]['text'][lower_bound:i]
             padding = (padding, 0)
             temp = F.pad(temp, padding, "constant", 0)
-            temp2 = self.data[index]['text'][lower_bound+1:i+1]
-            temp2 = F.pad(temp2, padding, "constant", 0)
+            if i+1 < len(self.data[index]['text']):
+                temp2 = self.data[index]['text'][lower_bound+1:i+1]
+                temp2 = F.pad(temp2, padding, "constant", 0)
+            else:
+                temp2 = self.data[index]['text'][lower_bound:i]
+                temp2 = F.pad(temp2, padding, "constant", 0)
             return temp, temp2
         elif 'MMapIndexedDataset' in str(type(self.data)):
             dix = self.data.get(idx=0, offset=i, length=self.ctx_len + 1).astype(int)

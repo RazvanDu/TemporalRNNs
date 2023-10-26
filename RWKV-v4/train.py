@@ -166,7 +166,7 @@ epoch_length_fixed = (10000 // batch_size) * batch_size # feel free to increase 
 
 # epoch_save_frequency 0 = never, 1 = every mini-epoch, 2 = every two mini-epochs, ...
 epoch_save_frequency = 10
-epoch_save_path = 'trained-'
+epoch_save_path = 'wikipedia_trained/trained'
 
 if EXPRESS_PILE_MODE:
     #if EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-169M':

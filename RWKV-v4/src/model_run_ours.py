@@ -250,17 +250,19 @@ class RWKV_GPT(nn.Module):
 ############################################################################################################
 
 class RWKV_RNN():  # this is running in FP32 at this moment
-    def __init__(self, MODEL_NAME, RUN_DEVICE, model_type, n_layer, n_embd, ctx_len):
+    def __init__(self, MODEL_NAME, RUN_DEVICE, model_type, n_layer, n_embd, ctx_len, n_persp):
         self.RUN_DEVICE = RUN_DEVICE
         self.model_type = model_type
         self.n_layer = n_layer
         self.n_embd = n_embd
         self.ctx_len = ctx_len
+        self.n_persp = n_persp
 
         self.w = types.SimpleNamespace()
 
-        w = torch.load('weights/' + MODEL_NAME + '.pth',
+        w = torch.load('wikipedia_trained/' + MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
+
         for x in w.keys():
             w[x] = w[x].float()
             if '.time_' in x:
@@ -317,69 +319,102 @@ class RWKV_RNN():  # this is running in FP32 at this moment
 
     def FF(self, xx, w, name):
         if name not in self.xx:
-            self.xx[name] = torch.zeros(self.n_embd, device=self.RUN_DEVICE)
-        xk = xx * w.time_mix_k + self.xx[name] * (1 - w.time_mix_k)
-        xr = xx * w.time_mix_r + self.xx[name] * (1 - w.time_mix_r)
-        self.xx[name] = xx
+            self.xx[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.n_persp)]
 
-        r = torch.sigmoid(w.receptance.weight @ xr)
-        k = torch.square(torch.relu(w.key.weight @ xk))
-        kv = w.value.weight @ k
+        output = []
 
-        return r * kv
+        for i in range(self.n_persp):
+
+            xk = xx[i] * w.time_mix_k[i] + self.xx[name][i] * (1 - w.time_mix_k[i])
+            xr = xx[i] * w.time_mix_r[i] + self.xx[name][i] * (1 - w.time_mix_r[i])
+            self.xx[name][i] = xx[i]
+
+            r = torch.sigmoid(w.receptance.weight @ xr)
+            k = torch.square(torch.relu(w.key.weight @ xk))
+            kv = w.value.weight @ k
+
+            output.append(r * kv)
+
+        return output
 
     def SA(self, xx, w, name):
         if name not in self.xx:
-            self.xx[name] = torch.zeros(self.n_embd, device=self.RUN_DEVICE)
-            self.aa[name] = torch.zeros(self.n_embd, device=self.RUN_DEVICE)
-            self.bb[name] = torch.zeros(self.n_embd, device=self.RUN_DEVICE)
-            self.pp[name] = torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30
+            self.xx[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.n_persp)]
+            self.aa[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.n_persp)]
+            self.bb[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) for _ in range(self.n_persp)]
+            self.pp[name] = [torch.zeros(self.n_embd, device=self.RUN_DEVICE) - 1e30 for _ in range(self.n_persp)]
 
-        xk = xx * w.time_mix_k + self.xx[name] * (1 - w.time_mix_k)
-        xv = xx * w.time_mix_v + self.xx[name] * (1 - w.time_mix_v)
-        xr = xx * w.time_mix_r + self.xx[name] * (1 - w.time_mix_r)
-        self.xx[name] = xx
+        output = []
 
-        r = torch.sigmoid(w.receptance.weight @ xr)
+        for i in range(self.n_persp):
 
-        k = w.key.weight @ xk
-        v = w.value.weight @ xv
+            xk = xx[i] * w.time_mix_k[i] + self.xx[name][i] * (1 - w.time_mix_k[i])
+            xv = xx[i] * w.time_mix_v[i] + self.xx[name][i] * (1 - w.time_mix_v[i])
+            xr = xx[i] * w.time_mix_r[i] + self.xx[name][i] * (1 - w.time_mix_r[i])
+            self.xx[name][i] = xx[i]
 
-        pp = self.pp[name]
-        aa = self.aa[name]
-        bb = self.bb[name]
-        ww = w.time_first + k
-        p = torch.maximum(pp, ww)
-        e1 = torch.exp(pp - p)
-        e2 = torch.exp(ww - p)
-        a = e1 * aa + e2 * v
-        b = e1 * bb + e2
-        ww = pp + w.time_decay
-        p = torch.maximum(ww, k)
-        e1 = torch.exp(ww - p)
-        e2 = torch.exp(k - p)
-        self.aa[name] = e1 * aa + e2 * v
-        self.bb[name] = e1 * bb + e2
-        self.pp[name] = p
+            r = torch.sigmoid(w.receptance.weight @ xr)
 
-        rwkv = r * a / b
+            k = w.key.weight @ xk
+            v = w.value.weight @ xv
 
-        return w.output.weight @ rwkv
+            pp = self.pp[name][i]
+            aa = self.aa[name][i]
+            bb = self.bb[name][i]
+            ww = w.time_first + k
+            p = torch.maximum(pp, ww)
+            e1 = torch.exp(pp - p)
+            e2 = torch.exp(ww - p)
+            a = e1 * aa + e2 * v
+            b = e1 * bb + e2
+            ww = pp + w.time_decay
+            p = torch.maximum(ww, k)
+            e1 = torch.exp(ww - p)
+            e2 = torch.exp(k - p)
+            self.aa[name][i] = e1 * aa + e2 * v
+            self.bb[name][i] = e1 * bb + e2
+            self.pp[name][i] = p
+
+            rwkv = r * a / b
+
+            output.append(w.output.weight @ rwkv)
+
+        return output
 
     def run(self, ctx):
         w = self.w
         x = w.emb.weight[ctx[-1]]
 
+        x = [x for _ in range(self.n_persp)]
+
         for i in range(self.n_layer):
             if i == 0:
-                x = self.LN(x, w.blocks[i].ln0)
+                for persp in range(self.n_persp):
+                    x[persp] = self.LN(x[persp], w.blocks[i].ln0)
             if i == 0 and self.model_type == 'RWKV-ffnPre':
-                x = x + self.FF(self.LN(x, w.blocks[i].ln1), w.blocks[i].ffnPre, f'ffnPre.{i}')
+                bef = x
+                for persp in range(self.n_persp):
+                    x[persp] = self.LN(x[persp], w.blocks[i].ln1)
+                x = self.FF(x, w.blocks[i].ffnPre, f'ffnPre.{i}')
+                for persp in range(self.n_persp):
+                    x[persp] = bef[persp] + x[persp]
             else:
-                x = x + self.SA(self.LN(x, w.blocks[i].ln1), w.blocks[i].att, f'att.{i}')
-            x = x + self.FF(self.LN(x, w.blocks[i].ln2), w.blocks[i].ffn, f'ffn.{i}')
+                bef = x
+                for persp in range(self.n_persp):
+                    x[persp] = self.LN(x[persp], w.blocks[i].ln1)
+                x = self.SA(x, w.blocks[i].att, f'att.{i}')
+                for persp in range(self.n_persp):
+                    x[persp] = bef[persp] + x[persp]
 
-        x = self.LN(x, w.ln_out)
+            bef = x
+            for persp in range(self.n_persp):
+                x[persp] = self.LN(x[persp], w.blocks[i].ln2)
+            x = self.FF(x, w.blocks[i].ffn, f'ffn.{i}')
+            for persp in range(self.n_persp):
+                x[persp] = bef[persp] + x[persp]
+
+        for persp in range(self.n_persp):
+            x[persp] = self.LN(x[persp], w.ln_out)
 
         if RWKV_HEAD_QK_DIM > 0:
             if self.hk == None:
@@ -399,7 +434,9 @@ class RWKV_RNN():  # this is running in FP32 at this moment
             for i in range(len(c)):
                 x[ctx[i]] += c[i]
         else:
-            x = w.head.weight @ x
+            for i in range(self.n_persp):
+                x[i] = w.head.weight @ x[i]
+            x = torch.mean(torch.stack(x), dim=0)
             x = x.cpu().numpy().tolist()
 
         return x

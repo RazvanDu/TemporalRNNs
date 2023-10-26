@@ -25,9 +25,7 @@ np.set_printoptions(precision=4, suppress=True, linewidth=200)
 
 TOKEN_MODE = 'pile' # char / bpe / pile
 
-n_layer = 6
-n_embd = 512
-ctx_len = 1024
+ours = True
 
 if TOKEN_MODE == 'char':
     MODEL_NAME = 'trained-500'  # your trained model
@@ -46,12 +44,18 @@ elif TOKEN_MODE == 'pile':
 
     #---> you can set MODEL_NAME to your fine-tuned model <---
 
-    MODEL_NAME = 'RWKV-4-Pile-3B-20221008-8023'
+    if ours:
+        MODEL_NAME = 'trained'
+    else:
+        MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+
+    N_PERSP = 4
+
     # N_LAYER = 12
     # N_EMBD = 768
-    n_layer = 32
-    n_embd = 2560
-    ctx_len = 4096
+    N_LAYER = 12
+    N_EMBD = 768
+    CTX_LEN = 1024
 
     # MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
     # n_layer = 24
@@ -66,6 +70,8 @@ elif TOKEN_MODE == 'pile':
 os.environ['RWKV_FLOAT_MODE'] = 'fp32'  # 'bf16' / 'fp16' / 'fp32' (note: only using fp32 at this moment)
 os.environ['RWKV_RUN_DEVICE'] = 'cpu'   # 'cpu' (already very fast) or 'cuda'
 model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre'
+
+ctx_len = CTX_LEN
 
 ########################################################################################################
 # Step 2: set prompt & sampling stuffs
@@ -88,9 +94,13 @@ DEBUG_DEBUG = False  # True False --> show softmax output
 ########################################################################################################
 
 print(f'Loading {MODEL_NAME}...')
-from src.model_run import RWKV_RNN
-from src.model_run import GREBE_RNN
-model = RWKV_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, n_layer, n_embd, ctx_len)
+if ours:
+    from src.model_run_ours import RWKV_RNN
+    model = RWKV_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, N_LAYER, N_EMBD, CTX_LEN, N_PERSP)
+else:
+    from src.model_run import RWKV_RNN
+    model = RWKV_RNN(MODEL_NAME, os.environ['RWKV_RUN_DEVICE'], model_type, N_LAYER, N_EMBD, CTX_LEN)
+
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=UNKNOWN_CHAR)
 
 ########################################################################################################

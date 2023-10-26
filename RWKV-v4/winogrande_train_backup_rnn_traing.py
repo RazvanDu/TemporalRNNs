@@ -23,12 +23,12 @@ now = datetime.now() # current date and time
 
 date_time = now.strftime("%m-%d-%Y-%H-%M-%S")
 # Your existing imports
-from src.model_run import RWKV_RNN, GREBE_RNN
+from src.model_run_ours import RWKV_RNN
 from src.utils import TOKENIZER
 
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
-MODEL_NAME = 'RWKV-4-Pile-1B5-20220814-4526'
+MODEL_NAME = 'wikipedia_trained/trained.pth'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/dev.jsonl'
 N_LAYER = 24
@@ -44,7 +44,7 @@ aug = naw.RandomWordAug(action="swap")
 
 np.random.seed(SEED)
 # Initialize model and tokenizer
-model = GREBE_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, None)
+model = RWKV_RNN(MODEL_NAME, 'cuda', 'RWKV', N_LAYER, N_EMBD, CTX_LEN, None)
 #model = GREBE_RNN(MODEL_NAME, 'cpu', 'RWKV', N_LAYER, N_EMBD, CTX_LEN)
 tokenizer = TOKENIZER(WORD_NAME, UNKNOWN_CHAR=None)
 

@@ -11,7 +11,7 @@ from src.model_run import RWKV_RNN, GREBE_RNN
 from src.utils import TOKENIZER
 
 
-MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+MODEL_NAME = 'trained'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 DATA_FILE = '../winogrande_1.1/test.jsonl'
 N_LAYER = 12

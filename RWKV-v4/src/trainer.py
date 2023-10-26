@@ -15,6 +15,7 @@ import math
 from pytorch_lightning.lite import LightningLite
 import gc
 import torch.nn as nn
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ class TrainerConfig:
     warmup_tokens = 0
     final_tokens = 0
     epoch_save_frequency = 0
-    epoch_save_path = 'trained-'
+    epoch_save_path = 'wikipedia_trained/trained'
     num_workers = 0  # for DataLoader
     ctx_len = 0
     vocab_size = 0
@@ -76,10 +77,12 @@ class Trainer(LightningLite):
                 if config.ours:
                     for param in m2:
                         if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
-                            m2[param] = nn.Parameter(torch.stack([m2[param].clone() for _ in range(config.n_persp)], dim=0), requires_grad=False)
+                            m2[param] = nn.Parameter(torch.stack([m2[param].clone() + torch.tensor(np.random.normal(0, 1, m2[param].size())/10.0, dtype=torch.float) for _ in range(config.n_persp)], dim=0), requires_grad=False)
                         else:
                             m2[param] = nn.Parameter(m2[param], requires_grad=False)
                 model.load_state_dict(m2)
+                for param in model.state_dict():
+                    model.state_dict()[param].requires_grad = False
                 del m2
         model.to(self.device)
 
@@ -197,7 +200,9 @@ class Trainer(LightningLite):
             if self.cuda_id == 0:
                 log_file.write(f'{epoch+1+self.EPOCH_BEGIN} {self.avg_loss:.6f} {math.exp(self.avg_loss):.4f} {self.lr:.8f} {datetime.datetime.now()} {epoch+1} \n')
                 log_file.flush()
-            
-                if (self.config.epoch_save_frequency > 0 and epoch % self.config.epoch_save_frequency == 0) or (epoch == config.max_epochs - 1):
-                    raw_model = self.model.module if hasattr(self.model, "module") else self.model
-                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+
+                raw_model = self.model.module if hasattr(self.model, "module") else self.model
+                torch.save(raw_model.state_dict(), self.config.epoch_save_path + '.pth') #+ str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+
+                if epoch%5 == 0:
+                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
