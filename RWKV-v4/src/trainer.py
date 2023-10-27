@@ -77,7 +77,8 @@ class Trainer(LightningLite):
                 if config.ours:
                     for param in m2:
                         if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
-                            m2[param] = nn.Parameter(torch.stack([m2[param].clone() + torch.tensor(np.random.normal(0, 1, m2[param].size())/10.0, dtype=torch.float) for _ in range(config.n_persp)], dim=0), requires_grad=False)
+                            m2[param] = nn.Parameter(torch.stack([m2[param].clone()# + torch.tensor(np.random.normal(0, 1, m2[param].size())/10.0,dtype=torch.float)
+                                                                  for _ in range(config.n_persp)], dim=0), requires_grad=False)
                         else:
                             m2[param] = nn.Parameter(m2[param], requires_grad=False)
                 model.load_state_dict(m2)

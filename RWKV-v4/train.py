@@ -52,7 +52,8 @@ if tokenized:
 else:
     datafile = load_dataset("wikipedia", "20220301.en", cache_dir="/home/gigi/hdd/RNNWins/data")
 
-print('X ', datafile, ' ', len(datafile))
+print(datafile, ' ', len(datafile))
+
 datafile_encoding = 'huggingface' # 'utf-8' / 'utf-16le' / 'numpy' (for fine-tuning pile models) / 'binidx' (the Megatron-LM 'binidx' format)
 
 if datafile_encoding == 'huggingface':

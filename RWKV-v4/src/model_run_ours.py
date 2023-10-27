@@ -392,21 +392,27 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                 for persp in range(self.n_persp):
                     x[persp] = self.LN(x[persp], w.blocks[i].ln0)
             if i == 0 and self.model_type == 'RWKV-ffnPre':
-                bef = x
+                bef = []
+                for persp in range(self.n_persp):
+                    bef.append(x[persp].clone())
                 for persp in range(self.n_persp):
                     x[persp] = self.LN(x[persp], w.blocks[i].ln1)
                 x = self.FF(x, w.blocks[i].ffnPre, f'ffnPre.{i}')
                 for persp in range(self.n_persp):
                     x[persp] = bef[persp] + x[persp]
             else:
-                bef = x
+                bef = []
+                for persp in range(self.n_persp):
+                    bef.append(x[persp].clone())
                 for persp in range(self.n_persp):
                     x[persp] = self.LN(x[persp], w.blocks[i].ln1)
                 x = self.SA(x, w.blocks[i].att, f'att.{i}')
                 for persp in range(self.n_persp):
                     x[persp] = bef[persp] + x[persp]
 
-            bef = x
+            bef = []
+            for persp in range(self.n_persp):
+                bef.append(x[persp].clone())
             for persp in range(self.n_persp):
                 x[persp] = self.LN(x[persp], w.blocks[i].ln2)
             x = self.FF(x, w.blocks[i].ffn, f'ffn.{i}')
