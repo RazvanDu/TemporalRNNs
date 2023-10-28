@@ -45,7 +45,7 @@ elif TOKEN_MODE == 'pile':
     #---> you can set MODEL_NAME to your fine-tuned model <---
 
     if ours:
-        MODEL_NAME = 'trained-10'
+        MODEL_NAME = 'trained-155'
     else:
         MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 

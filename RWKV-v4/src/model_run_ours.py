@@ -260,7 +260,7 @@ class RWKV_RNN():  # this is running in FP32 at this moment
 
         self.w = types.SimpleNamespace()
 
-        w = torch.load('wikipedia_trained/' + MODEL_NAME + '.pth',
+        w = torch.load('wikipedia_trained_good/' + MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
 
         for x in w.keys():
