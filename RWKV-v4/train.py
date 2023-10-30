@@ -14,10 +14,10 @@ np.set_printoptions(precision=4, suppress=True, linewidth=200)
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
                     datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO,)
 
-# if False: # True False ---> Set to False if you don't understand it
+if False: # True False ---> Set to False if you don't understand it
 #     print("\n\n[[[ SPECIAL DEBUG MODE FOR MYSELF. DON'T ENABLE THIS IF YOU DON'T UNDERSTAND IT ]]]\n\n")
-#     import src.utils
-#     src.utils.set_seed(42) # make training deterministic (including dataloader). if you are doing this, remember to change seed when you load a model (otherwise the dataloader loads old samples)
+    import src.utils
+    src.utils.set_seed(42) # make training deterministic (including dataloader). if you are doing this, remember to change seed when you load a model (otherwise the dataloader loads old samples)
 
 ########################################################################################################
 # Step 1: set training data & cfg
