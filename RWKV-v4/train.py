@@ -31,7 +31,7 @@ EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
 device = 'cuda'
 ours = True
 
-n_persp = 4
+n_persp = 12
 
 # EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
 # EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-430M'
@@ -148,7 +148,7 @@ elif EXPRESS_PILE_MODEL_TYPE == 'RWKV-4-Pile-1B5':
 ########################################################################################################
 
 # if you see "CUDA out of memory", reduce batch_size. Use nvidia-smi to find the highest value for your GPU.
-batch_size = 2 * int(os.environ['RWKV_NUM_GPUS'])
+batch_size = 1 * int(os.environ['RWKV_NUM_GPUS'])
 assert (batch_size % int(os.environ['RWKV_NUM_GPUS']) == 0)
 
 # By default we are using exponential LR decay.

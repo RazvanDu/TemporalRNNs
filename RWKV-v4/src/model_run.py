@@ -400,6 +400,6 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                 x[ctx[i]] += c[i]
         else:
             x = w.head.weight @ x
-            x = x.cpu().numpy().tolist()
+            #x = x.cpu().numpy().tolist()
 
         return x

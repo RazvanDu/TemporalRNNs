@@ -74,12 +74,20 @@ class Trainer(LightningLite):
                 print('loading', m_cfg.MODEL_NAME)
                 print(model.state_dict().keys())
                 m2 = torch.load(m_cfg.MODEL_NAME + '.pth', map_location='cpu')
+                m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, config.n_persp*m_cfg.n_embd)) + torch.tensor(np.random.normal(0, 1, (m_cfg.n_embd, config.n_persp*m_cfg.n_embd))/10.0,dtype=torch.float)
+                                                                  , requires_grad=False)
+                #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
                     for param in m2:
                         if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
-                            m2[param] = nn.Parameter(torch.stack([#m2[param].clone() +
-                                                                  torch.tensor(np.random.normal(0, 1, m2[param].size())/10.0,dtype=torch.float)
+                            #m2[param] = nn.Parameter(torch.stack([#m2[param].clone() +
+                            #                                      torch.tensor(np.random.normal(1, 1, m2[param].size()),dtype=torch.float)
+                            #                                      for _ in range(config.n_persp)], dim=0), requires_grad=False)
+                            m2[param] = nn.Parameter(torch.stack([m2[param].clone() +
+                                                                  torch.tensor(np.random.normal(0, 0.1, m2[param].size()),dtype=torch.float)
                                                                   for _ in range(config.n_persp)], dim=0), requires_grad=False)
+                            #for i in range(config.n_persp):
+                            #torch.nn.init.xavier_uniform(m2[param])
                         else:
                             m2[param] = nn.Parameter(m2[param], requires_grad=False)
                 model.load_state_dict(m2)
@@ -190,7 +198,12 @@ class Trainer(LightningLite):
                         factor = 1 / (it + 1)
                         self.avg_loss = self.avg_loss * (1.0 - factor) + now_loss * factor
 
-                    pbar.set_description(f"miniE {epoch+1+self.EPOCH_BEGIN} s {self.steps} prog {progress*100.0:.2f}% : ppl {math.exp(self.avg_loss):.6f} loss {self.avg_loss:.6f} lr {lr:e}")
+                    ppl = -1
+
+                    if self.avg_loss < 50:
+                        ppl = math.exp(self.avg_loss)
+
+                    pbar.set_description(f"miniE {epoch+1+self.EPOCH_BEGIN} s {self.steps} prog {progress*100.0:.2f}% : ppl {ppl:.6f} loss {self.avg_loss:.6f} lr {lr:e}")
 
         self.tokens = 0  # counter used for learning rate decay
         for epoch in range(99999999):
@@ -206,5 +219,5 @@ class Trainer(LightningLite):
                 raw_model = self.model.module if hasattr(self.model, "module") else self.model
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '.pth') #+ str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
-                if epoch%5 == 0:
-                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+                #if epoch%5 == 0:
+                torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')

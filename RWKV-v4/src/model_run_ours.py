@@ -443,6 +443,6 @@ class RWKV_RNN():  # this is running in FP32 at this moment
             for i in range(self.n_persp):
                 x[i] = w.head.weight @ x[i]
             x = torch.mean(torch.stack(x), dim=0)
-            x = x.cpu().numpy().tolist()
+            #x = x.cpu().numpy().tolist()
 
         return x

@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import DataLoader
 from datetime import datetime
 import numpy as np
+import copy
 
 os.environ['RWKV_RUN_DEVICE'] = 'cuda'
 
@@ -11,7 +12,7 @@ from src.utils import TOKENIZER
 
 current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-ours = True
+ours = False
 
 if ours:
     from src.model_run_ours import RWKV_RNN
@@ -21,10 +22,12 @@ else:
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 if ours:
-    MODEL_NAME = 'trained-10'
+    MODEL_NAME = 'trained-1'
 else:
     MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
+#N_LAYER = 32
+#N_EMBD = 2560
 N_LAYER = 12
 N_EMBD = 768
 N_PERSP = 4
@@ -69,9 +72,10 @@ class ArcEasyDataset(torch.utils.data.Dataset):
         choices = [choice['text'] for choice in item['question']['choices']]
         label = ord(item['answerKey']) - ord('A')
 
-        tokenized_choices = [self.tokenizer.tokenizer.encode(question + " " + choice) for choice in choices]
+        tokenized_question = self.tokenizer.tokenizer.encode("Q: " + question + "\n\n")
+        tokenized_choices = [self.tokenizer.tokenizer.encode("A: " + choice) for choice in choices]
 
-        return tokenized_choices, label, item['id'], question, choices
+        return tokenized_question, tokenized_choices, label, item['id'], question, choices
 
 
 arc_dataset = ArcEasyDataset(load_arc_easy_data(DATA_FILE), tokenizer)
@@ -82,26 +86,53 @@ correct_count = 0
 total_count = 0
 
 with open(OUTPUT_FILE, 'w') as outfile:
-    for i, (tokenized_choices, label, qID, question, choices) in enumerate(test_loader):
+    for i, (tokenized_question, tokenized_choices, label, qID, question, choices) in enumerate(test_loader):
         logits_list = []
 
+        logits = []
+        model.xx = {}
+        model.aa = {}
+        model.bb = {}
+        model.pp = {}
+        model.hk = {}
+
+        for j in range(len(tokenized_question)):
+            logits = torch.softmax(model.run(tokenized_question[j]).cpu(), dim=0)
+            xx = copy.deepcopy(model.xx)
+            aa = copy.deepcopy(model.aa)
+            bb = copy.deepcopy(model.bb)
+            pp = copy.deepcopy(model.pp)
+            hk = copy.deepcopy(model.hk)
+
+        #print(xx)
+
         for tokenized in tokenized_choices:
-            sum_score = 0
+            model.xx = copy.deepcopy(xx)
+            model.aa = copy.deepcopy(aa)
+            model.bb = copy.deepcopy(bb)
+            model.pp = copy.deepcopy(pp)
+            model.hk = copy.deepcopy(hk)
+            sum_score = 1
+            for j in range(len(tokenized)):
+                sum_score += np.log(logits.numpy().tolist()[tokenized[j]])
+                logits = torch.softmax(model.run(tokenized[j]).cpu(), dim=0)
 
-            logits = []
-            model.xx = {}
-            model.aa = {}
-            model.bb = {}
-            model.pp = {}
+            #logits = []
+            #model.xx = {}
+            #model.aa = {}
+            #model.bb = {}
+            #model.pp = {}
 
-            for j in range(len(tokenized) - 1):
-                logits = model.run(tokenized[j])
-                sum_score += logits[tokenized[j + 1]]
+            #for j in range(len(tokenized)-1):
+            #    logits = torch.softmax(model.run(tokenized[j]).cpu(), dim=0)
+            #    sum_score += np.log(logits.numpy().tolist()[tokenized[j+1]])
 
             logits_list.append(sum_score)
 
         #logits = torch.stack(logits_list, dim=0)
         #pred_label = torch.argmax(logits).item()
+
+        print("TEST ", logits_list)
 
         pred_label = np.argmax(logits_list)
 
@@ -124,6 +155,9 @@ with open(OUTPUT_FILE, 'w') as outfile:
 
         print(output_text)
         outfile.write(output_text)
+
+        #if total_count == 200:
+        #    break
 
     accuracy = (correct_count / total_count) * 100
     print(f"Evaluation complete. Accuracy: {accuracy}%\n")

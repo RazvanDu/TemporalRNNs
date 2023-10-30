@@ -354,6 +354,7 @@ class GPT(nn.Module):
         self.blocks = nn.Sequential(*[Block(config, i) for i in range(config.n_layer)])
 
         self.ln_out = nn.LayerNorm(config.n_embd)
+        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
 
         if RWKV_HEAD_QK_DIM > 0:
@@ -419,6 +420,7 @@ class GPT(nn.Module):
         assert T <= self.ctx_len, "Cannot forward, because len(input) > model ctx_len."
 
         temp = self.emb(idx)
+        #print("XXX " , temp.size())
         x = [temp for _ in range(self.config.n_persp)]
         x = self.blocks(x)
         for i in range(self.config.n_persp):
@@ -439,8 +441,12 @@ class GPT(nn.Module):
 
             x = self.head(x) + c
         else:
+            #print("W ", x[0].size())
+            #print("T ", torch.cat(x, dim=2).size())
+            #x = self.convert(torch.cat(x, dim=2))
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
+            #print("Q ", x.size())
 
         x = torch.mean(torch.stack(x), dim=0)
 
