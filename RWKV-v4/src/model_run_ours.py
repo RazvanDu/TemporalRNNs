@@ -258,6 +258,8 @@ class RWKV_RNN():  # this is running in FP32 at this moment
         self.ctx_len = ctx_len
         self.n_persp = n_persp
 
+        self.softmax = nn.Softmax(dim=0)
+
         self.w = types.SimpleNamespace()
 
         w = torch.load('wikipedia_trained_good/' + MODEL_NAME + '.pth',
@@ -440,9 +442,13 @@ class RWKV_RNN():  # this is running in FP32 at this moment
             for i in range(len(c)):
                 x[ctx[i]] += c[i]
         else:
+            weightss = self.softmax(w.convert.weight @ torch.cat(x, dim=0))
             for i in range(self.n_persp):
                 x[i] = w.head.weight @ x[i]
-            x = torch.mean(torch.stack(x), dim=0)
+            #x = torch.mean(torch.stack(x), dim=0)
+
+        x = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(self.n_persp)]
+        x = sum(x)
             #x = x.cpu().numpy().tolist()
 
         return x
