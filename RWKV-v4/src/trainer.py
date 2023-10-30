@@ -72,10 +72,15 @@ class Trainer(LightningLite):
         with torch.no_grad():
             if m_cfg.LOAD_MODEL:
                 print('loading', m_cfg.MODEL_NAME)
-                print(model.state_dict().keys())
                 m2 = torch.load(m_cfg.MODEL_NAME + '.pth', map_location='cpu')
-                m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, config.n_persp*m_cfg.n_embd)) + torch.tensor(np.random.normal(0, 1, (m_cfg.n_embd, config.n_persp*m_cfg.n_embd))/10.0,dtype=torch.float)
+                #                m2['convert.weight'] = nn.ModuleList([
+                #    nn.Linear(nn.Parameter(torch.tensor(np.random.normal(0, 0.1, (1, m_cfg.n_embd)), dtype=torch.float)
+                #                 , requires_grad=False)) for _ in range(config.n_persp)
+                #])
+                m2['convert.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0, (config.n_persp, config.n_persp*m_cfg.n_embd)),dtype=torch.float)
                                                                   , requires_grad=False)
+                #m2['convert.weight'] = nn.Parameter(torch.ones((config.n_persp, config.n_persp*m_cfg.n_embd),dtype=torch.float)
+                #                                                  , requires_grad=False)
                 #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
                     for param in m2:

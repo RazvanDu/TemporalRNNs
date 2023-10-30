@@ -354,7 +354,8 @@ class GPT(nn.Module):
         self.blocks = nn.Sequential(*[Block(config, i) for i in range(config.n_layer)])
 
         self.ln_out = nn.LayerNorm(config.n_embd)
-        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
+        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_persp, bias=False)
+        self.softmax = nn.Softmax(dim=2)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
 
         if RWKV_HEAD_QK_DIM > 0:
@@ -395,7 +396,7 @@ class GPT(nn.Module):
         for mn, m in self.named_modules():  # here we disable weight_decay
             for pn, p in m.named_parameters():
                 fpn = '%s.%s' % (mn, pn) if mn else pn  # full param name
-                if 'time_mix' in fpn:
+                if 'time_mix' in fpn or 'convert' in fpn:
                     no_decay.add(fpn)
 
         param_dict = {pn: p for pn, p in self.named_parameters()}
@@ -443,12 +444,27 @@ class GPT(nn.Module):
         else:
             #print("W ", x[0].size())
             #print("T ", torch.cat(x, dim=2).size())
-            #x = self.convert(torch.cat(x, dim=2))
+            #print("Q ", torch.cat(x, dim=0).size())
+            #print("T ", self.convert(torch.cat(x, dim=2)))
+            #weightss = []
+            #for i in range(self.config.n_persp):
+            #    weightss.append(self.convert(x[i]))
+            #weightss = self.softmax(torch.cat(weightss, dim=2))
+            weightss = self.softmax(self.convert(torch.cat(x, dim=2)))
+            #print("E ", self.convert(torch.cat(x, dim=2)).size())
+            print("R ", self.convert.weight)
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
             #print("Q ", x.size())
 
-        x = torch.mean(torch.stack(x), dim=0)
+        print(x[0].size())
+        print(weightss.size())
+
+        #for B in len(x[0]):
+
+        x = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(self.config.n_persp)]
+        x = sum(x)
+        #x = torch.mean(torch.stack(x), dim=0)
 
         loss = None
         if targets is not None:

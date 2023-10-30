@@ -12,7 +12,7 @@ from src.utils import TOKENIZER
 
 current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-ours = False
+ours = True
 
 if ours:
     from src.model_run_ours import RWKV_RNN
