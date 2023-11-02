@@ -119,9 +119,9 @@ os.environ['USE_WANDB'] = '0' # wandb logging. 0 = False, 1 = True
 EPOCH_BEGIN = 0 # begins with miniEpoch = EPOCH_BEGIN
 LOAD_MODEL = False # shall we load the #EPOCH_BEGIN model and continue the training from it?
 
-n_layer = 6
-n_embd = 512
-ctx_len = 1024 # increase T_MAX in src/model.py if your ctx_len is longer
+n_layer = 12
+n_embd = 768
+ctx_len = 768 # increase T_MAX in src/model.py if your ctx_len is longer
 
 model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre' (sometimes better)
 
@@ -161,7 +161,7 @@ assert (batch_size % int(os.environ['RWKV_NUM_GPUS']) == 0)
 # 
 # For L12-D768, set lr_init = 6e-4. For L24-D1024, set lr_init = 4e-4. For L24-D2048, set lr_init = 3e-4.
 
-lr_init = 8e-4
+lr_init = 5e-5
 lr_final = 1e-5
 
 # the mini-epoch is very short and of fixed length (length = ctx_len * epoch_length_fixed tokens)

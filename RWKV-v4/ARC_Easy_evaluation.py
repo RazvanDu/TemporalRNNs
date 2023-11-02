@@ -22,9 +22,9 @@ else:
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 if ours:
-    MODEL_NAME = 'trained-10'
+    MODEL_NAME = 'trained-20'
 else:
-    MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+    MODEL_NAME = 'RWKV-4-Pile-3B-20221008-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 #N_LAYER = 32
 #N_EMBD = 2560
@@ -72,8 +72,8 @@ class ArcEasyDataset(torch.utils.data.Dataset):
         choices = [choice['text'] for choice in item['question']['choices']]
         label = ord(item['answerKey']) - ord('A')
 
-        tokenized_question = self.tokenizer.tokenizer.encode("Q: " + question + "\n\n")
-        tokenized_choices = [self.tokenizer.tokenizer.encode("A: " + choice) for choice in choices]
+        tokenized_question = self.tokenizer.tokenizer.encode(question + " ")
+        tokenized_choices = [self.tokenizer.tokenizer.encode(choice) for choice in choices]
 
         return tokenized_question, tokenized_choices, label, item['id'], question, choices
 

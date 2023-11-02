@@ -354,7 +354,9 @@ class GPT(nn.Module):
         self.blocks = nn.Sequential(*[Block(config, i) for i in range(config.n_layer)])
 
         self.ln_out = nn.LayerNorm(config.n_embd)
-        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_persp, bias=False)
+        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
+        self.convert2 = nn.Linear(config.n_embd, config.n_persp, bias=False)
+        self.convert3 = nn.Linear(config.n_embd*config.n_persp, config.n_persp, bias=False)
         self.softmax = nn.Softmax(dim=2)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
 
@@ -397,6 +399,7 @@ class GPT(nn.Module):
             for pn, p in m.named_parameters():
                 fpn = '%s.%s' % (mn, pn) if mn else pn  # full param name
                 if 'time_mix' in fpn or 'convert' in fpn:
+                    #print(fpn)
                     no_decay.add(fpn)
 
         param_dict = {pn: p for pn, p in self.named_parameters()}
@@ -409,7 +412,7 @@ class GPT(nn.Module):
             optimizer = FusedAdam(optim_groups, lr=train_config.learning_rate, betas=train_config.betas, eps=train_config.eps, bias_correction=True, adam_w_mode=False, weight_decay=0, amsgrad=False)
         except:
             print('\n\nDeepSpeed not found. Using torch optimizer instead (probably slower)\n\n')
-            optimizer = torch.optim.Adam(optim_groups, lr=train_config.learning_rate, betas=train_config.betas, eps=train_config.eps)
+            optimizer = torch.optim.AdamW(optim_groups, lr=train_config.learning_rate, betas=train_config.betas, eps=train_config.eps)
 
         return optimizer
 
@@ -450,9 +453,11 @@ class GPT(nn.Module):
             #for i in range(self.config.n_persp):
             #    weightss.append(self.convert(x[i]))
             #weightss = self.softmax(torch.cat(weightss, dim=2))
-            weightss = self.softmax(self.convert(torch.cat(x, dim=2)))
+            #weightss = self.softmax(self.convert2(self.convert(torch.cat(x, dim=2))))
+            weightss = self.softmax(self.convert3(torch.cat(x, dim=2)))
             #print("E ", self.convert(torch.cat(x, dim=2)).size())
             print("R ", self.convert.weight)
+            #print("R2 ", self.convert2.weight)
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
             #print("Q ", x.size())

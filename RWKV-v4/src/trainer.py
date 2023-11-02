@@ -77,12 +77,21 @@ class Trainer(LightningLite):
                 #    nn.Linear(nn.Parameter(torch.tensor(np.random.normal(0, 0.1, (1, m_cfg.n_embd)), dtype=torch.float)
                 #                 , requires_grad=False)) for _ in range(config.n_persp)
                 #])
-                m2['convert.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0, (config.n_persp, config.n_persp*m_cfg.n_embd)),dtype=torch.float)
-                                                                  , requires_grad=False)
+
+
+
                 #m2['convert.weight'] = nn.Parameter(torch.ones((config.n_persp, config.n_persp*m_cfg.n_embd),dtype=torch.float)
                 #                                                  , requires_grad=False)
                 #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
+
+                    m2['convert.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (m_cfg.n_embd, config.n_persp*m_cfg.n_embd)),dtype=torch.float)
+                                                                     , requires_grad=False)
+                    m2['convert2.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (config.n_persp, m_cfg.n_embd)),dtype=torch.float)
+                                                                     , requires_grad=False)
+                    m2['convert3.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (config.n_persp, config.n_persp*m_cfg.n_embd)),dtype=torch.float)
+                                                                     , requires_grad=False)
+
                     for param in m2:
                         if 'time_mix_k' in param or 'time_mix_v' in param or 'time_mix_r' in param:
                             #m2[param] = nn.Parameter(torch.stack([#m2[param].clone() +
