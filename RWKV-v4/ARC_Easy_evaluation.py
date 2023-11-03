@@ -12,7 +12,7 @@ from src.utils import TOKENIZER
 
 current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-ours = True
+ours = False
 
 if ours:
     from src.model_run_ours import RWKV_RNN
@@ -22,9 +22,9 @@ else:
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 if ours:
-    MODEL_NAME = 'trained-20'
+    MODEL_NAME = 'trained-35'
 else:
-    MODEL_NAME = 'RWKV-4-Pile-3B-20221008-8023'
+    MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
 #N_LAYER = 32
 #N_EMBD = 2560

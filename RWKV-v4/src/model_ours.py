@@ -356,7 +356,7 @@ class GPT(nn.Module):
         self.ln_out = nn.LayerNorm(config.n_embd)
         self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
         self.convert2 = nn.Linear(config.n_embd, config.n_persp, bias=False)
-        self.convert3 = nn.Linear(config.n_embd*config.n_persp, config.n_persp, bias=False)
+        self.convert3 = nn.Linear(config.n_embd*(config.n_persp-1), config.n_persp-1, bias=False)
         self.softmax = nn.Softmax(dim=2)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
 
@@ -398,8 +398,11 @@ class GPT(nn.Module):
         for mn, m in self.named_modules():  # here we disable weight_decay
             for pn, p in m.named_parameters():
                 fpn = '%s.%s' % (mn, pn) if mn else pn  # full param name
-                if 'time_mix' in fpn or 'convert' in fpn:
+                if 'time_mix' in fpn:
                     #print(fpn)
+                    no_decay.add(fpn)
+                    #param_dict[pn] = param_dict[pn][1:4]
+                if 'convert' in fpn:
                     no_decay.add(fpn)
 
         param_dict = {pn: p for pn, p in self.named_parameters()}
@@ -454,22 +457,24 @@ class GPT(nn.Module):
             #    weightss.append(self.convert(x[i]))
             #weightss = self.softmax(torch.cat(weightss, dim=2))
             #weightss = self.softmax(self.convert2(self.convert(torch.cat(x, dim=2))))
-            weightss = self.softmax(self.convert3(torch.cat(x, dim=2)))
+            weightss = self.softmax(self.convert3(torch.cat(x[1:self.config.n_persp], dim=2)))
             #print("E ", self.convert(torch.cat(x, dim=2)).size())
-            print("R ", self.convert.weight)
+            #print("R ", self.convert.weight)
             #print("R2 ", self.convert2.weight)
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
             #print("Q ", x.size())
 
-        print(x[0].size())
-        print(weightss.size())
+        #print(x[0].size())
+        print("R ", weightss)
 
         #for B in len(x[0]):
 
-        x = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(self.config.n_persp)]
-        x = sum(x)
+        partial = [x[i] * weightss[..., i-1].unsqueeze(-1) for i in range(1, self.config.n_persp)]
+        partial = sum(partial)
         #x = torch.mean(torch.stack(x), dim=0)
+
+        x = x[0] * 0.5 + 0.5 * partial
 
         loss = None
         if targets is not None:
