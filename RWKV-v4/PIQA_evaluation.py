@@ -86,43 +86,116 @@ class PIQADataset(torch.utils.data.Dataset):
         tokenized_sol1 = self.tokenizer.tokenizer.encode(sol1)
         tokenized_sol2 = self.tokenizer.tokenizer.encode(sol2)
 
-        return tokenized_goal, tokenized_sol1, tokenized_sol2, label, item['id'], goal, [sol1, sol2]
+        return tokenized_goal, [tokenized_sol1, tokenized_sol2], label, item['id'], goal, [sol1, sol2]
 
 
-def evaluate_on_validation_set(data_loader, model, tokenizer):
+def evaluate_on_validation_set(data_loader, model):
     correct_predictions = 0
     total_predictions_count = 0
 
     with open(OUTPUT_FILE, 'w') as outfile:
-        for tokenized_goal, tokenized_sol1, tokenized_sol2, true_label, qID, goal, solutions in data_loader:
-            # TODO: Replace with the correct evaluation, current solution doesn't work
-            sol1_score = model.run(tokenized_goal + tokenized_sol1).cpu()
-            sol2_score = model.run(tokenized_goal + tokenized_sol2).cpu()
+        for i, (tokenized_goal, tokenized_solutions, true_label, qID, goal, solutions) in enumerate(data_loader):
+            logits_list = []
 
-            predicted_label = 0 if sol1_score > sol2_score else 1
-            correct = predicted_label == true_label
+            model.xx = {}
+            model.aa = {}
+            model.bb = {}
+            model.pp = {}
+            model.hk = {}
 
-            correct_predictions += correct
+            for j in range(len(tokenized_goal)):
+                logits_temp = model.run(tokenized_goal[j]).cpu()
+
+            xx = copy.deepcopy(model.xx)
+            aa = copy.deepcopy(model.aa)
+            bb = copy.deepcopy(model.bb)
+            pp = copy.deepcopy(model.pp)
+            hk = copy.deepcopy(model.hk)
+
+            for tokenized_solution in tokenized_solutions:
+                model.xx = copy.deepcopy(xx)
+                model.aa = copy.deepcopy(aa)
+                model.bb = copy.deepcopy(bb)
+                model.pp = copy.deepcopy(pp)
+                model.hk = copy.deepcopy(hk)
+
+                sum_score = 1
+                logits = logits_temp.clone()
+                for j in range(len(tokenized_solution)):
+                    sum_score += logits.numpy().tolist()[tokenized_solution[j]]
+                    logits = model.run(tokenized_solution[j]).cpu()
+
+                logits_list.append(sum_score / len(tokenized_solution))
+
+            pred_label = np.argmax(logits_list)
+
+            if pred_label == true_label:
+                correct_predictions += 1
+
             total_predictions_count += 1
 
-            current_accuracy = correct_predictions / total_predictions_count
+            current_accuracy = (correct_predictions / total_predictions_count) * 100
+            print(f"Evaluation in progress... Current accuracy: {current_accuracy}%\n")
 
             output_text = (
+                f"Question number: {total_predictions_count}/{len(data_loader.dataset)}\n"
                 f"Question ID: {qID}\n"
-                f"Question: {goal}\n"
+                f"Problem: {goal}\n"
                 f"Solutions: {solutions}\n"
-                f"Prediction: {'sol1' if predicted_label == 0 else 'sol2'}, "
-                f"Actual: {'sol1' if true_label == 0 else 'sol2'}, "
-                f"Correct: {correct}\n"
-                f"Current accuracy: {current_accuracy}\n\n"
+                f"Prediction: {'sol1' if pred_label == 0 else 'sol2'}, Ground Truth: {'sol1' if true_label == 0 else 'sol2'}\n"
+                f"Current accuracy: {current_accuracy}%\n\n"
             )
 
             print(output_text)
             outfile.write(output_text)
 
-        accuracy = correct_predictions / len(data_loader.dataset)
-        print(f'Validation Evaluation complete. Accuracy: {accuracy:.2%}\n')
-        outfile.write(f'Validation Evaluation complete. Accuracy: {accuracy:.2%}\n')
+        accuracy = (correct_predictions / total_predictions_count) * 100
+        print(f"Evaluation complete. Accuracy: {accuracy}%\n")
+        outfile.write(f"Evaluation complete. Accuracy: {accuracy}%\n")
+
+    print(f"Evaluation complete. Accuracy: {accuracy}%")
+
+
+def generate_predictions_for_piqa_test_set(data_loader, model):
+    with open(PREDICTIONS_FILEPATH, 'w') as pred_file:
+        for i, (tokenized_goal, tokenized_solutions, _, qID, goal, solutions) in enumerate(data_loader):
+            logits_list = []
+
+            model.xx = {}
+            model.aa = {}
+            model.bb = {}
+            model.pp = {}
+            model.hk = {}
+
+            for j in range(len(tokenized_goal)):
+                logits_temp = model.run(tokenized_goal[j]).cpu()
+
+            xx = copy.deepcopy(model.xx)
+            aa = copy.deepcopy(model.aa)
+            bb = copy.deepcopy(model.bb)
+            pp = copy.deepcopy(model.pp)
+            hk = copy.deepcopy(model.hk)
+
+            for tokenized_solution in tokenized_solutions:
+                model.xx = copy.deepcopy(xx)
+                model.aa = copy.deepcopy(aa)
+                model.bb = copy.deepcopy(bb)
+                model.pp = copy.deepcopy(pp)
+                model.hk = copy.deepcopy(hk)
+
+                sum_score = 1
+                logits = logits_temp.clone()
+                for j in range(len(tokenized_solution)):
+                    sum_score += logits.numpy().tolist()[tokenized_solution[j]]
+                    logits = model.run(tokenized_solution[j]).cpu()
+
+                logits_list.append(sum_score / len(tokenized_solution))
+
+            pred_label = np.argmax(logits_list)
+
+            pred_file.write(f'{pred_label}\n')
+
+    print('Test set predictions saved to', PREDICTIONS_FILEPATH)
 
 
 val_dataset = PIQADataset(load_piqa_data(VAL_DATA_FILEPATH, VAL_LABELS_FILEPATH), tokenizer)
@@ -131,17 +204,10 @@ val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
 test_dataset = PIQADataset(load_piqa_data(TEST_DATA_FILEPATH), tokenizer)
 test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
-evaluate_on_validation_set(val_loader, model, tokenizer)
+evaluate_on_validation_set(val_loader, model)
 
-# We don't have the ground truth for the test set, we save the predictions to a file and we need to submit to a contest page (I think)
-with open(PREDICTIONS_FILEPATH, 'w') as pred_file:
-    for tokenized_goal, tokenized_sol1, tokenized_sol2, _, qID, goal, solutions in test_loader:
-        # TODO: Replace with the correct evaluation, current solution doesn't work
-        sol1_score = model.run(tokenized_goal + tokenized_sol1).cpu()
-        sol2_score = model.run(tokenized_goal + tokenized_sol2).cpu()
+print('Evaluation done for the validation set!')
 
-        predicted_label = 0 if sol1_score > sol2_score else 1
+generate_predictions_for_piqa_test_set(test_loader, model)
 
-        pred_file.write(f'{predicted_label}\n')
-
-print('Test set predictions saved to', PREDICTIONS_FILEPATH)
+print('Preidctions generated for the test set!')
