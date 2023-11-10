@@ -1,0 +1,1435 @@
+Question number: 1/10042
+Question ID: ('24',)
+Context: ('A man is sitting on a roof. he',)
+Ending Options: [('starts pulling up roofing on a roof.',), ('is using wrap to wrap a pair of skis.',), ('is ripping level tiles off.',), ("is holding a rubik's cube.",)]
+Prediction: ('starts pulling up roofing on a roof.',), Ground Truth: ('starts pulling up roofing on a roof.',)
+Current accuracy: 100.0%
+
+Question number: 2/10042
+Question ID: ('92',)
+Context: ('A lady walks to a barbell. She bends down and grabs the pole. the lady',)
+Ending Options: [('pulls a rope attached to the barbell.',), ('pulls the barbell forward.',), ('stands and lifts the weight over her head.',), ('swings and lands in her arms.',)]
+Prediction: ('stands and lifts the weight over her head.',), Ground Truth: ('stands and lifts the weight over her head.',)
+Current accuracy: 100.0%
+
+Question number: 3/10042
+Question ID: ('106',)
+Context: ('Two women in a child are shown in a canoe while a man pulls the canoe while standing in the water, with other individuals visible in the background. the child and a different man',)
+Ending Options: [('are driving the canoe, they go down the river flowing side to side.',), ('walking go down the rapids, while the man in his helicopter almost falls and goes out of canoehood.',), ('sit in a canoe while the man paddles.',), ('are then shown paddling down a river in a boat while a woman talks.',)]
+Prediction: ('are then shown paddling down a river in a boat while a woman talks.',), Ground Truth: ('sit in a canoe while the man paddles.',)
+Current accuracy: 66.66666666666666%
+
+Question number: 4/10042
+Question ID: ('114',)
+Context: ('A boy is running down a track. the boy',)
+Ending Options: [('gets in a mat.',), ('lifts his body above the height of a pole.',), ('stands on his hands and springs.',), ('runs into a car.',)]
+Prediction: ('stands on his hands and springs.',), Ground Truth: ('lifts his body above the height of a pole.',)
+Current accuracy: 50.0%
+
+Question number: 5/10042
+Question ID: ('116',)
+Context: ('The boy lifts his body above the height of a pole. The boy lands on his back on to a red mat. the boy',)
+Ending Options: [('gets up from the mat.',), ('wiggles out of the mat.',), ('continues to lift his body over the pole.',), ('turns his body around on the mat.',)]
+Prediction: ('turns his body around on the mat.',), Ground Truth: ('gets up from the mat.',)
+Current accuracy: 40.0%
+
+Question number: 6/10042
+Question ID: ('117',)
+Context: ('The boy lands on his back on to a red mat. The boy gets up from the mat. the boy',)
+Ending Options: [('does jump jacks on his stick.',), ('celebrates by clapping and flexing both arms.',), ('starts doing spins.',), ('is dancing on the mat.',)]
+Prediction: ('is dancing on the mat.',), Ground Truth: ('celebrates by clapping and flexing both arms.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 7/10042
+Question ID: ('149',)
+Context: ('A man is standing in front of a camera. He starts playing a harmonica for the camera. he',)
+Ending Options: [('rocks back and forth to the music as he goes.',), ('seems to be singing while playing the harmonica.',), ('painted a fence in front of the camera.',), ('begins to play the harmonica with his body while looking at the camera.',)]
+Prediction: ('begins to play the harmonica with his body while looking at the camera.',), Ground Truth: ('rocks back and forth to the music as he goes.',)
+Current accuracy: 28.57142857142857%
+
+Question number: 8/10042
+Question ID: ('170',)
+Context: ('A cartoon animation video is shown with people wandering around and rockets being shot. two men',)
+Ending Options: [('fight robots of evil and ends with a to be continued.',), ("look in the cameraman's eye and smile.",), ('push a child in a speedboat in the water.',), ('are then shown in closeups shooting a shot put.',)]
+Prediction: ('push a child in a speedboat in the water.',), Ground Truth: ('fight robots of evil and ends with a to be continued.',)
+Current accuracy: 25.0%
+
+Question number: 9/10042
+Question ID: ('180',)
+Context: ('A man is holding a pocket knife while sitting on some rocks in the wilderness. then he',)
+Ending Options: [('opens a can of oil put oil on the knife, and puts oil on a knife and press it through a can filled with oil then cuts several pieces from the sandwiches.',), ('uses the knife to shave his leg.',), ('takes a small stone from the flowing river and smashes it on another stone.',), ('sand the rocks and tops them by using strong pressure.',)]
+Prediction: ('uses the knife to shave his leg.',), Ground Truth: ('takes a small stone from the flowing river and smashes it on another stone.',)
+Current accuracy: 22.22222222222222%
+
+Question number: 10/10042
+Question ID: ('182',)
+Context: ('Then he takes a small stone from the flowing river and smashes it on another stone. He starts to crush the small stone to smaller pieces. he',)
+Ending Options: [('starts to party with them and throw the pieces by hand while they celebrate.',), ('eventually brings it back into view and adds it to the smaller ones to make a small triangular shaped piece.',), ('cuts the center stone in half and blow it on to make it bigger.',), ('grind it hard to make the pieces smaller.',)]
+Prediction: ('eventually brings it back into view and adds it to the smaller ones to make a small triangular shaped piece.',), Ground Truth: ('grind it hard to make the pieces smaller.',)
+Current accuracy: 20.0%
+
+Question number: 11/10042
+Question ID: ('185',)
+Context: ('Then he takes a piece of bark and rubs the powered stone pieces onto it. The stone particles stick to the wet piece of wood. he',)
+Ending Options: [('walks towards the camera.',), ('then takes the knife and sharpens it against the wood piece.',), ('uses a small brush to polish one of the stone pieces.',), ('then uses a strip of sealing tape to seal the board and then smooths the bottom of the board.',)]
+Prediction: ('then takes the knife and sharpens it against the wood piece.',), Ground Truth: ('then takes the knife and sharpens it against the wood piece.',)
+Current accuracy: 27.27272727272727%
+
+Question number: 12/10042
+Question ID: ('186',)
+Context: ('The stone particles stick to the wet piece of wood. He then takes the knife and sharpens it against the wood piece. he',)
+Ending Options: [('scrapes the wood with a broom in the cutting tool used in sharpening the instrument.',), ('then notices a little black and green poisonous frog sitting next to him.',), ('then cuts off the excess hair of the wood.',), ('writes on the board again.',)]
+Prediction: ('then cuts off the excess hair of the wood.',), Ground Truth: ('then notices a little black and green poisonous frog sitting next to him.',)
+Current accuracy: 25.0%
+
+Question number: 13/10042
+Question ID: ('187',)
+Context: ('He then takes the knife and sharpens it against the wood piece. He then notices a little black and green poisonous frog sitting next to him. the frog',)
+Ending Options: [('is acting crazy and attacking him while he is cooking.',), ('eventually gets to get up and marches out of the room waving its body about.',), ('then escapes and jumps away.',), ('then starts to get up from the chair and begins walking towards the camera.',)]
+Prediction: ('is acting crazy and attacking him while he is cooking.',), Ground Truth: ('then escapes and jumps away.',)
+Current accuracy: 23.076923076923077%
+
+Question number: 14/10042
+Question ID: ('188',)
+Context: ('He then notices a little black and green poisonous frog sitting next to him. The frog then escapes and jumps away. he',)
+Ending Options: [('explains how the frog secretes a poisonous fluid that can be extremely harmful.',), ('then sits there staring at his text machine as if he has actually been given a gift from god.',), ('sits and hugs another man and also adjusts his camera.',), ('takes the frog on his hand and tickles the back of it.',)]
+Prediction: ('explains how the frog secretes a poisonous fluid that can be extremely harmful.',), Ground Truth: ('explains how the frog secretes a poisonous fluid that can be extremely harmful.',)
+Current accuracy: 28.57142857142857%
+
+Question number: 15/10042
+Question ID: ('192',)
+Context: ('A person is playing bagpipes out in a park. A man and two boys watching from a far. the camera',)
+Ending Options: [('is covered to the boy that is playing there.',), ('then goes black and we see a black opening scene.',), ('watching the boy and boy as they play a game of drums.',), ('shoots areas all around the park while the bagpipes play.',)]
+Prediction: ('watching the boy and boy as they play a game of drums.',), Ground Truth: ('shoots areas all around the park while the bagpipes play.',)
+Current accuracy: 26.666666666666668%
+
+Question number: 16/10042
+Question ID: ('200',)
+Context: ('Two people are seen passing a ball back and fourth in a pool and leads into one speaking to the camera. the man',)
+Ending Options: [('dips the ball and walks back with the boy and pours detergent into a cup again.',), ('demonstrates how to properly throw the ball with his hands while still speaking to the camera.',), ('then takes a drink having a conversation with another man and another man leads into him throwing balls in the water and laughing to the camera.',), ('then throws the ball into the pool and begins running around with a sail in his hand while a group of men watch.',)]
+Prediction: ('demonstrates how to properly throw the ball with his hands while still speaking to the camera.',), Ground Truth: ('demonstrates how to properly throw the ball with his hands while still speaking to the camera.',)
+Current accuracy: 31.25%
+
+Question number: 17/10042
+Question ID: ('225',)
+Context: ('A woman is sitting at a table in a fast food restaurant while eating. She continually speaks to nobody as she eats. she',)
+Ending Options: [('is then seen sitting alone as she eats a cold brown ice cream.',), ('pauses in the process of eating to enjoy her food.',), ('stands up and grabs her purse, continuing to talk and laugh as she leaves.',), ('picks up another chocolate bar and chews it as she talks.',)]
+Prediction: ('stands up and grabs her purse, continuing to talk and laugh as she leaves.',), Ground Truth: ('stands up and grabs her purse, continuing to talk and laugh as she leaves.',)
+Current accuracy: 35.294117647058826%
+
+Question number: 18/10042
+Question ID: ('245',)
+Context: ('A group of cheerleaders run onto a stage before a cheering audience. they',)
+Ending Options: [('get into formation, then begin dancing and flipping as male cheerleaders join them.',), ('are then shown performing the type of cheerleading dance, using batons and pole vaults.',), ('perform a cheer routine before the girls, along with makeup artists, spread out and pose.',), ('take turns jumping on each other like they are performing karate.',)]
+Prediction: ('take turns jumping on each other like they are performing karate.',), Ground Truth: ('get into formation, then begin dancing and flipping as male cheerleaders join them.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 19/10042
+Question ID: ('246',)
+Context: ('A group of cheerleaders run onto a stage before a cheering audience. They get into formation, then begin dancing and flipping as male cheerleaders join them. they all',)
+Ending Options: [('dance and flip on stage while hanging their hats on the sides.',), ('dance together with flip up their sleeves.',), ('perform their routines as the studio rashes to a halt with cheerleaders in the audience.',), ('continue dancing and flipping, doing hand springs.',)]
+Prediction: ('dance and flip on stage while hanging their hats on the sides.',), Ground Truth: ('continue dancing and flipping, doing hand springs.',)
+Current accuracy: 31.57894736842105%
+
+Question number: 20/10042
+Question ID: ('247',)
+Context: ('They get into formation, then begin dancing and flipping as male cheerleaders join them. They all continue dancing and flipping, doing hand springs. when they',)
+Ending Options: [('come down from their workout, they all stop to bow and applaud, then they continue dancing.',), ('are finished, they jump up and down happily and walk off the stage, exhausted.',), ("are done, they shake hands and walk away, but cheers are heard all around as they're finished.",), ('are done, a male cheerleader is crowned and an instant replay is shown.',)]
+Prediction: ("are done, they shake hands and walk away, but cheers are heard all around as they're finished.",), Ground Truth: ('are finished, they jump up and down happily and walk off the stage, exhausted.',)
+Current accuracy: 30.0%
+
+Question number: 21/10042
+Question ID: ('282',)
+Context: ('A woman is reading a newspaper nearby while he speaks to her and shows her something in his hand. The man sharpens his knives using an electric tool. he',)
+Ending Options: [('then shows her a spare knife that he has also used on a knife sharpener and drills into a side of the table.',), ('sharpens and cuts something on a knife board using an electric tool.',), ('travels with his knife under the table and uses it also in his shoe.',), ('then continues cutting his onion.',)]
+Prediction: ('then shows her a spare knife that he has also used on a knife sharpener and drills into a side of the table.',), Ground Truth: ('then continues cutting his onion.',)
+Current accuracy: 28.57142857142857%
+
+Question number: 22/10042
+Question ID: ('354',)
+Context: ('A man is outside of a building. He is using commercial lawn mowing equipment. he',)
+Ending Options: [('walks back and forth as he mows the grass.',), ('is animated as he does the task.',), ('runs from one side of the building to the other.',), ('relaxes, making sure his lawn is pristine.',)]
+Prediction: ('runs from one side of the building to the other.',), Ground Truth: ('walks back and forth as he mows the grass.',)
+Current accuracy: 27.27272727272727%
+
+Question number: 23/10042
+Question ID: ('378',)
+Context: ('Children bring desert out for their family member. the family',)
+Ending Options: [('member stands looking into a hut and then handing people photographs.',), ('enjoys eating the desert together.',), ('floats in a river.',), ('member cuts a piece of sunscreen.',)]
+Prediction: ('member cuts a piece of sunscreen.',), Ground Truth: ('enjoys eating the desert together.',)
+Current accuracy: 26.08695652173913%
+
+Question number: 24/10042
+Question ID: ('380',)
+Context: ('The family enjoys eating the desert together. The people in the restaurant laugh at the man and he wonders what they are doing. the man',)
+Ending Options: [("goes to the bathroom and isn't able to get very far.",), ('plays the bagpipe and smiles and laughs as he enjoys the hospitality.',), ('puts the glass aside and a fourth person walks in and walks away.',), ('gets up and walks away to the other room.',)]
+Prediction: ('gets up and walks away to the other room.',), Ground Truth: ('gets up and walks away to the other room.',)
+Current accuracy: 29.166666666666668%
+
+Question number: 25/10042
+Question ID: ('385',)
+Context: ('A black female is shown in a room with a black scarf around her head. black spots on her faced',)
+Ending Options: [('are shown and she misses a little bit of her swing.',), ('are shown and one finger is seen poking through.',), ('are shown as she continues to dance around on the hardwood and every move makes a lash on her face.',), ('are then zoomed in on and she begins to apply something on it.',)]
+Prediction: ('are shown as she continues to dance around on the hardwood and every move makes a lash on her face.',), Ground Truth: ('are then zoomed in on and she begins to apply something on it.',)
+Current accuracy: 28.000000000000004%
+
+Question number: 26/10042
+Question ID: ('386',)
+Context: ('A black female is shown in a room with a black scarf around her head. Black spots on her faced are then zoomed in on and she begins to apply something on it. next',)
+Ending Options: [(', she takes some spray and it makes her skin extremely oily and she continues to talk until the video is over.',), (', she is shown making multiple moans and sprays some kind of liquid down her face before hanging up.',), ('she is shown in various different locations and gets extremely close to a wall.',), (', she begins to brush her lips and make painted lips look just like a lipstick to the camera and ends with her closing gift and instruction showing her off at the end.',)]
+Prediction: ('she is shown in various different locations and gets extremely close to a wall.',), Ground Truth: (', she takes some spray and it makes her skin extremely oily and she continues to talk until the video is over.',)
+Current accuracy: 26.923076923076923%
+
+Question number: 27/10042
+Question ID: ('393',)
+Context: ('A helicopter flies in some people who then start playing paintball. they',)
+Ending Options: [('chase a bird in the sky while others walk around.',), ('run around obstacles and have a great time.',), ('shoot at each other while the helicopter drone who am looking on.',), ('lose their shirt during the fight and run back the others.',)]
+Prediction: ('chase a bird in the sky while others walk around.',), Ground Truth: ('run around obstacles and have a great time.',)
+Current accuracy: 25.925925925925924%
+
+Question number: 28/10042
+Question ID: ('398',)
+Context: ('A young boy and girl are standing over a sink with their mother talking. the mother',)
+Ending Options: [('washes the boy while the child grabs shampoo.',), ("is now putting lipstick on the boy's mouth and he tries to stop her but only gets a little bit stuck.",), ('instructs them on how to brush their teeth while laughing.',), ('shows some shaving cream on the boy who is scrubbing her brushes.',)]
+Prediction: ("is now putting lipstick on the boy's mouth and he tries to stop her but only gets a little bit stuck.",), Ground Truth: ('instructs them on how to brush their teeth while laughing.',)
+Current accuracy: 25.0%
+
+Question number: 29/10042
+Question ID: ('399',)
+Context: ('A young boy and girl are standing over a sink with their mother talking. The mother instructs them on how to brush their teeth while laughing. the boy',)
+Ending Options: [('walks with an empty mouthwash cup on a sink floor.',), ('puts a shirt on and rubs his mouth.',), ('helps his younger sister brush his teeth.',), ('and girl then begin working out.',)]
+Prediction: ('puts a shirt on and rubs his mouth.',), Ground Truth: ('helps his younger sister brush his teeth.',)
+Current accuracy: 24.137931034482758%
+
+Question number: 30/10042
+Question ID: ('400',)
+Context: ('The mother instructs them on how to brush their teeth while laughing. The boy helps his younger sister brush his teeth. she',)
+Ending Options: [('shows how to hit the mom and then kiss his dad as well.',), ('gets them some water to gargle in their mouths.',), ('glows from the center of the camera as a reaction.',), ('brushes past the camera, looking better soon after.',)]
+Prediction: ('glows from the center of the camera as a reaction.',), Ground Truth: ('gets them some water to gargle in their mouths.',)
+Current accuracy: 23.333333333333332%
+
+Question number: 31/10042
+Question ID: ('402',)
+Context: ('She gets them some water to gargle in their mouths. The boy and girl begin playing in the sink. the woman',)
+Ending Options: [('laughs at the children dribbling water.',), ('comes back and talks to the boys.',), ('shakes her head in disbelief and waves at her.',), ('gets some food out of the fridge and they continue playing together.',)]
+Prediction: ('gets some food out of the fridge and they continue playing together.',), Ground Truth: ('laughs at the children dribbling water.',)
+Current accuracy: 22.58064516129032%
+
+Question number: 32/10042
+Question ID: ('478',)
+Context: ('A cat is sitting in a cat bed. It is licking its paw. it',)
+Ending Options: [('then wipes its paw on its ear.',), ("'s laying down about six inches away from the camera.",), ('crawls to the door.',), ('crawls on one foot to get closer to the camera.',)]
+Prediction: ("'s laying down about six inches away from the camera.",), Ground Truth: ('then wipes its paw on its ear.',)
+Current accuracy: 21.875%
+
+Question number: 33/10042
+Question ID: ('479',)
+Context: ('A man in brown jacket is pulling out an arrow from the target board, then he was talking to the camera, then he pull out his bow and started to use it with his bow to hit the target board, he fired his bows several times. the man',)
+Ending Options: [('eventually throw the arrow, but it flew into the gravel is near the targets.',), ('played paper if and shoot the arrows to hit the target, then he hang from the board with his bow and arrow.',), ('went to the target board and talked to the camera.',), ('have his bow as he talk to the camera, he pulled it out to show how to put with its flex, tighten, and notch that was attached to his bow.',)]
+Prediction: ('went to the target board and talked to the camera.',), Ground Truth: ('went to the target board and talked to the camera.',)
+Current accuracy: 24.242424242424242%
+
+Question number: 34/10042
+Question ID: ('491',)
+Context: ('A man walks outside plugs his lawn mower in and gets ready to mow. he',)
+Ending Options: [('starts mowing his lawn casually going over all the grass.',), ('does this multiple times until a pale orange moon appears overhead.',), ('walks off the porch and goes back inside.',), ('drives through the grass while drinking from a large cup of water and carrying his lawn mower.',)]
+Prediction: ('walks off the porch and goes back inside.',), Ground Truth: ('starts mowing his lawn casually going over all the grass.',)
+Current accuracy: 23.52941176470588%
+
+Question number: 35/10042
+Question ID: ('492',)
+Context: ('A man walks outside plugs his lawn mower in and gets ready to mow. He starts mowing his lawn casually going over all the grass. his dog',)
+Ending Options: [('is having a seizure and starts to hop all over the lawn as he walks around.',), ('comes outside and takes a closer look at the man mowing, after he picks up the mower.',), ("comes outside and starts to follow him a little while he's closer to the house.",), ('runs loose and feeds on his movements.',)]
+Prediction: ('comes outside and takes a closer look at the man mowing, after he picks up the mower.',), Ground Truth: ("comes outside and starts to follow him a little while he's closer to the house.",)
+Current accuracy: 22.857142857142858%
+
+Question number: 36/10042
+Question ID: ('493',)
+Context: ("He starts mowing his lawn casually going over all the grass. His dog comes outside and starts to follow him a little while he's closer to the house. the yard",)
+Ending Options: [('is slowly starting to look really really nice, once he is completely finished the yard looks great, nice and smooth.',), ('gets mowed quicker by the dog.',), ('eventually looks happy on the outside and appears to be going pretty happily.',), ('is very neat and clean and very active under the circumstances.',)]
+Prediction: ('is slowly starting to look really really nice, once he is completely finished the yard looks great, nice and smooth.',), Ground Truth: ('is slowly starting to look really really nice, once he is completely finished the yard looks great, nice and smooth.',)
+Current accuracy: 25.0%
+
+Question number: 37/10042
+Question ID: ('503',)
+Context: ('A sea is shown with a green forest on seashore. Blond man is standing in seashore and talking to the camera and surfing big waves on the sea. man',)
+Ending Options: [('is on ocean and swimming in white water snapping his head.',), ('is snowboarding up in the sea.',), ('is doing flips in the waters and on the rocks and he be water surfing.',), ('is walking on seashore through a lot of people and talking to the camera and holding an award and talking about surfing the seashore.',)]
+Prediction: ('is snowboarding up in the sea.',), Ground Truth: ('is walking on seashore through a lot of people and talking to the camera and holding an award and talking about surfing the seashore.',)
+Current accuracy: 24.324324324324326%
+
+Question number: 38/10042
+Question ID: ('527',)
+Context: ('We see a bottle of face wash. we',)
+Ending Options: [('see four cookies in a pan.',), ('see a person holding face wash then putting it on their face.',), ('see a tool on a table.',), ('see a newspaper story.',)]
+Prediction: ('see a person holding face wash then putting it on their face.',), Ground Truth: ('see a person holding face wash then putting it on their face.',)
+Current accuracy: 26.31578947368421%
+
+Question number: 39/10042
+Question ID: ('529',)
+Context: ('We see a person holding face wash then putting it on their face. They rinse the face and add the face wash with a brush. we',)
+Ending Options: [('then see a replay then the person putting the face wash on.',), ('see a closing title screen.',), ('see a black screen with the credits.',), ('see an illustration on how to add the wash using a brush.',)]
+Prediction: ('see an illustration on how to add the wash using a brush.',), Ground Truth: ('see an illustration on how to add the wash using a brush.',)
+Current accuracy: 28.205128205128204%
+
+Question number: 40/10042
+Question ID: ('560',)
+Context: ('A person is seen throwing plaster onto a wall while the camera follows the person close behind. the person',)
+Ending Options: [('gradually throws more and more onto the wall and the camera pans over the finished product.',), ('continues throwing ingredients down and leads into a person kicking a dirty toilet.',), ('then uses paper to spread it all over the wall followed by others putting paper through with the plaster.',), ('is now seen putting wax all along the wall while still looking back to the camera.',)]
+Prediction: ('gradually throws more and more onto the wall and the camera pans over the finished product.',), Ground Truth: ('gradually throws more and more onto the wall and the camera pans over the finished product.',)
+Current accuracy: 30.0%
+
+Question number: 41/10042
+Question ID: ('586',)
+Context: ('More and more people begin talking and each of them has a bottle of sun screen and starts to squirt it on their arms in effort to protect their skin. a small blue bottle of the sun screen',)
+Ending Options: [('appears and then different people carry it to a table where they mix the liquid with a straw with a straw and take turns squirting the liquid into their skin.',), ('is then shown and several more people begin talking about the product.',), ('zooms in on sheers that they have on the floor.',), ('appears near each of their hair as they continue to talk but no bottle at all appear.',)]
+Prediction: ('appears and then different people carry it to a table where they mix the liquid with a straw with a straw and take turns squirting the liquid into their skin.',), Ground Truth: ('is then shown and several more people begin talking about the product.',)
+Current accuracy: 29.268292682926827%
+
+Question number: 42/10042
+Question ID: ('604',)
+Context: ('A group of boys are standing in a room with many clear cups of beer on a table they are all standing around. the boys',)
+Ending Options: [('talk, laugh and tease each other before beginning a game of beer pong across a long table using a triangle shaped array of clear cups.',), ('take a flute together and then begin to play the harmonica using it to play the tune.',), ('begin to wrap red bow around the plastic cups, put bows on the bottoms _start_various objects on the foam covers and belongings to the floor.',), ('all grab one and chug their contents of the cans.',)]
+Prediction: ('take a flute together and then begin to play the harmonica using it to play the tune.',), Ground Truth: ('talk, laugh and tease each other before beginning a game of beer pong across a long table using a triangle shaped array of clear cups.',)
+Current accuracy: 28.57142857142857%
+
+Question number: 43/10042
+Question ID: ('605',)
+Context: ('The boys talk, laugh and tease each other before beginning a game of beer pong across a long table using a triangle shaped array of clear cups. one of the ping pongs',)
+Ending Options: [('rush walks up in front of the boys, removes a small piece of paper from the bottom of the table, puts a hand on the machine and wrestles with buttons, turns the machine off and pushes a button inside to turn the game back on.',), ('lands in the cup and one of the boys begins to drink the beer.',), ('is knocked upside down, which causes the other teens to give each other high fives.',), ('tries to rise but dikes instead.',)]
+Prediction: ('lands in the cup and one of the boys begins to drink the beer.',), Ground Truth: ('lands in the cup and one of the boys begins to drink the beer.',)
+Current accuracy: 30.23255813953488%
+
+Question number: 44/10042
+Question ID: ('606',)
+Context: ('One of the ping pongs lands in the cup and one of the boys begins to drink the beer. the group',)
+Ending Options: [('gets up together and poses with their vests to celebrate.',), ('does a trick and the liquid is poured on a second table.',), ('of teens is sailing down the river with others sailing in the background.',), ('continue to play beer pong when one final player is able to throw and land a ping pong ball while standing with his back to the cups at which point the boys celebrate, and laugh.',)]
+Prediction: ('continue to play beer pong when one final player is able to throw and land a ping pong ball while standing with his back to the cups at which point the boys celebrate, and laugh.',), Ground Truth: ('continue to play beer pong when one final player is able to throw and land a ping pong ball while standing with his back to the cups at which point the boys celebrate, and laugh.',)
+Current accuracy: 31.818181818181817%
+
+Question number: 45/10042
+Question ID: ('615',)
+Context: ("There's a nbc news reporter wearing a red sweater and white shirt talking about dog grooming by scissor wizard a grooming company. the representative from the company",)
+Ending Options: [('is talking about the services they offer and how those dogs participate in dog shows.',), ('in grey sweater and black pants talks about the procedures on grooming dogs in life and techniques.',), ('tells viewers about a dog grooming company, itv with a website.',), ('speaks to a woman sitting on a colorful conference room chair next to a brown dog kennel in front of them.',)]
+Prediction: ('is talking about the services they offer and how those dogs participate in dog shows.',), Ground Truth: ('is talking about the services they offer and how those dogs participate in dog shows.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 46/10042
+Question ID: ('616',)
+Context: ('The representative from the company is talking about the services they offer and how those dogs participate in dog shows. a groomer',)
+Ending Options: [('speaks to an older man about snow cleaning dogs and showing how it is flectious.',), ('is presenting cookies to the room with a loaf of bread.',), ("is seen using shears to creatively trim the dog's hair and even dye it in colorful shades of red, green, yellow and blue.",), ('shows crowd opinion for use as their garden service representative.',)]
+Prediction: ("is seen using shears to creatively trim the dog's hair and even dye it in colorful shades of red, green, yellow and blue.",), Ground Truth: ("is seen using shears to creatively trim the dog's hair and even dye it in colorful shades of red, green, yellow and blue.",)
+Current accuracy: 34.78260869565217%
+
+Question number: 47/10042
+Question ID: ('618',)
+Context: ('A woman tries to eat ice cream to a child, but the child refuses to eat the ice cream, then the woman eats the ice cream in the spoon. after',)
+Ending Options: [(", two people wearing red shirts pass through the store's door and inside the market and besides a man and a chimpanzee wearing silver uniforms are watching the woman and child.",), (", the woman gives ice cream to the child, and then the woman cleans the child's mouth.",), (', the child and the woman tries to eat food without ice cream, then they sit and talk with adults in the room.',), (', the child takes out the fork the other child takes out the spoon and eats the ice cream.',)]
+Prediction: (", the woman gives ice cream to the child, and then the woman cleans the child's mouth.",), Ground Truth: (", the woman gives ice cream to the child, and then the woman cleans the child's mouth.",)
+Current accuracy: 36.17021276595745%
+
+Question number: 48/10042
+Question ID: ('619',)
+Context: ("After, the woman gives ice cream to the child, and then the woman cleans the child's mouth. an old woman",)
+Ending Options: [('tries to stop the mother pray while giving a baby something else.',), ('feeds a boy ice cream.',), ('hold the child and eats the ice cream, after the woman is giving baby ice cream to the child.',), ('is standing using a white blower to blow snow.',)]
+Prediction: ('hold the child and eats the ice cream, after the woman is giving baby ice cream to the child.',), Ground Truth: ('feeds a boy ice cream.',)
+Current accuracy: 35.41666666666667%
+
+Question number: 49/10042
+Question ID: ('689',)
+Context: ('Men are lifting heavy weights over their head several times. A man in a blue shirt is watching one of the men. a man in a gray shirt',)
+Ending Options: [('is mimicking the person lifting the weight.',), ('is watching the men on the ground.',), ('hits a big weight in slow motion.',), ('is talking to one of the men in the middle of the gym.',)]
+Prediction: ('is talking to one of the men in the middle of the gym.',), Ground Truth: ('is mimicking the person lifting the weight.',)
+Current accuracy: 34.69387755102041%
+
+Question number: 50/10042
+Question ID: ('708',)
+Context: ('In home pet groomers demonstrate how to groom a pet. the person',)
+Ending Options: [('starts at their butt rise, combing out the hair with a brush from a red.',), ('installs and interacts with a sleeping pet before moving away.',), ('puts a setting engage on the pets tongue and leash.',), ("is demonstrating how the dog's hair is trimmed with electric shears at their grooming salon.",)]
+Prediction: ("is demonstrating how the dog's hair is trimmed with electric shears at their grooming salon.",), Ground Truth: ("is demonstrating how the dog's hair is trimmed with electric shears at their grooming salon.",)
+Current accuracy: 36.0%
+
+Question number: 51/10042
+Question ID: ('712',)
+Context: ('A person polish a shoe with a wrapped finger. then',)
+Ending Options: [(', a person polish the fingers, then the person puts a black polish.',), (', the person removes the heel heel from the shoe and polish.',), (', the person grabs polish paste and water to polish the shoe.',), (', the person remove the wrapping paper to expose a shoe.',)]
+Prediction: (', a person polish the fingers, then the person puts a black polish.',), Ground Truth: (', the person grabs polish paste and water to polish the shoe.',)
+Current accuracy: 35.294117647058826%
+
+Question number: 52/10042
+Question ID: ('748',)
+Context: ('Eight people are standing at the studio, one woman walked at the back of the group. the group',)
+Ending Options: [('started dancing, swirling, shaking their hips, rotating, their arms and hands are moving from side to side, in front.',), ('is gathered around a long table into a dance routine.',), ('continue to discuss the topic of volleyball.',), ('then begins marching down a fitness track, demonstrating steps, going forward and backward, in between takes several breaks to lift their feet.',)]
+Prediction: ('is gathered around a long table into a dance routine.',), Ground Truth: ('started dancing, swirling, shaking their hips, rotating, their arms and hands are moving from side to side, in front.',)
+Current accuracy: 34.61538461538461%
+
+Question number: 53/10042
+Question ID: ('801',)
+Context: ('A man is seen talking to the camera and presents his knife and sharpener. He then glides the knife down the sharpener and shows how other knives work with different sharpeners. he',)
+Ending Options: [('then repeats his advice and using more wax.',), ('presents the knife one last time while still speaking to the camera.',), ('shows the using the sharpener on a piece of wood.',), ('uses scissors to cut the blade as well as metal and talk to the camera at the end.',)]
+Prediction: ('presents the knife one last time while still speaking to the camera.',), Ground Truth: ('presents the knife one last time while still speaking to the camera.',)
+Current accuracy: 35.84905660377358%
+
+Question number: 54/10042
+Question ID: ('818',)
+Context: ('A man walks onto the stage to join a band. a man',)
+Ending Options: [('plays harp and flute while two other people play instruments next to him.',), ('and woman dance around together on the stage.',), ('dance on the ropes attached to the stage.',), ('plays up front of a band with a harmonica.',)]
+Prediction: ('and woman dance around together on the stage.',), Ground Truth: ('plays up front of a band with a harmonica.',)
+Current accuracy: 35.18518518518518%
+
+Question number: 55/10042
+Question ID: ('819',)
+Context: ('A man walks onto the stage to join a band. A man plays up front of a band with a harmonica. the keyboardist',)
+Ending Options: [('sings with the band, twirling his violin as he walks.',), ('plays the hip hop and dance moves with the band.',), ('plays a spirited solo during the song.',), ('plays his guitar while moving his body around in front of the band.',)]
+Prediction: ('plays his guitar while moving his body around in front of the band.',), Ground Truth: ('plays a spirited solo during the song.',)
+Current accuracy: 34.54545454545455%
+
+Question number: 56/10042
+Question ID: ('854',)
+Context: ("A camera pans away from a road and shows a person's feet moving around. several shots",)
+Ending Options: [('are shown of people riding up a mountain on skis while being pulled down by a rope.',), ('are shown of people wake boarding.',), ('are shown of people tying their shoes, hitting a button, and checking a watch.',), ('are then shown of people riding on snowboards over mountains.',)]
+Prediction: ('are shown of people riding up a mountain on skis while being pulled down by a rope.',), Ground Truth: ('are shown of people tying their shoes, hitting a button, and checking a watch.',)
+Current accuracy: 33.92857142857143%
+
+Question number: 57/10042
+Question ID: ('855',)
+Context: ("A camera pans away from a road and shows a person's feet moving around. Several shots are shown of people tying their shoes, hitting a button, and checking a watch. people",)
+Ending Options: [('march around a room wearing funny hats, hats, and shoes.',), ('are then seen running down the road one at a time followed by many more following.',), ('walk along a road, using bicycles and bagpipes.',), ('then are shown washing a car.',)]
+Prediction: ('march around a room wearing funny hats, hats, and shoes.',), Ground Truth: ('are then seen running down the road one at a time followed by many more following.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 58/10042
+Question ID: ('858',)
+Context: ('A gymnast put power chalk power on his hands and stands near the pommel horse. then',)
+Ending Options: [(', the gymnast blade the board and stands in position facing the pommel horse doing blade moves.',), (', the gymnast moves around and flips the chalk power to full weight and continues gymnastics for the next competition, after he turns and stands near the pommel horse.',), (', the gymnast approach the pommel horse to spin around many times.',), (', the gymnast put strength and power item on his body and falls.',)]
+Prediction: (', the gymnast approach the pommel horse to spin around many times.',), Ground Truth: (', the gymnast approach the pommel horse to spin around many times.',)
+Current accuracy: 34.48275862068966%
+
+Question number: 59/10042
+Question ID: ('859',)
+Context: ('A gymnast put power chalk power on his hands and stands near the pommel horse. Then, the gymnast approach the pommel horse to spin around many times. then',)
+Ending Options: [(', the gymnast put the star light on his hands and jumps high using strength.',), (', the gymnast cross the pommel horse with the long rope while performing handsprings.',), (', the gymnast stand on his hand and jumps to land on the floor, while people applaud.',), (', the gymnast puts fluid on the pommel horse and sit on it to rise the body while position it.',)]
+Prediction: (', the gymnast stand on his hand and jumps to land on the floor, while people applaud.',), Ground Truth: (', the gymnast stand on his hand and jumps to land on the floor, while people applaud.',)
+Current accuracy: 35.59322033898305%
+
+Question number: 60/10042
+Question ID: ('875',)
+Context: ('A logo shows that this video is presented by expert village. a man in a small blue boat',)
+Ending Options: [('discusses the topic of hand surfing in a hole and gives hints on how to perform this activity.',), (', in the middle of a lake, is skiing.',), ('is pushing a kress of water in a lake while instructing his boarder.',), ('is in the water pushing a boat with a sail.',)]
+Prediction: (', in the middle of a lake, is skiing.',), Ground Truth: ('discusses the topic of hand surfing in a hole and gives hints on how to perform this activity.',)
+Current accuracy: 35.0%
+
+Question number: 61/10042
+Question ID: ('876',)
+Context: ('A man in a small blue boat discusses the topic of hand surfing in a hole and gives hints on how to perform this activity. the man',)
+Ending Options: [('demonstrates how to properly back up a hand surf by requiring an anchor.',), ('demonstrates tricks that can be done while performing this activity.',), ('in the small blue boat holds a fish in his hands and then holds the fish while talking about the technique needed to perform this activity.',), ("is omic on the water as he's riding the speedo on the aerobic machine still pointing down at the water.",)]
+Prediction: ('in the small blue boat holds a fish in his hands and then holds the fish while talking about the technique needed to perform this activity.',), Ground Truth: ('demonstrates tricks that can be done while performing this activity.',)
+Current accuracy: 34.42622950819672%
+
+Question number: 62/10042
+Question ID: ('883',)
+Context: ('The camera pans to show a man playing a harmonica while sitting on a log beside a river. A woman walks near the train tracks while a train drives by. the woman',)
+Ending Options: [('sees the harmonica playing man in the distance.',), ('continues just playing with the tunes she made.',), ('plays a song on her harmonica while walking away from the train.',), ('taps a horn intermittently as the camera pans right.',)]
+Prediction: ('plays a song on her harmonica while walking away from the train.',), Ground Truth: ('sees the harmonica playing man in the distance.',)
+Current accuracy: 33.87096774193548%
+
+Question number: 63/10042
+Question ID: ('884',)
+Context: ('A woman walks near the train tracks while a train drives by. The woman sees the harmonica playing man in the distance. she',)
+Ending Options: [('walks around the rail of the tracks and watches the scenery and the crowds of people.',), ('watches him and listens to him playing.',), ('comes back to the train and continues walking on the subway.',), ('begins playing with the harmonica and stops.',)]
+Prediction: ('walks around the rail of the tracks and watches the scenery and the crowds of people.',), Ground Truth: ('watches him and listens to him playing.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 64/10042
+Question ID: ('886',)
+Context: ('The woman sees the harmonica playing man in the distance. She watches him and listens to him playing. She walks away leaving the man. the man',)
+Ending Options: [('jumps over a barrier and lands on the sandy beach.',), ('takes out a wall show from his guitar.',), ('plays in a house while the woman looks on.',), ('finishes playing and remains seated.',)]
+Prediction: ('plays in a house while the woman looks on.',), Ground Truth: ('finishes playing and remains seated.',)
+Current accuracy: 32.8125%
+
+Question number: 65/10042
+Question ID: ('887',)
+Context: ('A person is shown looking around a city and begins washing windows with his tools. he',)
+Ending Options: [('then brushes right through the window and cleans it off.',), ('puts water on a hose and begins cleaning the windows.',), ('uses a large block cutter to remove smaller blocks until he has the whole of the window covered.',), ('goes up and down the windows at a rapid pace and continues filming himself through the glass.',)]
+Prediction: ('puts water on a hose and begins cleaning the windows.',), Ground Truth: ('goes up and down the windows at a rapid pace and continues filming himself through the glass.',)
+Current accuracy: 32.30769230769231%
+
+Question number: 66/10042
+Question ID: ('888',)
+Context: ('A person is shown looking around a city and begins washing windows with his tools. He goes up and down the windows at a rapid pace and continues filming himself through the glass. he',)
+Ending Options: [('spins around to show the different angles of the board and shows pictures of the house in the end.',), ('takes his clothes off and hangs them up before throwing his plaid shirt into the laundry.',), ('continues to work by scrubbing the windows and then by pouring water out.',), ('finishes the glass in record time and turns off the camera.',)]
+Prediction: ('spins around to show the different angles of the board and shows pictures of the house in the end.',), Ground Truth: ('finishes the glass in record time and turns off the camera.',)
+Current accuracy: 31.818181818181817%
+
+Question number: 67/10042
+Question ID: ('923',)
+Context: ('A man dressed in yellow and black winter clothes ice fishes on a a frozen lake. the man',)
+Ending Options: [('is reeling in a fish for a long time.',), ('does numerous tricks as he goes through these beauty course courses of ice covered lakes.',), ('spins with his fishing pole in the air.',), ('does a trick on his dirty ice fishing line.',)]
+Prediction: ('is reeling in a fish for a long time.',), Ground Truth: ('is reeling in a fish for a long time.',)
+Current accuracy: 32.83582089552239%
+
+Question number: 68/10042
+Question ID: ('924',)
+Context: ('A man dressed in yellow and black winter clothes ice fishes on a a frozen lake. The man is reeling in a fish for a long time. the mans catch',)
+Ending Options: [('one and puts it on a fishing pole in the lake.',), ('a fish for dinner by making a wish with his mouth.',), ('finally reaches the surface.',), ('more fish and throws them to the side.',)]
+Prediction: ('one and puts it on a fishing pole in the lake.',), Ground Truth: ('finally reaches the surface.',)
+Current accuracy: 32.35294117647059%
+
+Question number: 69/10042
+Question ID: ('942',)
+Context: ("Two children are seen sitting in a tub rubbing their faces and another person's hands interacting. the boy",)
+Ending Options: [('then begins washing the other child and ends by copulating with him.',), ('walks out of the bathroom laughing to the camera and the girl stands up to rinse her face off.',), ('continues to rub water all over his face as well as play with toys and smile at the cameraman.',), ('is now seen pointing down by himself and leads into him holding a comb and blow dryer and speaking to others.',)]
+Prediction: ('walks out of the bathroom laughing to the camera and the girl stands up to rinse her face off.',), Ground Truth: ('continues to rub water all over his face as well as play with toys and smile at the cameraman.',)
+Current accuracy: 31.88405797101449%
+
+Question number: 70/10042
+Question ID: ('950',)
+Context: ('A woman hands a young boy a stick with a little girl grabbing for her attention. the pinata',)
+Ending Options: [('pops, and a child in white attempts to hit the pinata, but fails.',), ('is lifted and the boy begins swinging at the object.',), ('is hit one after the other, and the girl lets go her hold.',), ('pops out of the playground.',)]
+Prediction: ('is hit one after the other, and the girl lets go her hold.',), Ground Truth: ('is lifted and the boy begins swinging at the object.',)
+Current accuracy: 31.428571428571427%
+
+Question number: 71/10042
+Question ID: ('951',)
+Context: ('A woman hands a young boy a stick with a little girl grabbing for her attention. The pinata is lifted and the boy begins swinging at the object. the camera',)
+Ending Options: [('zooms in on the pinata and then the girl.',), ("is upside down so everyone else can't see the object.",), ("zooms in on the boy's head and he looks at the pinata person in the background.",), ('pans around people watching while he hits the pinata and a little boy is seen clapping behind him.',)]
+Prediction: ("zooms in on the boy's head and he looks at the pinata person in the background.",), Ground Truth: ('pans around people watching while he hits the pinata and a little boy is seen clapping behind him.',)
+Current accuracy: 30.985915492957744%
+
+Question number: 72/10042
+Question ID: ('989',)
+Context: ('A woman is playing a violin on the street while various people walk around here and behind her. she',)
+Ending Options: [('continues playing the violin and beginning to intermittently move the sticks up and down.',), ('smiles into the camera while playing and continues playing the song while several people bend down to tip her and walk around her.',), ('finishes and walks off, leaving the violin lying on the ground.',), ('continues to play violin while people pass by her.',)]
+Prediction: ('finishes and walks off, leaving the violin lying on the ground.',), Ground Truth: ('smiles into the camera while playing and continues playing the song while several people bend down to tip her and walk around her.',)
+Current accuracy: 30.555555555555557%
+
+Question number: 73/10042
+Question ID: ('992',)
+Context: ('Various pictures of food are shown followed by a person cutting up vegetables and mixing various ingredients into a pot. he',)
+Ending Options: [('then cuts up a piece of bread, scoops out the insides, and fries up some meat.',), ('cooks up a meal and each are shown eating inside the pot.',), ('boils food into a bowl and then adds some part of a salad into the bowl.',), ('shows how the vegetables are chopped for seasoning and then sprinkled into broth and shown with the water boiling.',)]
+Prediction: ('boils food into a bowl and then adds some part of a salad into the bowl.',), Ground Truth: ('then cuts up a piece of bread, scoops out the insides, and fries up some meat.',)
+Current accuracy: 30.136986301369863%
+
+Question number: 74/10042
+Question ID: ('1005',)
+Context: ('Ingredients are sitting on a wooden block. a person',)
+Ending Options: [('starts mixing the ingredients together.',), ('is mixing the ingredients in an iron.',), ('adds flour to a baking pan.',), ('puts salt, lemon juice in a pot, then adds eggs, cheese, ham, and some other hoagies.',)]
+Prediction: ('starts mixing the ingredients together.',), Ground Truth: ('starts mixing the ingredients together.',)
+Current accuracy: 31.08108108108108%
+
+Question number: 75/10042
+Question ID: ('1012',)
+Context: ('A man is seen walking closer to a pinata while a large group of people stand around him. the man',)
+Ending Options: [('misses the pinata and hits a person behind him, shown again in slow motion.',), ('spins around several times and throws the stick.',), ('shows off various tapers while swinging at the pinata and throwing them out to the crowd.',), ('then throws the pin while others watch on the sides.',)]
+Prediction: ('misses the pinata and hits a person behind him, shown again in slow motion.',), Ground Truth: ('misses the pinata and hits a person behind him, shown again in slow motion.',)
+Current accuracy: 32.0%
+
+Question number: 76/10042
+Question ID: ('1045',)
+Context: ('A pair of female hands uses an iron on a piece of baby clothing. the woman',)
+Ending Options: [('wets the garment and scrubs it with a cloth.',), ('sets the iron aside and flips the clothing.',), ('peels the old clothing off the piece and replaces it with dry material.',), ('wraps the garment on top of the blouse, then irons it.',)]
+Prediction: ('peels the old clothing off the piece and replaces it with dry material.',), Ground Truth: ('sets the iron aside and flips the clothing.',)
+Current accuracy: 31.57894736842105%
+
+Question number: 77/10042
+Question ID: ('1046',)
+Context: ('A pair of female hands uses an iron on a piece of baby clothing. The woman sets the iron aside and flips the clothing. the woman',)
+Ending Options: [('then undresses and irons the shirt.',), ('shows how to iron a sock correctly.',), ('places a pair of pants into a bucket.',), ('uses the iron on the other side of the clothing.',)]
+Prediction: ('uses the iron on the other side of the clothing.',), Ground Truth: ('uses the iron on the other side of the clothing.',)
+Current accuracy: 32.467532467532465%
+
+Question number: 78/10042
+Question ID: ('1047',)
+Context: ('The woman sets the iron aside and flips the clothing. The woman uses the iron on the other side of the clothing. the woman',)
+Ending Options: [("crosses her arms in front of her and it's gone.",), ('quickly picks up and irons, flames dancing over the clothing.',), ('sets the iron aside.',), ('scrubs the clothing with her hands.',)]
+Prediction: ("crosses her arms in front of her and it's gone.",), Ground Truth: ('sets the iron aside.',)
+Current accuracy: 32.05128205128205%
+
+Question number: 79/10042
+Question ID: ('1050',)
+Context: ('We see a chair with a pillow on it. a man holding a cat',)
+Ending Options: [('does curling.',), ('starts hitting objects on an item.',), ('is wrapping a box.',), ('sits down on the chair.',)]
+Prediction: ('sits down on the chair.',), Ground Truth: ('sits down on the chair.',)
+Current accuracy: 32.91139240506329%
+
+Question number: 80/10042
+Question ID: ('1052',)
+Context: ('We see a chair with a pillow on it. A man holding a cat sits down on the chair. The man clips the cats fingernails. the man',)
+Ending Options: [('then clips the cat nails.',), ('puts the cat down and boxes it with paper.',), ("strokes the cat's head.",), ('gives the cats ears.',)]
+Prediction: ("strokes the cat's head.",), Ground Truth: ("strokes the cat's head.",)
+Current accuracy: 33.75%
+
+Question number: 81/10042
+Question ID: ('1053',)
+Context: ("A man holding a cat sits down on the chair. The man clips the cats fingernails. The man strokes the cat's head. the man",)
+Ending Options: [('sits back down on the chair.',), ('plays with the cat rocking it back and forth.',), ('stands up and walks down the sidewalk.',), ('takes the cat to the other room.',)]
+Prediction: ('takes the cat to the other room.',), Ground Truth: ('plays with the cat rocking it back and forth.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 82/10042
+Question ID: ('1065',)
+Context: ('A young girl in a green leotard begins twirling a baton and doing tricks. the girl',)
+Ending Options: [('begins to incorporate her arms and does a flip and continues to flip the baton over her hands and arms.',), ('puts their hands together, and twirl together like a ballet dancer.',), ('does this in the beginning while using her foot and one hand to move around her body.',), ('begins to do some of her routine and does a few hip spins.',)]
+Prediction: ('does this in the beginning while using her foot and one hand to move around her body.',), Ground Truth: ('begins to incorporate her arms and does a flip and continues to flip the baton over her hands and arms.',)
+Current accuracy: 32.926829268292686%
+
+Question number: 83/10042
+Question ID: ('1066',)
+Context: ('The girl begins to incorporate her arms and does a flip and continues to flip the baton over her hands and arms. as the young lady',)
+Ending Options: [('becomes more involved in the ballet, she does a final dismount to bring her elbows down and her upper body straight.',), ('is still serving the baton, she places the extension on her left hand and does a full 180 degree spin in one flip.',), ('is zapping her arms and is practicing her baton twirling technique, she grabs the baton from the ground and shows herself victorious while her coach claps.',), ('continues her performance, she twirls the baton between her legs and over her head, catches it and does a gallop.',)]
+Prediction: ('continues her performance, she twirls the baton between her legs and over her head, catches it and does a gallop.',), Ground Truth: ('continues her performance, she twirls the baton between her legs and over her head, catches it and does a gallop.',)
+Current accuracy: 33.734939759036145%
+
+Question number: 84/10042
+Question ID: ('1067',)
+Context: ("As the young lady continues her performance, she twirls the baton between her legs and over her head, catches it and does a gallop. the rest of the young girl's performance",)
+Ending Options: [('is shown several times and ends by showcasing her back to the both the camera and a final focus of her performance.',), ('is replayed in slow motion.',), ('is a set of twirls and twist and then she runs off the floor to finish her performance.',), ('is replayed, ending with the young lady clapping her hands joyfully.',)]
+Prediction: ('is replayed in slow motion.',), Ground Truth: ('is a set of twirls and twist and then she runs off the floor to finish her performance.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 85/10042
+Question ID: ('1084',)
+Context: ('We see a man in a driveway cleaning snow from his car. the man',)
+Ending Options: [('removes the pieces of the line off his windshield.',), ('cleans the snow under his windshield wipers.',), ('wet his car and wipes it down.',), ('moves the snow out of the front bumper of his car and pours gasoline on it.',)]
+Prediction: ('moves the snow out of the front bumper of his car and pours gasoline on it.',), Ground Truth: ('cleans the snow under his windshield wipers.',)
+Current accuracy: 32.94117647058823%
+
+Question number: 86/10042
+Question ID: ('1085',)
+Context: ('We see a man in a driveway cleaning snow from his car. The man cleans the snow under his windshield wipers. we',)
+Ending Options: [('see the mans silver car gliding by in the background.',), ("see the old man's garage and what looks like a boat in the water.",), ('zoom in on the cabin.',), ('see the building behind the car.',)]
+Prediction: ("see the old man's garage and what looks like a boat in the water.",), Ground Truth: ('see the building behind the car.',)
+Current accuracy: 32.55813953488372%
+
+Question number: 87/10042
+Question ID: ('1087',)
+Context: ('The man cleans the snow under his windshield wipers. We see the building behind the car. We do a 360 spin to see the parking lot. the man',)
+Ending Options: [('finishes and turns off the wipers.',), ('opens the doors on his car and gets in.',), ('puts up the camera.',), ('finishes and slides out of the car.',)]
+Prediction: ('opens the doors on his car and gets in.',), Ground Truth: ('opens the doors on his car and gets in.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 88/10042
+Question ID: ('1112',)
+Context: ('A man in a blue shirt and shorts lifts a large weight over his head. Another man is filming it. The same man comes back and lifts the weight over his head again. he',)
+Ending Options: [('drops it on the ground and walks away.',), ('drops it and runs towards the camera.',), ('again lifts the weight over his head.',), ('drops it onto the floor where it gets stuck.',)]
+Prediction: ('drops it on the ground and walks away.',), Ground Truth: ('drops it on the ground and walks away.',)
+Current accuracy: 34.090909090909086%
+
+Question number: 89/10042
+Question ID: ('1115',)
+Context: ('A man is seen throwing a dart onto a board and leads into a woman speaking. the man',)
+Ending Options: [('tosses darts into the water while people measure the distance and run after them.',), ('holds behind him and the woman continues speaking.',), ('throws several more darts while taking the time to speak to the woman.',), ('gives her several tips and she continues creating darts.',)]
+Prediction: ('throws several more darts while taking the time to speak to the woman.',), Ground Truth: ('throws several more darts while taking the time to speak to the woman.',)
+Current accuracy: 34.831460674157306%
+
+Question number: 90/10042
+Question ID: ('1117',)
+Context: ('A group of people are standing in the middle of a forest with a trail of pebbles separating them from a beautiful crystal clear body of water. the camera',)
+Ending Options: [('zooms in on the foamy waters as well as the nearby cliffs and forest surrounding it.',), ('moves across the water and several people on boats and jet-skis are moving in the water near a large wave.',), ('follows the couple kayaking behind the group on the trail moving back and fourth on the murky water in the forest.',), ('then goes right side up and shows a lot of scenery on the left side.',)]
+Prediction: ('then goes right side up and shows a lot of scenery on the left side.',), Ground Truth: ('moves across the water and several people on boats and jet-skis are moving in the water near a large wave.',)
+Current accuracy: 34.44444444444444%
+
+Question number: 91/10042
+Question ID: ('1119',)
+Context: ('The camera moves across the water and several people on boats and jet-skis are moving in the water near a large wave. More large waves begin to surface and a man begins surfing the waves. the forest',)
+Ending Options: [('starts to get darker and darker as the large wave picks up and men continue to sail around it.',), ('of trees quickly moves over the trailing wave and they follow suit as well.',), ('is then shown clearly under a large wide wave.',), ('is then shown and surf boards appear that are washed up against the banks of the water.',)]
+Prediction: ('starts to get darker and darker as the large wave picks up and men continue to sail around it.',), Ground Truth: ('is then shown and surf boards appear that are washed up against the banks of the water.',)
+Current accuracy: 34.065934065934066%
+
+Question number: 92/10042
+Question ID: ('1140',)
+Context: ('A large patch of grass is shown. a man',)
+Ending Options: [('is mowing the yard next to the bushes.',), ('stretches in front of it.',), ('belly flops on some grass before a newscaster announces the story.',), ('is shown inside while a machine is working.',)]
+Prediction: ('stretches in front of it.',), Ground Truth: ('is mowing the yard next to the bushes.',)
+Current accuracy: 33.69565217391305%
+
+Question number: 93/10042
+Question ID: ('1189',)
+Context: ('A pilates instructor on skates explains how to strap your risk protectors tight and shows that you need knee pads to protect your knees. the lady',)
+Ending Options: [('shows how to harness and strap your weight on properly and she moves away from the mounting as she reaches for her left knee.',), ('starts with two small straps and it puts her into a squatting position with feet fully placed over her knee and her hands suspended and ready.',), ('then explains the skates movement and how to use the breaks that is in the back of the skates.',), ('then puts lotion in both of her hands and rubs them along your knees while the instructor washes them.',)]
+Prediction: ('then explains the skates movement and how to use the breaks that is in the back of the skates.',), Ground Truth: ('then explains the skates movement and how to use the breaks that is in the back of the skates.',)
+Current accuracy: 34.40860215053764%
+
+Question number: 94/10042
+Question ID: ('1199',)
+Context: ('A woman wearing a tan apron is holding a knife and talking. She then shows an appliance on the table and tilts it upwards. she',)
+Ending Options: [('turns a dial on the appliance and sets it back down.',), ('removes a lemon from a jar and places it into a pot.',), ('takes a quarter of an inch of the device and holds it against a piece of cake.',), ('continues sliding the blade over the appliance.',)]
+Prediction: ('removes a lemon from a jar and places it into a pot.',), Ground Truth: ('turns a dial on the appliance and sets it back down.',)
+Current accuracy: 34.04255319148936%
+
+Question number: 95/10042
+Question ID: ('1200',)
+Context: ('She then shows an appliance on the table and tilts it upwards. She turns a dial on the appliance and sets it back down. she',)
+Ending Options: [('also shows how to use tubing no a string is attached to it and she explaining the use of the tubing.',), ('shows several shots of the chair in the end.',), ('pokes the vacuum nozzle in the top seam of the vacuum cleaner and adds fuel to it while still keeping the vacuum nozzle up.',), ('picks the knife back up and places it on the appliance.',)]
+Prediction: ('picks the knife back up and places it on the appliance.',), Ground Truth: ('picks the knife back up and places it on the appliance.',)
+Current accuracy: 34.73684210526316%
+
+Question number: 96/10042
+Question ID: ('1201',)
+Context: ('She turns a dial on the appliance and sets it back down. She picks the knife back up and places it on the appliance. she',)
+Ending Options: [('gets up and starts brushing the blade.',), ('jumps up and throws something into a container shaped like a snowboard.',), ('turns the dial again on the appliance.',), ('uses a tool to pinch the wax off of the knife.',)]
+Prediction: ('turns the dial again on the appliance.',), Ground Truth: ('turns the dial again on the appliance.',)
+Current accuracy: 35.41666666666667%
+
+Question number: 97/10042
+Question ID: ('1203',)
+Context: ('She picks the knife back up and places it in the appliance and slowly draws it back several times. she',)
+Ending Options: [('stands up from the chair and walks towards the stairs before finally leaving the room.',), ('continues using the appliance to put the fancy knife on the box.',), ('removes the rubber band off of the knife and gets it across the blade.',), ('slices a tomato on a wood block with the knife.',)]
+Prediction: ('stands up from the chair and walks towards the stairs before finally leaving the room.',), Ground Truth: ('slices a tomato on a wood block with the knife.',)
+Current accuracy: 35.051546391752574%
+
+Question number: 98/10042
+Question ID: ('1204',)
+Context: ('She picks the knife back up and places it in the appliance and slowly draws it back several times. She slices a tomato on a wood block with the knife. she',)
+Ending Options: [('then demonstrates how to sharpen the knife and finishes by putting a metal rod in front of the plate of spaghetti that she just sharpened.',), ('grabs a second knife and puts it in the appliance.',), ('decorates the knife with green and red maracas.',), ('positions the knife front and back and finishes by pushing it straight across the square board.',)]
+Prediction: ('grabs a second knife and puts it in the appliance.',), Ground Truth: ('grabs a second knife and puts it in the appliance.',)
+Current accuracy: 35.714285714285715%
+
+Question number: 99/10042
+Question ID: ('1248',)
+Context: ('A man wearing a black clothes is sharpening the knife on a stone. The man beside him on blue long sleeves drawing something on the table with his finger. the man',)
+Ending Options: [('down retracts from the knife and starts sharpening the knife back up again.',), ('turn the knife to sharpen the other side and then wipe it with paper towel.',), ('continues sharpening the knife and standing on the middle of the stone.',), ('stops sharpening the knife and draws on the stone again.',)]
+Prediction: ('stops sharpening the knife and draws on the stone again.',), Ground Truth: ('turn the knife to sharpen the other side and then wipe it with paper towel.',)
+Current accuracy: 35.35353535353536%
+
+Question number: 100/10042
+Question ID: ('1277',)
+Context: ('A man is seen speaking to the camera while a shot of a person playing basketball shows behind. the man',)
+Ending Options: [('pulls the ball up on the court while still speaking to the camera.',), ('continues to speak and leads into more clips of him playing tennis.',), ('continues going around the basket while the camera is sitting in the back.',), ('continues speaking as more shots are shown of the boy playing basketball.',)]
+Prediction: ('pulls the ball up on the court while still speaking to the camera.',), Ground Truth: ('continues speaking as more shots are shown of the boy playing basketball.',)
+Current accuracy: 35.0%
+
+Question number: 101/10042
+Question ID: ('1283',)
+Context: ('A bottle of deep cleansing gel is shown. a woman',)
+Ending Options: [('then begins applying the liquid to his body.',), ('holds up the bottle, then is shown using several different solutions that she lines up together on the counter.',), ('reading a book demonstrates how to use the bottle in the bathroom.',), ('kneels down on a mat while holds up an aerosol can.',)]
+Prediction: ('reading a book demonstrates how to use the bottle in the bathroom.',), Ground Truth: ('holds up the bottle, then is shown using several different solutions that she lines up together on the counter.',)
+Current accuracy: 34.65346534653465%
+
+Question number: 102/10042
+Question ID: ('1301',)
+Context: ('The male athlete is standing by the two poles, raised his arms up, then jumped on the poles with his arms, while under him, a man pull out a red beam. the athlete',)
+Ending Options: [('perform his exhibition on the poles, he stand on his arms while his feet and legs are extended straight up in the air, he turns around, swirl, jumped and twist around then jumped on the mat, standing straight.',), ('placed his feet on the pole and then hold it, then jumped from the pole on the poles stop and put his hands on his knees, bend down, and begin swinging on the pole.',), ('looked behind him, then and continue walking to the pole.',), ('crosses parallel, then stand on all fours above, and on his arms then jump.',)]
+Prediction: ('placed his feet on the pole and then hold it, then jumped from the pole on the poles stop and put his hands on his knees, bend down, and begin swinging on the pole.',), Ground Truth: ('perform his exhibition on the poles, he stand on his arms while his feet and legs are extended straight up in the air, he turns around, swirl, jumped and twist around then jumped on the mat, standing straight.',)
+Current accuracy: 34.31372549019608%
+
+Question number: 103/10042
+Question ID: ('1321',)
+Context: ('A man is in the gym in tight he bends over picks up a weight over his head and drops it back down. he',)
+Ending Options: [('walks back and loosens up before walking back up and doing it again adding more weight.',), ('lifts his legs and pulls the bar up on his body and lifts the weight above his head.',), ('raises the bar over his head followed by another.',), ('lifts it again lifts it over his head and drops it this time and he loosens his way to the top and grabs it again.',)]
+Prediction: ('lifts his legs and pulls the bar up on his body and lifts the weight above his head.',), Ground Truth: ('walks back and loosens up before walking back up and doing it again adding more weight.',)
+Current accuracy: 33.980582524271846%
+
+Question number: 104/10042
+Question ID: ('1322',)
+Context: ('A man is in the gym in tight he bends over picks up a weight over his head and drops it back down. He walks back and loosens up before walking back up and doing it again adding more weight. he',)
+Ending Options: [('walks back up and drops the weights back down.',), ('turns his back towards the camera and continues talking to the camera adding more weight along with more weight on the end.',), ('does this multiple times adding more and more weight to the rack.',), ('finally lifts the weight over his head over his own head.',)]
+Prediction: ('walks back up and drops the weights back down.',), Ground Truth: ('does this multiple times adding more and more weight to the rack.',)
+Current accuracy: 33.65384615384615%
+
+Question number: 105/10042
+Question ID: ('1486',)
+Context: ('Two other men gets in the ring and are wresting the man in the center. People are around the ring wtching the wrest. three journalists',)
+Ending Options: [('are standing wearing suits and watch the men in the ring.',), ('came in and started talking to the reporter.',), ('are wrestling at the ring as people are seeing them.',), ('gets in front of them tugging and pushing the man.',)]
+Prediction: ('came in and started talking to the reporter.',), Ground Truth: ('are standing wearing suits and watch the men in the ring.',)
+Current accuracy: 33.33333333333333%
+
+Question number: 106/10042
+Question ID: ('1493',)
+Context: ('A shot of a sunset set is shown followed by peaking smoking and walking around a paint ball pit. the men',)
+Ending Options: [('play a game of indoor water volleyball and end by handing the ball to someone outside the net and presenting it to the camera.',), ('speak to one another and lead into running around and playing paint ball.',), ('then heat paint and paint more followed by smoke and zzing.',), ('use firearms and films to shoot at a target while the owner smiles in the end.',)]
+Prediction: ('play a game of indoor water volleyball and end by handing the ball to someone outside the net and presenting it to the camera.',), Ground Truth: ('speak to one another and lead into running around and playing paint ball.',)
+Current accuracy: 33.0188679245283%
+
+Question number: 107/10042
+Question ID: ('1494',)
+Context: ('A shot of a sunset set is shown followed by peaking smoking and walking around a paint ball pit. The men speak to one another and lead into running around and playing paint ball. they',)
+Ending Options: [('pauses for a few moments to speak to one another and the camera captures the shooters from different angles.',), ('are seen outside again with one man speaking and dancing in the same spot.',), ('finish and walk into each other holding a pose and cheering.',), ('jump and skydive into the water at various speeds, tossing each other around.',)]
+Prediction: ('pauses for a few moments to speak to one another and the camera captures the shooters from different angles.',), Ground Truth: ('pauses for a few moments to speak to one another and the camera captures the shooters from different angles.',)
+Current accuracy: 33.64485981308411%
+
+Question number: 108/10042
+Question ID: ('1515',)
+Context: ('We see the underwater sea floor. two people',)
+Ending Options: [('swim in front of the camera.',), ('engage in a game of water polo.',), ('are sitting in a kayak behind the water.',), ('push the cups of at the sea floor and the sea floor begins to rise.',)]
+Prediction: ('swim in front of the camera.',), Ground Truth: ('swim in front of the camera.',)
+Current accuracy: 34.25925925925926%
+
+Question number: 109/10042
+Question ID: ('1516',)
+Context: ('We see the underwater sea floor. Two people swim in front of the camera. we',)
+Ending Options: [('see a blue wedge and see a boy wearing a cap underwater.',), ('see a man holding a camera.',), ('see a sea turtle in a grey body bag.',), ('see men wearing water fogs.',)]
+Prediction: ('see a man holding a camera.',), Ground Truth: ('see a man holding a camera.',)
+Current accuracy: 34.862385321100916%
+
+Question number: 110/10042
+Question ID: ('1517',)
+Context: ('We see the underwater sea floor. Two people swim in front of the camera. We see a man holding a camera. we',)
+Ending Options: [('see a person kitesurfing the ocean floor.',), ('see divers and a man talking.',), ('see a fin enter the camera.',), ('see the man turn off the camera.',)]
+Prediction: ('see the man turn off the camera.',), Ground Truth: ('see a fin enter the camera.',)
+Current accuracy: 34.54545454545455%
+
+Question number: 111/10042
+Question ID: ('1519',)
+Context: ('We see a fin enter the camera. The camera is spinning wildly. Bubbles rise out of a tube. a man',)
+Ending Options: [('bottoms out in the pool.',), ('flours out of the tube.',), ('hands another person the mouthpiece.',), ('walks into the camera frame.',)]
+Prediction: ('walks into the camera frame.',), Ground Truth: ('hands another person the mouthpiece.',)
+Current accuracy: 34.234234234234236%
+
+Question number: 112/10042
+Question ID: ('1549',)
+Context: ('A man is seen standing behind a counter speaking to the camera and holding up cleaning products. He puts the products into a sink and begins scrubbing around the sides. he',)
+Ending Options: [('puts a pants and a shirt into the sink and dries off.',), ('wipes down the counter and shows off the finished sink.',), ('moves to one side of the sink and slowly replaces the tile while also speaking to the camera.',), ('sprays down all the surfaces and flips over to show the just cleaned sink.',)]
+Prediction: ('wipes down the counter and shows off the finished sink.',), Ground Truth: ('wipes down the counter and shows off the finished sink.',)
+Current accuracy: 34.82142857142857%
+
+Question number: 113/10042
+Question ID: ('1607',)
+Context: ('A group of men on donkeys play a form of polo on a dirt field. the',)
+Ending Options: [('camera pans to people watching the game.',), ('group of players are shown riding horses by goalie during a competition without nets strapped around them.',), ('men fall to the ground.',), ('camera follows the pack as they chase a dirt bucker.',)]
+Prediction: ('men fall to the ground.',), Ground Truth: ('camera pans to people watching the game.',)
+Current accuracy: 34.51327433628318%
+
+Question number: 114/10042
+Question ID: ('1608',)
+Context: ('A group of men on donkeys play a form of polo on a dirt field. The camera pans to people watching the game. the camera',)
+Ending Options: [('returns to the people riding the donkeys.',), ('pans between the playing couples.',), ('moves to the women playing.',), ('cuts to people riding horses on a dirt track.',)]
+Prediction: ('moves to the women playing.',), Ground Truth: ('returns to the people riding the donkeys.',)
+Current accuracy: 34.21052631578947%
+
+Question number: 115/10042
+Question ID: ('1621',)
+Context: ('Two men are on a platform, fencing. they',)
+Ending Options: [('jab at each other with their swords.',), ('are in a par four olympics match.',), ('are slipping and sliding between two beams.',), ('pick up sticks and start the match, alternating back and forth.',)]
+Prediction: ('jab at each other with their swords.',), Ground Truth: ('jab at each other with their swords.',)
+Current accuracy: 34.78260869565217%
+
+Question number: 116/10042
+Question ID: ('1622',)
+Context: ('Two men are on a platform, fencing. They jab at each other with their swords. a woman',)
+Ending Options: [('grabs them and whips them apart.',), ('approaches, instructing them.',), ('is shown on the side.',), ('watches as they parlay back and forth.',)]
+Prediction: ('grabs them and whips them apart.',), Ground Truth: ('watches as they parlay back and forth.',)
+Current accuracy: 34.48275862068966%
+
+Question number: 117/10042
+Question ID: ('1626',)
+Context: ('There are two men in the water wearing wetsuits and laying on their surfboards as they ride a wave. the camera man',)
+Ending Options: [('is shorter than the men and has a shorter range.',), ('is surfing as fast as he can on the water as the waves crescendo.',), ('catches one of the surfers as he slips into the goop.',), ('is in a fast moving boat and he continues to video the surfers who are still riding the wave but now they are standing up.',)]
+Prediction: ('is shorter than the men and has a shorter range.',), Ground Truth: ('is in a fast moving boat and he continues to video the surfers who are still riding the wave but now they are standing up.',)
+Current accuracy: 34.18803418803419%
+
+Question number: 118/10042
+Question ID: ('1628',)
+Context: ('The surfer who is in front is happy to riding the wave for so long that he raises his two arms up in the air and then lowers it back down. the surfer in the back',)
+Ending Options: [('begins to lose balance and falls off of his board while the man in the front is still standing up.',), ('does not have to go as far as he needed to to go as he is ready to go.',), ('wave has a big wave almost bigger than he is paddling, and this makes it pretty fun because it causes the surfer riding the wave to put up a lot of resistance so he just does it and crash onto the waves making the wave even bigger then it was.',), ('kept one arm raised up and the surfer in front of him raise his left arm.',)]
+Prediction: ('does not have to go as far as he needed to to go as he is ready to go.',), Ground Truth: ('begins to lose balance and falls off of his board while the man in the front is still standing up.',)
+Current accuracy: 33.89830508474576%
+
+Question number: 119/10042
+Question ID: ('1663',)
+Context: ('Several people are seen drilling holes into the ice while looking down and speaking to the camera. Many pictures are shown of the people fishing as well as pulling fish out of a hole. more people',)
+Ending Options: [('sit by the holes and continue to pull out fish.',), ('are seen having their pictures taken and speaking to the camera while water flows all around them.',), ('are seen drilling holes as well as swimming around in the water.',), ('are seen swimming around in the lake and the men speak to the camera.',)]
+Prediction: ('are seen drilling holes as well as swimming around in the water.',), Ground Truth: ('sit by the holes and continue to pull out fish.',)
+Current accuracy: 33.61344537815126%
+
+Question number: 120/10042
+Question ID: ('1701',)
+Context: ('An older women is shown sitting on a front step putting socks on with a small dog standing near her. she',)
+Ending Options: [('brushes and walks with the dog very close.',), ('then puts her shoe on the foot and the dog looks off into the distance.',), ('jumps up and down grabbing her socks rubbing on the dog from time to time.',), ('goes back and forth putting on socks near the dog.',)]
+Prediction: ('then puts her shoe on the foot and the dog looks off into the distance.',), Ground Truth: ('then puts her shoe on the foot and the dog looks off into the distance.',)
+Current accuracy: 34.166666666666664%
+
+Question number: 121/10042
+Question ID: ('1708',)
+Context: ('A young man plays violin while wearing headsets. then',)
+Ending Options: [(', the male hits the violin just once, get the pitch.',), (', the young man stops playing and pass on front a row of drummers.',), (', the young man stands up to demonstrate how to play, after he plays in stairs.',), (', the young man finish playing and take off the headsets.',)]
+Prediction: (', the young man finish playing and take off the headsets.',), Ground Truth: (', the young man finish playing and take off the headsets.',)
+Current accuracy: 34.710743801652896%
+
+Question number: 122/10042
+Question ID: ('1752',)
+Context: ('A female basketball coach is seen instructing a group of girl basketball players who are standing in line on a basketball court. the first girl',)
+Ending Options: [('line up and stand behind a dummy dummy.',), ('trying to get the ball to go far past the basket and hit it back towards the basket while her coach continues teaching her.',), ('walks across the court with the ball and keeps walking then pulling the girls to the other side of the court and the girls begin playing volleyball rhythmically rolling on the floor as the coach helps them follow how to properly do things.',), ('passes to another coach and then runs to the net and takes a layup.',)]
+Prediction: ('trying to get the ball to go far past the basket and hit it back towards the basket while her coach continues teaching her.',), Ground Truth: ('passes to another coach and then runs to the net and takes a layup.',)
+Current accuracy: 34.42622950819672%
+
+Question number: 123/10042
+Question ID: ('1755',)
+Context: ('A group of people are in a house. a man',)
+Ending Options: [('is holding cored soap in his hand as he washes with a bottle.',), ('uses a paintball gun on his child.',), ('is mopping the floor with a mop.',), ('is shown wearing skis as he talks about areas he will like to ski on.',)]
+Prediction: ('is mopping the floor with a mop.',), Ground Truth: ('is mopping the floor with a mop.',)
+Current accuracy: 34.959349593495936%
+
+Question number: 124/10042
+Question ID: ('1756',)
+Context: ('A group of people are in a house. A man is mopping the floor with a mop. another boy',)
+Ending Options: [('walks behind him and sets the mop down.',), ('is standing next to a man scrubbing the floor.',), ('is mopping a floor while blindfolded.',), ('attempts to walk through where he is mopping.',)]
+Prediction: ('is standing next to a man scrubbing the floor.',), Ground Truth: ('attempts to walk through where he is mopping.',)
+Current accuracy: 34.67741935483871%
+
+Question number: 125/10042
+Question ID: ('1757',)
+Context: ('A man is mopping the floor with a mop. Another boy attempts to walk through where he is mopping. the man',)
+Ending Options: [('takes a bucket, large hose and goes in the sink with it.',), ('puts his foot down and walks away.',), ('walks around the mopping area.',), ('takes a drink of beer and complains to the camera.',)]
+Prediction: ('puts his foot down and walks away.',), Ground Truth: ('takes a drink of beer and complains to the camera.',)
+Current accuracy: 34.4%
+
+Question number: 126/10042
+Question ID: ('1758',)
+Context: ('Another boy attempts to walk through where he is mopping. The man takes a drink of beer and complains to the camera. he',)
+Ending Options: [('gets back in the raft to go back to the store.',), ('continues scrubbing the mop with another spray and the boy walks back.',), ('continues to mop mopping the floor.',), ('mops through the room in between the people.',)]
+Prediction: ('gets back in the raft to go back to the store.',), Ground Truth: ('mops through the room in between the people.',)
+Current accuracy: 34.12698412698413%
+
+Question number: 127/10042
+Question ID: ('1818',)
+Context: ('A small boy wearing a blue and yellow hoodie and gray sweat pants in standing in an outdoor tennis court. he',)
+Ending Options: [('is holding a blue racket as he bounces the yellow and orange tennis ball on the court.',), ('is lifting a ball over his head to throw it at a birdie on a long wooden table in front of him.',), ('lobs the ball back and forth onto the court then puts his hand down to record between his legs to record more practice kicks.',), ('then jumps onto a tennis ball that is positioned in between a set of net and a larger setting of tables on which are arranged various rackets and vegetables as well as various sticks.',)]
+Prediction: ('is holding a blue racket as he bounces the yellow and orange tennis ball on the court.',), Ground Truth: ('is holding a blue racket as he bounces the yellow and orange tennis ball on the court.',)
+Current accuracy: 34.645669291338585%
+
+Question number: 128/10042
+Question ID: ('1819',)
+Context: ('A small boy wearing a blue and yellow hoodie and gray sweat pants in standing in an outdoor tennis court. He is holding a blue racket as he bounces the yellow and orange tennis ball on the court. he',)
+Ending Options: [('continues bouncing the yellow haired ball back and forth while looking out over the court passing the ball to one of the players.',), ('bounces it and does several different things to hit it.',), ('bounces and throws the ball evenly evenly to continue the game of tennis against the two balls.',), ('starts with his first serve where the ball hits the net.',)]
+Prediction: ('starts with his first serve where the ball hits the net.',), Ground Truth: ('starts with his first serve where the ball hits the net.',)
+Current accuracy: 35.15625%
+
+Question number: 129/10042
+Question ID: ('1821',)
+Context: ('He starts with his first serve where the ball hits the net. Then he takes another ball, bounces it and serves again. the ball',)
+Ending Options: [('comes back to him without touching the net.',), ('bounces again and hits the net multiple times.',), ('returns with a third serve.',), ('goes over the net and falls on the other side of the court.',)]
+Prediction: ('goes over the net and falls on the other side of the court.',), Ground Truth: ('goes over the net and falls on the other side of the court.',)
+Current accuracy: 35.65891472868217%
+
+Question number: 130/10042
+Question ID: ('1827',)
+Context: ('We see a golden title on a black screen. a man',)
+Ending Options: [('is waxing a small black horse as rolls his croquet stick.',), ('is on a slack line and is pushed down it.',), ('is playing a harmonica as arrows point to numbers above him.',), ('is wearing scuba gear in a hole in the ice at lake hriton.',)]
+Prediction: ('is on a slack line and is pushed down it.',), Ground Truth: ('is playing a harmonica as arrows point to numbers above him.',)
+Current accuracy: 35.38461538461539%
+
+Question number: 131/10042
+Question ID: ('1846',)
+Context: ('A shot of a cyclist is shown and then it cuts back to the same man in white speaking. a woman',)
+Ending Options: [('shows a strap on and checks it out.',), ('is then seen riding in on a horse with another man and they start riding together across the track.',), ('is now seen riding beside the cyclist and taking pictures as well.',), ('is shown running and the man continues speaking about fitness tips.',)]
+Prediction: ('is then seen riding in on a horse with another man and they start riding together across the track.',), Ground Truth: ('is shown running and the man continues speaking about fitness tips.',)
+Current accuracy: 35.11450381679389%
+
+Question number: 132/10042
+Question ID: ('1855',)
+Context: ('A runner is running on a track in front of a crowd of people. a man',)
+Ending Options: [('is throwing a ball for his dog to catch.',), ('is shown talking to the camera.',), ('is not running when he jumps into a sand pit.',), ('gives a brief introduction before continuing and competing against the man in black.',)]
+Prediction: ('is throwing a ball for his dog to catch.',), Ground Truth: ('is shown talking to the camera.',)
+Current accuracy: 34.84848484848485%
+
+Question number: 133/10042
+Question ID: ('1858',)
+Context: ('Runners are running down a track with crowds on both sides and one of the runners stumbles. Another runner is shown and a man is shown talking to the camera. a runner',)
+Ending Options: [('is shown again multiple times.',), ('triumphant throws up his arms and walks off alone.',), ('is walking through a huge forest and ends up climbing up the aplus over a fence and crashing into other person who subsequently falls too.',), ('is crawling across a finish line while other runners are running through the finish line.',)]
+Prediction: ('is crawling across a finish line while other runners are running through the finish line.',), Ground Truth: ('is crawling across a finish line while other runners are running through the finish line.',)
+Current accuracy: 35.338345864661655%
+
+Question number: 134/10042
+Question ID: ('1860',)
+Context: ('The distressed runner is carried away. Runners in distress are shown. A man is talking to the camera. various runners',)
+Ending Options: [('are shown putting on before a competition.',), ('are shown in distress and talking to the camera.',), ('came into the camera.',), ('arrive from various countries.',)]
+Prediction: ('are shown in distress and talking to the camera.',), Ground Truth: ('are shown in distress and talking to the camera.',)
+Current accuracy: 35.82089552238806%
+
+Question number: 135/10042
+Question ID: ('1872',)
+Context: ('A person is seen standing off in the distance with another standing around a hole. the person',)
+Ending Options: [('then pitches a ball down a long slide and walks away looking triumphant.',), ('then lights a match and starts throwing the wood to the other.',), ('uses a fishing pole on the hole and attempts to pull out a fish.',), ('then throws a ball down the snow and another person stands on a ladder and catches the ball.',)]
+Prediction: ('uses a fishing pole on the hole and attempts to pull out a fish.',), Ground Truth: ('uses a fishing pole on the hole and attempts to pull out a fish.',)
+Current accuracy: 36.2962962962963%
+
+Question number: 136/10042
+Question ID: ('1874',)
+Context: ('A cooker talks in a kitchen and shows the inside of a sharpener knife that has discs inside. then',)
+Ending Options: [(', the cooker prods the discs to make some dough inside while demonstrating while painted the floor.',), (', the cooker add black ingredient and block.',), (', the man puts a knife in the sharpener knife to sharpen.',), (', the cooker put the discs in a tray made of zesty and sliced them on each side of a chopped banana, then slice them and add them to the lemon slice and add a glass of lemonade.',)]
+Prediction: (', the man puts a knife in the sharpener knife to sharpen.',), Ground Truth: (', the man puts a knife in the sharpener knife to sharpen.',)
+Current accuracy: 36.76470588235294%
+
+Question number: 137/10042
+Question ID: ('1875',)
+Context: ('A cooker talks in a kitchen and shows the inside of a sharpener knife that has discs inside. Then, the man puts a knife in the sharpener knife to sharpen. after',)
+Ending Options: [(', he cuts a slice in two and put them in a pan.',), (', the man then paints the knife with the discs.',), (', the man measures the sharpener and cut the discs on its knife, then sews the discs and carve them.',), (', the man wash and dry the knife.',)]
+Prediction: (', he cuts a slice in two and put them in a pan.',), Ground Truth: (', the man wash and dry the knife.',)
+Current accuracy: 36.496350364963504%
+
+Question number: 138/10042
+Question ID: ('1876',)
+Context: ('A pile of trees are shown blowing outside on a cobblestone path outside of a building. as the leaves',)
+Ending Options: [('fall, a large dog wearing a blue cape covers his face.',), ('blow, flour is poured into a pan and laid out.',), ('continue to blow a young boy walks into the scene clearing the path with his leaf blower.',), ('fall, others are shown as well.',)]
+Prediction: ('fall, a large dog wearing a blue cape covers his face.',), Ground Truth: ('continue to blow a young boy walks into the scene clearing the path with his leaf blower.',)
+Current accuracy: 36.231884057971016%
+
+Question number: 139/10042
+Question ID: ('1931',)
+Context: ('A man does a barbecue in a yard while singing with people showing drinks in cans and cups. Then people walk to a bar and sing inside drinking beer. Women serves drinks from a fountain. a man',)
+Ending Options: [('films the men drinking beers through a can and eat.',), ('gives a kiss to a man and then look at a table a woman is using, then a woman shows something white on an tin.',), ('talks on front a microphone and people continue singing and showing beer.',), ('then weld and a bartender gives an alcoholic beverage to the worker.',)]
+Prediction: ('gives a kiss to a man and then look at a table a woman is using, then a woman shows something white on an tin.',), Ground Truth: ('talks on front a microphone and people continue singing and showing beer.',)
+Current accuracy: 35.97122302158273%
+
+Question number: 140/10042
+Question ID: ('1932',)
+Context: ('Women serves drinks from a fountain. A man talks on front a microphone and people continue singing and showing beer. then',)
+Ending Options: [(", people play soccer, ripping each other's hair.",), (', people sit and play foosball and are shown during the show.',), (', people are again singing, drinking and dancing outdoors.',), (', two men fight sand with an accordion while a man help him pretend.',)]
+Prediction: (', people are again singing, drinking and dancing outdoors.',), Ground Truth: (', people are again singing, drinking and dancing outdoors.',)
+Current accuracy: 36.42857142857142%
+
+Question number: 141/10042
+Question ID: ('1962',)
+Context: ('There are people standing on a frozen body of water and are looking into a small hole that has a fishing wire in it and they watch it as it bobs up and down. the standing man',)
+Ending Options: [('in red shirt starts to swing on the line and tries hard to get it to catch something and pulls on the wire several times and hangs from it like a seal.',), ('gets a brush that is attached to a pole and starts to move and gets a zip line out of that hole.',), ('pulls the pole and wire up higher and the man kneeling on the ice pulls the fish out of the ice water and puts it onto the ice.',), ('is on the floating device and is swimming deep under the water, digging around with the pole, while spectators are standing nearby and he extends the fishing wire up to the hole he made before getting pulled under.',)]
+Prediction: ('pulls the pole and wire up higher and the man kneeling on the ice pulls the fish out of the ice water and puts it onto the ice.',), Ground Truth: ('pulls the pole and wire up higher and the man kneeling on the ice pulls the fish out of the ice water and puts it onto the ice.',)
+Current accuracy: 36.87943262411347%
+
+Question number: 142/10042
+Question ID: ('1963',)
+Context: ('The standing man pulls the pole and wire up higher and the man kneeling on the ice pulls the fish out of the ice water and puts it onto the ice. another man',)
+Ending Options: [("lays out the fish on the ice while the audience can't make out a face from their turn.",), ('takes a picture of the fish, the kneeling man unhooks it and the standing man picks it up, holds it by its gills and poses with it.',), ('is then kneeling on the ice and the men fly up and fly as far as possible.',), ('in three suits throws the fish down the lake onto the water while the other man at the lower depth touches the fish.',)]
+Prediction: ('takes a picture of the fish, the kneeling man unhooks it and the standing man picks it up, holds it by its gills and poses with it.',), Ground Truth: ('takes a picture of the fish, the kneeling man unhooks it and the standing man picks it up, holds it by its gills and poses with it.',)
+Current accuracy: 37.32394366197183%
+
+Question number: 143/10042
+Question ID: ('1998',)
+Context: ('Some boys are in the pools playing with volleyballs. there',)
+Ending Options: [('is a game going on called soccer being played.',), ('is a man in a blue suit standing in front of them with a thick rope around his neck.',), ('is a boy carrying a metal ball and a black net on the back of his back.',), ('is a large swimming team swimming and throwing the ball around to their team mates, scoring.',)]
+Prediction: ('is a man in a blue suit standing in front of them with a thick rope around his neck.',), Ground Truth: ('is a large swimming team swimming and throwing the ball around to their team mates, scoring.',)
+Current accuracy: 37.06293706293706%
+
+Question number: 144/10042
+Question ID: ('2030',)
+Context: ('A young man sits on a bed. the man',)
+Ending Options: [('starts playing an acoustic guitar.',), ('lifts a shoe to his mouth.',), ('gets up and walks towards the camera.',), ('then wipes his face.',)]
+Prediction: ('starts playing an acoustic guitar.',), Ground Truth: ('starts playing an acoustic guitar.',)
+Current accuracy: 37.5%
+
+Question number: 145/10042
+Question ID: ('2047',)
+Context: ('Two men do maneuvers on a canoe pivoting the canoe helping with the paddlers. Then, the men pivot the canoe away from the bow paddlers while paddling fast the oars. after',)
+Ending Options: [(', a man sits and maneuver the canoe while other men sit.',), (', the men slides the canoe forward using the oars to advance.',), (', a man performs different zumba moves in different circumstances.',), (', one man misses the paddle while paddling.',)]
+Prediction: (', the men slides the canoe forward using the oars to advance.',), Ground Truth: (', the men slides the canoe forward using the oars to advance.',)
+Current accuracy: 37.93103448275862%
+
+Question number: 146/10042
+Question ID: ('2048',)
+Context: ('Then, the men pivot the canoe away from the bow paddlers while paddling fast the oars. After, the men slides the canoe forward using the oars to advance. next',)
+Ending Options: [(', the men flip the canoe and stops at the bow paddlers.',), (', the men throw the canoe into the water, while one of them holds the paddle with his right hand.',), (', the men turn in the air, then they followed the bow paddlers.',), (', the men sail on the river until arrive to the bank of the river.',)]
+Prediction: (', the men throw the canoe into the water, while one of them holds the paddle with his right hand.',), Ground Truth: (', the men sail on the river until arrive to the bank of the river.',)
+Current accuracy: 37.67123287671233%
+
+Question number: 147/10042
+Question ID: ('2059',)
+Context: ('People are standing on a hill of snow. people',)
+Ending Options: [('are snowboarding down a hill of snow.',), ('are shoveling snow from the foot of the hill.',), ('are working inside a building.',), ('are sitting in buckets on a blanket on the hill.',)]
+Prediction: ('are shoveling snow from the foot of the hill.',), Ground Truth: ('are snowboarding down a hill of snow.',)
+Current accuracy: 37.41496598639456%
+
+Question number: 148/10042
+Question ID: ('2060',)
+Context: ('People are standing on a hill of snow. People are snowboarding down a hill of snow. people',)
+Ending Options: [('are pouring snowballs into tubes as they go down the hill.',), ('are skiing down a roof of a house.',), ('are standing on a hill holding stick.',), ('are skiing down a hill.',)]
+Prediction: ('are skiing down a hill.',), Ground Truth: ('are skiing down a hill.',)
+Current accuracy: 37.83783783783784%
+
+Question number: 149/10042
+Question ID: ('2061',)
+Context: ('People are standing on a hill of snow. People are snowboarding down a hill of snow. People are skiing down a hill. the skiiers',)
+Ending Options: [('comes to a stop on a hill of snow.',), ('are skiing down a snowy hill.',), ('stop at the bottom and talk.',), ('are holding on to ladders.',)]
+Prediction: ('comes to a stop on a hill of snow.',), Ground Truth: ('stop at the bottom and talk.',)
+Current accuracy: 37.58389261744966%
+
+Question number: 150/10042
+Question ID: ('2154',)
+Context: ('A man in an outdoor basketball court explains how to do layup drills with both arms, over hand, underhand, right and left hand layup with two steps. he',)
+Ending Options: [('then demonstrates reading what, by how, you can do the layup over and under hand move with your hands.',), ('shows the components of gym holing, how to use the constant need for exercise to renew strength and safety, and explains how to stand before parti balanced positions as the man demonstrates proper use of such suspension.',), ('then goes to the hash marks on the court and shows various variations of a layup from various distances and how to do the drills for practice.',), ('explains about techniques to correct your back and legs rotation on the course and game.',)]
+Prediction: ('then goes to the hash marks on the court and shows various variations of a layup from various distances and how to do the drills for practice.',), Ground Truth: ('then goes to the hash marks on the court and shows various variations of a layup from various distances and how to do the drills for practice.',)
+Current accuracy: 38.0%
+
+Question number: 151/10042
+Question ID: ('2155',)
+Context: ('He then goes to the hash marks on the court and shows various variations of a layup from various distances and how to do the drills for practice. he',)
+Ending Options: [('shows how to put a hole in a wall using a drill.',), ('once again changes course and takes a break before continuing to talk to the camera.',), ('explains this one more time as he walks towards the game area.',), ('then comes back to the camera and explains what he did.',)]
+Prediction: ('shows how to put a hole in a wall using a drill.',), Ground Truth: ('then comes back to the camera and explains what he did.',)
+Current accuracy: 37.74834437086093%
+
+Question number: 152/10042
+Question ID: ('2165',)
+Context: ('The man in brown shirt is standing next to a pile of tennis ball while he is talking to the camera. he',)
+Ending Options: [('played tennis ball with another person.',), ("pulled out two tennis rackets and toss one to the man and the other's dropped the racket in the air.",), ('started hitting the ball with his racket on his gloved hand.',), ('walked along a beach, talking with people, trying to court a ball.',)]
+Prediction: ('started hitting the ball with his racket on his gloved hand.',), Ground Truth: ('played tennis ball with another person.',)
+Current accuracy: 37.5%
+
+Question number: 153/10042
+Question ID: ('2166',)
+Context: ('The man in brown shirt is standing next to a pile of tennis ball while he is talking to the camera. He played tennis ball with another person. the man in purple shirt',)
+Ending Options: [('fell on the ground, the man put the ball down, pull the ball and set it on the ground, he ball fell, but remain upright.',), ('finally dressed in a black shirt walked over and joined the men talking about the tennis racket.',), ('is playing racket ball while talking to the camera.',), ('serve the ball while the black man hit the ball back.',)]
+Prediction: ('is playing racket ball while talking to the camera.',), Ground Truth: ('serve the ball while the black man hit the ball back.',)
+Current accuracy: 37.254901960784316%
+
+Question number: 154/10042
+Question ID: ('2215',)
+Context: ('A group of people are sitting in a sauna fully clothed. One guy stands up with a violin. The guy begins playing the violin and dancing. the guy',)
+Ending Options: [('plays behind a camera.',), ('kicks his shoe off while dancing.',), ('finishes and gets up.',), ('demonstrates how to cut the strings with the violin.',)]
+Prediction: ('demonstrates how to cut the strings with the violin.',), Ground Truth: ('kicks his shoe off while dancing.',)
+Current accuracy: 37.01298701298701%
+
+Question number: 155/10042
+Question ID: ('2216',)
+Context: ('One guy stands up with a violin. The guy begins playing the violin and dancing. The guy kicks his shoe off while dancing. the guy',)
+Ending Options: [('sits down and plays the violin.',), ('taps his shoe while playing the violin.',), ('resumes playing the violin.',), ('stops playing and drops the violin.',)]
+Prediction: ('taps his shoe while playing the violin.',), Ground Truth: ('sits down and plays the violin.',)
+Current accuracy: 36.774193548387096%
+
+Question number: 156/10042
+Question ID: ('2217',)
+Context: ('The harmonica is held up and shown. a person',)
+Ending Options: [('runs up and grabs the guitar, then begins strumming.',), ('is strumming an electric guitar.',), ('holds a harmonica between his hands a plays a song.',), ('is flying through the sky.',)]
+Prediction: ('is flying through the sky.',), Ground Truth: ('holds a harmonica between his hands a plays a song.',)
+Current accuracy: 36.53846153846153%
+
+Question number: 157/10042
+Question ID: ('2218',)
+Context: ('The harmonica is held up and shown. A person holds a harmonica between his hands a plays a song. the person',)
+Ending Options: [('folds the the harmonica between their legs.',), ('plays a painting on front a chair.',), ('takes the harmonica out of their mouth and begins playing the piece.',), ('finishes the song and holds up the harmonica.',)]
+Prediction: ('finishes the song and holds up the harmonica.',), Ground Truth: ('finishes the song and holds up the harmonica.',)
+Current accuracy: 36.94267515923567%
+
+Question number: 158/10042
+Question ID: ('2219',)
+Context: ('A young man plays the violin on a sidewalk for people passing by in downtown area. two students',)
+Ending Options: [('play the violin on front people who pass by in street, looking at the violin.',), ('of swimming are in the swimming pool watching him play the violin.',), ('are playing drums in a park while other people walk past on sidewalk.',), ('walk by behind the musician while he plays.',)]
+Prediction: ('of swimming are in the swimming pool watching him play the violin.',), Ground Truth: ('walk by behind the musician while he plays.',)
+Current accuracy: 36.708860759493675%
+
+Question number: 159/10042
+Question ID: ('2241',)
+Context: ("The camera zooms in to show the car's front right wheel. The camera zooms out to show the man spraying the car with soap. the camera",)
+Ending Options: [('shows the man cleaning the car with the brooms.',), ('zooms in again to show the soap running down the back of the car, then the camera moves to show the left side of the car.',), ('zooms in to the driver side wheel and mimics it.',), ('zooms back out to show the well laid tires.',)]
+Prediction: ('zooms in again to show the soap running down the back of the car, then the camera moves to show the left side of the car.',), Ground Truth: ('zooms in again to show the soap running down the back of the car, then the camera moves to show the left side of the car.',)
+Current accuracy: 37.10691823899371%
+
+Question number: 160/10042
+Question ID: ('2242',)
+Context: ('The camera zooms in again to show the soap running down the back of the car, then the camera moves to show the left side of the car. then two men',)
+Ending Options: [('appear and one stands next to the car and the other follows behind.',), ('are shown standing next to a woman with fish on a wheel, laughing.',), ('spray water on the car to wash the soap off.',), ('in the background release, spray paint, cloth, and long sleeves from a car cover.',)]
+Prediction: ('appear and one stands next to the car and the other follows behind.',), Ground Truth: ('spray water on the car to wash the soap off.',)
+Current accuracy: 36.875%
+
+Question number: 161/10042
+Question ID: ('2263',)
+Context: ('A woman in an orange shirt is sitting on an exercise machine. she',)
+Ending Options: [('engages in some form of mount.',), ('is using a dodgeball machine.',), ('begins working out on the exercise machine.',), ('gets on the machine and starts riding it.',)]
+Prediction: ('gets on the machine and starts riding it.',), Ground Truth: ('begins working out on the exercise machine.',)
+Current accuracy: 36.64596273291926%
+
+Question number: 162/10042
+Question ID: ('2275',)
+Context: ('A person hangs onto the handles of a kite flying overhead. the kite',)
+Ending Options: [('falls as the wind lessens.',), ('is flying in the air waving to the camera.',), ('moves away as the man is pushed back up by the water.',), ('takes off on a bright course.',)]
+Prediction: ('is flying in the air waving to the camera.',), Ground Truth: ('falls as the wind lessens.',)
+Current accuracy: 36.41975308641975%
+
+Question number: 163/10042
+Question ID: ('2278',)
+Context: ('People are rowing down a body of water. a guy',)
+Ending Options: [('is standing on a rowing machine.',), ('rinses his face with water from the body of water.',), ('falls out of his back.',), ('uses a big paddle to pull people that fall.',)]
+Prediction: ('rinses his face with water from the body of water.',), Ground Truth: ('rinses his face with water from the body of water.',)
+Current accuracy: 36.809815950920246%
+
+Question number: 164/10042
+Question ID: ('2281',)
+Context: ('A graphic introduces the hand car wash video. the car',)
+Ending Options: [('washes game is displayed.',), ('is washed first gently with soap.',), ('washes and a man wearing a blue shirt speaks to the camera.',), ('washes persons hands and wipes them with a blue cloth.',)]
+Prediction: ('washes and a man wearing a blue shirt speaks to the camera.',), Ground Truth: ('is washed first gently with soap.',)
+Current accuracy: 36.58536585365854%
+
+Question number: 165/10042
+Question ID: ('2282',)
+Context: ('A graphic introduces the hand car wash video. The car is washed first gently with soap. next',)
+Ending Options: [(', the tires are soaped and washed thoroughly.',), (', two cars slowly drive by.',), ('is a clean car wash video.',), (', it is shown from behind.',)]
+Prediction: (', it is shown from behind.',), Ground Truth: (', the tires are soaped and washed thoroughly.',)
+Current accuracy: 36.36363636363637%
+
+Question number: 166/10042
+Question ID: ('2284',)
+Context: ("Next, the tires are soaped and washed thoroughly. After that, the car's engine is steam cleaned. a final spot free rinse",)
+Ending Options: [('is taken from under the hood.',), ('is shown and a young female is sucking on a cigarette.',), ('washer is applied and the wash sheet is spread out on the floor.',), ('is applied and the car is dried.',)]
+Prediction: ('is applied and the car is dried.',), Ground Truth: ('is applied and the car is dried.',)
+Current accuracy: 36.74698795180723%
+
+Question number: 167/10042
+Question ID: ('2301',)
+Context: ('A woman is seen putting makeup on her face and leads into several pictures of makeup. Many more pictures of products are shown with text across the screen. more pictures of products',)
+Ending Options: [('are shown on the screen leads into a woman putting makeup on herself.',), ('are shown that end with more text and a woman pushing away makeup.',), ('are shown and ends with a woman hula hooping with herself.',), ('are shown and ends with the camera shining off into the distance and the woman walking away.',)]
+Prediction: ('are shown and ends with the camera shining off into the distance and the woman walking away.',), Ground Truth: ('are shown that end with more text and a woman pushing away makeup.',)
+Current accuracy: 36.52694610778443%
+
+Question number: 168/10042
+Question ID: ('2306',)
+Context: ('There is a woman eating ice cream from a tub and talking to the camera man. and he',)
+Ending Options: [('is gone doing this all with a in a getting ice cream, while a man else with a stick is also eating from a tub and eating ice cream.',), ('tries to look into the tub, but she pulls it away.',), ('is holding a baby zumba as they begin dancing around twirling their legs and dancing in tight formation.',), ('tells her about some sticky potatoes and she eats them also.',)]
+Prediction: ('tries to look into the tub, but she pulls it away.',), Ground Truth: ('tries to look into the tub, but she pulls it away.',)
+Current accuracy: 36.904761904761905%
+
+Question number: 169/10042
+Question ID: ('2307',)
+Context: ('There is a woman eating ice cream from a tub and talking to the camera man. And he tries to look into the tub, but she pulls it away. the camera person',)
+Ending Options: [('sits down to continue talking to the woman.',), ('stops at a jar of liquid in the sink.',), ('is sitting in the bushes watching the woman.',), ('continues talking to the social media to find a rich husband in that world.',)]
+Prediction: ('is sitting in the bushes watching the woman.',), Ground Truth: ('sits down to continue talking to the woman.',)
+Current accuracy: 36.68639053254438%
+
+Question number: 170/10042
+Question ID: ('2324',)
+Context: ('A man is shown standing in front of a blue background as many harmonicas are shown and he starts playing them. He is then shown speaking into the camera and going into detail with regards to the products features. he',)
+Ending Options: [('is 6\'6 " and continues to play with the device throughout the video as well as cutting it back to a man playing polls.',), ('continues talking about the machine while smoking a cigarette in front of the camera.',), ('continues playing the stereo while detail is shown on the side as the scenes continue to pan in focus and ends with a blow by blow image.',), ('shows off how many he has in his coat and continues talking.',)]
+Prediction: ('continues talking about the machine while smoking a cigarette in front of the camera.',), Ground Truth: ('shows off how many he has in his coat and continues talking.',)
+Current accuracy: 36.470588235294116%
+
+Question number: 171/10042
+Question ID: ('2361',)
+Context: ('A violinist is playing the violin in a music room. she',)
+Ending Options: [('explains the song she is about to play.',), ('takes a cloth in her hand and prints the sheet music.',), ('adjusts the violin under her chin as she reads the music.',), ('stops playing the violin and starts to sit up.',)]
+Prediction: ('adjusts the violin under her chin as she reads the music.',), Ground Truth: ('adjusts the violin under her chin as she reads the music.',)
+Current accuracy: 36.84210526315789%
+
+Question number: 172/10042
+Question ID: ('2363',)
+Context: ('A woman in a suit is talking to a camera. a woman',)
+Ending Options: [('takes an earring into her nostril.',), ('is giving a tattoo to a man on a bed.',), ('puts on hair gel and brushes on her face.',), ('is putting contact lenses into her eyes.',)]
+Prediction: ('is giving a tattoo to a man on a bed.',), Ground Truth: ('is putting contact lenses into her eyes.',)
+Current accuracy: 36.627906976744185%
+
+Question number: 173/10042
+Question ID: ('2364',)
+Context: ('A woman in a suit is talking to a camera. A woman is putting contact lenses into her eyes. contact lenses',)
+Ending Options: [('are being put into elongated pupil holes.',), ('are made and put in.',), ('are shown inside a case onto her nose, inside and outside.',), ('are shown on a hand.',)]
+Prediction: ('are shown inside a case onto her nose, inside and outside.',), Ground Truth: ('are shown on a hand.',)
+Current accuracy: 36.41618497109826%
+
+Question number: 174/10042
+Question ID: ('2390',)
+Context: ('A crowd watches as several runners in a race jog past. they all',)
+Ending Options: [('fall down as they attempt to make the jump.',), ('are interviewed by microphones outside.',), ('stop and change positions as the race starts.',), ('keep jogging, coming in at the end of the race.',)]
+Prediction: ('keep jogging, coming in at the end of the race.',), Ground Truth: ('keep jogging, coming in at the end of the race.',)
+Current accuracy: 36.7816091954023%
+
+Question number: 175/10042
+Question ID: ('2433',)
+Context: ('A small child seated at a table eats ice cream with a spoon while people walk by in the background. a pair of adult hands',)
+Ending Options: [('briefly enter the camera frame in the foreground.',), ('them a carton of milk, estes laughs and their mom feeds the boy.',), ('him the ice cream cone as the child claps.',), ('somebody else time.',)]
+Prediction: ('briefly enter the camera frame in the foreground.',), Ground Truth: ('briefly enter the camera frame in the foreground.',)
+Current accuracy: 37.142857142857146%
+
+Question number: 176/10042
+Question ID: ('2434',)
+Context: ('A small child seated at a table eats ice cream with a spoon while people walk by in the background. A pair of adult hands briefly enter the camera frame in the foreground. the child',)
+Ending Options: [('eats with gusto while dancing and smiling to the camera.',), ('departs from the camera frame, holding a spoon and shakes it in the air.',), ('lifts the spoon without touching the liquid on the spoon.',), ('inserts her spoon into her ice cream container on the table.',)]
+Prediction: ('departs from the camera frame, holding a spoon and shakes it in the air.',), Ground Truth: ('inserts her spoon into her ice cream container on the table.',)
+Current accuracy: 36.93181818181818%
+
+Question number: 177/10042
+Question ID: ('2477',)
+Context: ("There's a woman with red colored hair wearing a black tank top and printed black tights skating on roller blades through the streets of a city. the streets",)
+Ending Options: [('are filled with crowds, people and cars, and she is wearing a white and orange outfit.',), ('showed various advertisements advertised for skate skating.',), ('are covered hip hop and dressed in purple and red leotards as the individual rhythmically spins around.',), ("don't have any cars but people are riding bikes or skateboarding.",)]
+Prediction: ('are filled with crowds, people and cars, and she is wearing a white and orange outfit.',), Ground Truth: ("don't have any cars but people are riding bikes or skateboarding.",)
+Current accuracy: 36.72316384180791%
+
+Question number: 178/10042
+Question ID: ('2478',)
+Context: ("There's a woman with red colored hair wearing a black tank top and printed black tights skating on roller blades through the streets of a city. The streets don't have any cars but people are riding bikes or skateboarding. the woman",)
+Ending Options: [('on the skateboards takes one final turn and then climbs the stairs of a building.',), ('stops skateboarding and gets out of the skate park and opens a door behind her and takes a cigarette out of her purse.',), ('walks past teens riding bmx bikes.',), ('swiftly skates through the crowded streets as she passes by several tourists walking leisurely.',)]
+Prediction: ('on the skateboards takes one final turn and then climbs the stairs of a building.',), Ground Truth: ('swiftly skates through the crowded streets as she passes by several tourists walking leisurely.',)
+Current accuracy: 36.51685393258427%
+
+Question number: 179/10042
+Question ID: ('2487',)
+Context: ('The bikers are biking on the ramp, while on the starting line the group of bikers are in positioned. The small fence was put down the the bikers went bike racing over the big ramps. the spectators',)
+Ending Options: [('flowed around the ends of the ramp, while the people observe and applaud.',), ('are in the crowd so the bike races is continued.',), ('are on the side of the tracks.',), ('all congratulated the bikers onto the racetrack win.',)]
+Prediction: ('are on the side of the tracks.',), Ground Truth: ('are on the side of the tracks.',)
+Current accuracy: 36.87150837988827%
+
+Question number: 180/10042
+Question ID: ('2497',)
+Context: ('A man is kneeling on the ice with another beside hide pulling string out of a hole. they',)
+Ending Options: [('march the sled back and forth creating holes as they go.',), ('continue to pull the string while the man beside him grabs a hook.',), ('use the string to create a sled as they begin sledding through the streets of paris.',), ('then open the hole with a rod and let the ice out into the ocean.',)]
+Prediction: ('then open the hole with a rod and let the ice out into the ocean.',), Ground Truth: ('continue to pull the string while the man beside him grabs a hook.',)
+Current accuracy: 36.666666666666664%
+
+Question number: 181/10042
+Question ID: ('2499',)
+Context: ('They continue to pull the string while the man beside him grabs a hook. He places the hook near the hole but the man grabs a fish on a string. the fish',)
+Ending Options: [('crawls out and the man catches it.',), ('splashes into the hole bigger and bigger as the others continue to pull the string one by one.',), ('fizzles and the man drops the hook.',), ('flops around and the man grabs the fish and holds him up.',)]
+Prediction: ('fizzles and the man drops the hook.',), Ground Truth: ('flops around and the man grabs the fish and holds him up.',)
+Current accuracy: 36.46408839779006%
+
+Question number: 182/10042
+Question ID: ('2513',)
+Context: ('A group of people wearing swim caps move around a pool and toss a ball around with a man on the sides waving a flag. they',)
+Ending Options: [('dive backward into the pool causing it to crest and swim to the edge of the pool.',), ('continue playing with one another in the water and join stand by to watch the game.',), ('play a game of water polo and throw the ball around to each other.',), ('continue to throw the object around while holding the hold the fish.',)]
+Prediction: ('play a game of water polo and throw the ball around to each other.',), Ground Truth: ('play a game of water polo and throw the ball around to each other.',)
+Current accuracy: 36.81318681318682%
+
+Question number: 183/10042
+Question ID: ('2514',)
+Context: ('A group of people wearing swim caps move around a pool and toss a ball around with a man on the sides waving a flag. They play a game of water polo and throw the ball around to each other. one',)
+Ending Options: [('throws the ball into the net and causes the people on the side to jump and cheer.',), ('jumps through the net and makes it all the way to the other side.',), ('person keeps score and pretends to make a goal.',), ('person wins the game knocking the other one into the water.',)]
+Prediction: ('person wins the game knocking the other one into the water.',), Ground Truth: ('throws the ball into the net and causes the people on the side to jump and cheer.',)
+Current accuracy: 36.6120218579235%
+
+Question number: 184/10042
+Question ID: ('2518',)
+Context: ('We see an image and a title card. We see a man playing basketball. The shot he made is seen in reverse. we',)
+Ending Options: [('see a gym with teenagers shooting basketball.',), ('see the man make his shot and see a title card.',), ('see a title and the man appears, shirtless.',), ('see a stick in the finished basket.',)]
+Prediction: ('see the man make his shot and see a title card.',), Ground Truth: ('see a gym with teenagers shooting basketball.',)
+Current accuracy: 36.41304347826087%
+
+Question number: 185/10042
+Question ID: ('2522',)
+Context: ('We see a title card on black. A man is shooting basketball in a gym. We see a man dunk the ball twice. we',)
+Ending Options: [('see a man flip and throw the ball.',), ('see the ending title card on black.',), ('see man pull back the cup and drop a dart down the grass.',), ('see a yellow screen and title screen.',)]
+Prediction: ('see a man flip and throw the ball.',), Ground Truth: ('see the ending title card on black.',)
+Current accuracy: 36.21621621621622%
+
+Question number: 186/10042
+Question ID: ('2533',)
+Context: ('A woman in a dress holding a violin addresses an audience. The woman plays the violin as other musicians look on. the woman',)
+Ending Options: [('finishes playing directly and the audience applauds.',), ('finishes playing and sits back.',), ('finishes her playing and everyone applauds.',), ('pauses to face the audience.',)]
+Prediction: ('pauses to face the audience.',), Ground Truth: ('finishes her playing and everyone applauds.',)
+Current accuracy: 36.02150537634409%
+
+Question number: 187/10042
+Question ID: ('2552',)
+Context: ('A boy skateboard on a road jumping and flipping the skateboard in the street. a skateboard',)
+Ending Options: [('is riding on the road on its belly.',), ('leans on a tree.',), ('lands on the road where construction workers are spraying it down, and a boy with sunglasses runs towards the skateboard like a robot.',), ('is two of the boys skateboard together.',)]
+Prediction: ('is riding on the road on its belly.',), Ground Truth: ('leans on a tree.',)
+Current accuracy: 35.82887700534759%
+
+Question number: 188/10042
+Question ID: ('2553',)
+Context: ('A boy skateboard on a road jumping and flipping the skateboard in the street. A skateboard leans on a tree. then',)
+Ending Options: [(', gopro jumps, then skateboard on a road.',), (', the boy slides on the street with his skateboard sticking in the air.',), (', the boy skateboard on small ramps and then continues skateboarding in the street.',), (', the boy rides on the skateboard with turned legs.',)]
+Prediction: (', the boy slides on the street with his skateboard sticking in the air.',), Ground Truth: (', the boy skateboard on small ramps and then continues skateboarding in the street.',)
+Current accuracy: 35.638297872340424%
+
+Question number: 189/10042
+Question ID: ('2558',)
+Context: ('A girl is seen laying on a table with a man piercing her belly button below her. the girl',)
+Ending Options: [('holds up a bottle of fluid and puts it on an iv.',), ('laughs at the camera while holding a can of herself and the man.',), ('screams in pain and the man finishes her piercing while she looks to the camera.',), ("under the belly's cycle begins to milk the tube from the bottle that is in her stomach and pans over to the man piercing her belly button.",)]
+Prediction: ('screams in pain and the man finishes her piercing while she looks to the camera.',), Ground Truth: ('screams in pain and the man finishes her piercing while she looks to the camera.',)
+Current accuracy: 35.978835978835974%
+
+Question number: 190/10042
+Question ID: ('2581',)
+Context: ('A young man is washing clothes inside a bathroom sink as he talks to the camera. initially he',)
+Ending Options: [('is demonstrating using two hoses to wash the clothes as he will talk to the camera.',), ('is going to his locker but resumes washing the shirt.',), ('starts to wash the clothes with both hands.',), ('shows several different ways to clean a sink during a wash and is seen staring into the camera.',)]
+Prediction: ('is demonstrating using two hoses to wash the clothes as he will talk to the camera.',), Ground Truth: ('starts to wash the clothes with both hands.',)
+Current accuracy: 35.78947368421053%
+
+Question number: 191/10042
+Question ID: ('2582',)
+Context: ('A young man is washing clothes inside a bathroom sink as he talks to the camera. Initially he starts to wash the clothes with both hands. afterwards he',)
+Ending Options: [('goes back to using his hands to wash the clothes gradually.',), ('adds more soap using two different bottles to the sink.',), ('shows his face by grimacing due to the stiff air stream and looks in the mirror to change something for his face.',), ('washes the other clothes in the sink and several more people walk by.',)]
+Prediction: ('goes back to using his hands to wash the clothes gradually.',), Ground Truth: ('adds more soap using two different bottles to the sink.',)
+Current accuracy: 35.602094240837694%
+
+Question number: 192/10042
+Question ID: ('2583',)
+Context: ('Initially he starts to wash the clothes with both hands. Afterwards he adds more soap using two different bottles to the sink. subsequently he',)
+Ending Options: [('adds more soap to the washing machine and then proceeds to swirl and rinse the clothes.',), ('ends by miming drinking the water in the sink.',), ('grabs fabric to dry the clothes and shows how they fit him comfortably.',), ('keeps washing the clothes as he talks to the camera.',)]
+Prediction: ('keeps washing the clothes as he talks to the camera.',), Ground Truth: ('keeps washing the clothes as he talks to the camera.',)
+Current accuracy: 35.9375%
+
+Question number: 193/10042
+Question ID: ('2611',)
+Context: ('A man touches his faces and waves. the man',)
+Ending Options: [('in black puts a medal medal around his neck.',), ('motions for someone in a suit to come and gray their hair.',), ('walks a mower across very tall growing grass.',), ('runs and claps his hands together.',)]
+Prediction: ('runs and claps his hands together.',), Ground Truth: ('walks a mower across very tall growing grass.',)
+Current accuracy: 35.751295336787564%
+
+Question number: 194/10042
+Question ID: ('2623',)
+Context: ('We see the title introducing us to jesse. jesse the dog',)
+Ending Options: [('runs and catches frisbee.',), ('runs in circles where the dog is his mate.',), ('owner shows us how he walks and how he breathes.',), ('is shown from a shampoo advertisement one last time.',)]
+Prediction: ('owner shows us how he walks and how he breathes.',), Ground Truth: ('runs and catches frisbee.',)
+Current accuracy: 35.56701030927835%
+
+Question number: 195/10042
+Question ID: ('2624',)
+Context: ('We see the title introducing us to jesse. Jesse the dog runs and catches frisbee. we',)
+Ending Options: [('see a violinist doing a piano clip.',), ('see an opening title screen.',), ('see jesse close up in the camera.',), ('see a guy hold a blue frisbee in the air and tell that the dog has a pink frisbee and we see its pink feet.',)]
+Prediction: ('see a guy hold a blue frisbee in the air and tell that the dog has a pink frisbee and we see its pink feet.',), Ground Truth: ('see jesse close up in the camera.',)
+Current accuracy: 35.38461538461539%
+
+Question number: 196/10042
+Question ID: ('2625',)
+Context: ('We see the title introducing us to jesse. Jesse the dog runs and catches frisbee. We see jesse close up in the camera. jesse',)
+Ending Options: [('throws the frisbee and a dog catches it.',), ('gives us the dog and we see the ending title screen.',), ('is running around catching the frisbee the lady throws.',), ('gives instructions on how to clean a window in a home.',)]
+Prediction: ('gives us the dog and we see the ending title screen.',), Ground Truth: ('is running around catching the frisbee the lady throws.',)
+Current accuracy: 35.204081632653065%
+
+Question number: 197/10042
+Question ID: ('2626',)
+Context: ('Jesse the dog runs and catches frisbee. We see jesse close up in the camera. Jesse is running around catching the frisbee the lady throws. we',)
+Ending Options: [('see a fish landing into the water.',), ('see a house in the distance and on the left.',), ('see five still shots of jesse jumping in the air.',), ('see the ground in a white screen.',)]
+Prediction: ('see a house in the distance and on the left.',), Ground Truth: ('see five still shots of jesse jumping in the air.',)
+Current accuracy: 35.025380710659896%
+
+Question number: 198/10042
+Question ID: ('2627',)
+Context: ('Jesse is running around catching the frisbee the lady throws. We see five still shots of jesse jumping in the air. jesse',)
+Ending Options: [('kicks after the dog while the lady helps.',), ('immediately shits in pain while having a hard time catching the frisbee.',), ('is then shown jumping again and we see the men giving each other high fives.',), ('continues to run around with his frisbee.',)]
+Prediction: ('is then shown jumping again and we see the men giving each other high fives.',), Ground Truth: ('continues to run around with his frisbee.',)
+Current accuracy: 34.84848484848485%
+
+Question number: 199/10042
+Question ID: ('2637',)
+Context: ('A first person view is seen of a man riding a riding lawn mower. he',)
+Ending Options: [('takes turns quickly, mowing the lawn.',), ('creates a large puddle of water and a high rush of water around him as he heads back and forth back and forth.',), ('talks about how to properly ride an object while another man climbs up on the back of him.',), ('moves all around while there is a crowd watching.',)]
+Prediction: ('creates a large puddle of water and a high rush of water around him as he heads back and forth back and forth.',), Ground Truth: ('takes turns quickly, mowing the lawn.',)
+Current accuracy: 34.67336683417086%
+
+Question number: 200/10042
+Question ID: ('2638',)
+Context: ('A first person view is seen of a man riding a riding lawn mower. He takes turns quickly, mowing the lawn. he',)
+Ending Options: [('continues until the entire yard is mown.',), ('backs up slowly to cut the lawn.',), ('moves back and fourth doing several other tasks while looking to the camera.',), ('never stops, trampling the grass and clipping it back.',)]
+Prediction: ('backs up slowly to cut the lawn.',), Ground Truth: ('continues until the entire yard is mown.',)
+Current accuracy: 34.5%
+
+Question number: 201/10042
+Question ID: ('2646',)
+Context: ('. a colorful intro with a lot of flashing words',)
+Ending Options: [('appears giving a description of the video.',), ('it says as follows.',), (', leads into a dirt track.',), ('flash across the screen along with a logo and a banner with foreign language written on it.',)]
+Prediction: ('flash across the screen along with a logo and a banner with foreign language written on it.',), Ground Truth: ('flash across the screen along with a logo and a banner with foreign language written on it.',)
+Current accuracy: 34.82587064676617%
+
+Question number: 202/10042
+Question ID: ('2647',)
+Context: ('A colorful intro with a lot of flashing words flash across the screen along with a logo and a banner with foreign language written on it. a woman dressed in an orange and red dress and scarf',)
+Ending Options: [('is sitting in front of a small sketched machine that is beginning to cook something and holds an egg over it that she adds onto the plate.',), ('is standing and talking has she hold white paper in her hands.',), ('is giving a video about shredded potato slicer ® treats and nutritious makeberry pudding.',), ('is standing with a muffin and a small bowl of frnt and poke holes of the frnt, putting the frrt under the muffin before eating it.',)]
+Prediction: ('is sitting in front of a small sketched machine that is beginning to cook something and holds an egg over it that she adds onto the plate.',), Ground Truth: ('is standing and talking has she hold white paper in her hands.',)
+Current accuracy: 34.65346534653465%
+
+Question number: 203/10042
+Question ID: ('2651',)
+Context: ('The woman from before who is dressed in an orange and red dress appears again and is still holding the white paper as she talks. flashing words',)
+Ending Options: [('appear on the screen announcing it is time to start as the woman speaks again.',), ('appear after the woman is talking and continues to the end.',), ('at the bottom come back at her and she puts the white paper in the at the bottom and makes an x below it for a while.',), ('appear on the screen and they say " curt\'s theme comedy " enacted attached to a fedex limit tape.',)]
+Prediction: ('appear on the screen announcing it is time to start as the woman speaks again.',), Ground Truth: ('appear after the woman is talking and continues to the end.',)
+Current accuracy: 34.48275862068966%
+
+Question number: 204/10042
+Question ID: ('2666',)
+Context: ('A girl is riding on a yellow riding lawn mower on a very large yard filled with green grass. when the girl',)
+Ending Options: [('stops, she is standing in front of an able to reach yellow dirt path to prepare her destination.',), ('reaches the end of the yard she makes a turn and drives up in the same direction she just came from.',), ('reach the end of the yard, she looked around and started to turn around and walk back to the beginning.',), ('makes it to the end of the lawn, she stops, takes a deep breath, gets off her horse and walks away.',)]
+Prediction: ('makes it to the end of the lawn, she stops, takes a deep breath, gets off her horse and walks away.',), Ground Truth: ('reaches the end of the yard she makes a turn and drives up in the same direction she just came from.',)
+Current accuracy: 34.31372549019608%
+
+Question number: 205/10042
+Question ID: ('2667',)
+Context: ('When the girl reaches the end of the yard she makes a turn and drives up in the same direction she just came from. when she',)
+Ending Options: [("reaches that end, she makes a turn but it's too tight and she reverses a little.",), ('makes a turn she goes up arm high and lands inside the field.',), ('reaches the end, she slows down and goes through the washer and dryer area that is lined up before she pulls a spare tire off of the trunk of the car and puts the tire back on.',), ('reaches the end of the yard she jumps off the back of the truck, completes a triple jump on the wooden stairs of the backstop and springs back down and even does a 360 flip before jumping off again.',)]
+Prediction: ('reaches the end, she slows down and goes through the washer and dryer area that is lined up before she pulls a spare tire off of the trunk of the car and puts the tire back on.',), Ground Truth: ("reaches that end, she makes a turn but it's too tight and she reverses a little.",)
+Current accuracy: 34.146341463414636%
+
