@@ -262,7 +262,7 @@ class RWKV_RNN():  # this is running in FP32 at this moment
 
         self.w = types.SimpleNamespace()
 
-        w = torch.load('wikipedia_trained_temp/' + MODEL_NAME + '.pth',
+        w = torch.load('wikipedia_trained/' + MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
 
         for x in w.keys():
@@ -387,6 +387,8 @@ class RWKV_RNN():  # this is running in FP32 at this moment
         w = self.w
         x = w.emb.weight[ctx[-1]]
 
+        temp = x
+
         x = [x for _ in range(self.n_persp)]
 
         for i in range(self.n_layer):
@@ -443,18 +445,21 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                 x[ctx[i]] += c[i]
         else:
 
-            weightss = self.softmax(w.convert3.weight @ torch.cat(x[1:4], dim=0))
+            weightss = self.softmax(w.convert3.weight @ torch.cat([x[i] for i in range(self.n_persp)], dim=0))
+
+            #x = torch.mean(torch.stack(x), dim=0)
 
             for i in range(self.n_persp):
                 x[i] = w.head.weight @ x[i]
 
-            #x = torch.mean(torch.stack(x), dim=0)
+            #x = w.head.weight @ x
 
-        partial = [x[i] * weightss[..., i-1].unsqueeze(-1) for i in range(1, self.n_persp)]
+        #x = torch.mean(torch.stack(x), dim=0)
+        #x = x.cpu().numpy().tolist()
+
+        partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.n_persp)]
         partial = sum(partial)
 
-
         x = x[0] * 0.75 + 0.25 * partial
-            #x = x.cpu().numpy().tolist()
 
         return x

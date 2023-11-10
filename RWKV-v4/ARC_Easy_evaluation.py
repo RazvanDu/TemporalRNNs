@@ -12,7 +12,7 @@ from src.utils import TOKENIZER
 
 current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-ours = False
+ours = True
 
 if ours:
     from src.model_run_ours import RWKV_RNN
@@ -22,7 +22,7 @@ else:
 # Define constants
 #MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 if ours:
-    MODEL_NAME = 'trained-35'
+    MODEL_NAME = 'trained-40'
 else:
     MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 WORD_NAME = ['20B_tokenizer.json', '20B_tokenizer.json']
@@ -72,7 +72,7 @@ class ArcEasyDataset(torch.utils.data.Dataset):
         choices = [choice['text'] for choice in item['question']['choices']]
         label = ord(item['answerKey']) - ord('A')
 
-        tokenized_question = self.tokenizer.tokenizer.encode(question + " ")
+        tokenized_question = self.tokenizer.tokenizer.encode(question)
         tokenized_choices = [self.tokenizer.tokenizer.encode(choice) for choice in choices]
 
         return tokenized_question, tokenized_choices, label, item['id'], question, choices
@@ -97,12 +97,12 @@ with open(OUTPUT_FILE, 'w') as outfile:
         model.hk = {}
 
         for j in range(len(tokenized_question)):
-            logits = torch.softmax(model.run(tokenized_question[j]).cpu(), dim=0)
-            xx = copy.deepcopy(model.xx)
-            aa = copy.deepcopy(model.aa)
-            bb = copy.deepcopy(model.bb)
-            pp = copy.deepcopy(model.pp)
-            hk = copy.deepcopy(model.hk)
+            logits_temp = model.run(tokenized_question[j]).cpu()
+        xx = copy.deepcopy(model.xx)
+        aa = copy.deepcopy(model.aa)
+        bb = copy.deepcopy(model.bb)
+        pp = copy.deepcopy(model.pp)
+        hk = copy.deepcopy(model.hk)
 
         #print(xx)
 
@@ -112,10 +112,12 @@ with open(OUTPUT_FILE, 'w') as outfile:
             model.bb = copy.deepcopy(bb)
             model.pp = copy.deepcopy(pp)
             model.hk = copy.deepcopy(hk)
+            #print("T ", torch.sum(next(iter(model.xx.values()))))
             sum_score = 1
+            logits = logits_temp.clone()
             for j in range(len(tokenized)):
-                sum_score += np.log(logits.numpy().tolist()[tokenized[j]])
-                logits = torch.softmax(model.run(tokenized[j]).cpu(), dim=0)
+                sum_score += logits.numpy().tolist()[tokenized[j]]
+                logits = model.run(tokenized[j]).cpu()
 
             #logits = []
             #model.xx = {}
@@ -127,7 +129,7 @@ with open(OUTPUT_FILE, 'w') as outfile:
             #    logits = torch.softmax(model.run(tokenized[j]).cpu(), dim=0)
             #    sum_score += np.log(logits.numpy().tolist()[tokenized[j+1]])
 
-            logits_list.append(sum_score)
+            logits_list.append(sum_score/len(tokenized))
 
         #logits = torch.stack(logits_list, dim=0)
         #pred_label = torch.argmax(logits).item()
