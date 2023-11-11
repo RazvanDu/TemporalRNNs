@@ -67,11 +67,13 @@ model.to(device)
 #pipeline = PIPELINE(model, "rwkv_vocab_v20230424")
 
 eval_tasks = []
-eval_tasks += ['arc_easy']
+# eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa',]
+# eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa',]
+eval_tasks += ['lambada_openai','piqa','hellaswag','winogrande','triviaqa','sciq']
+#eval_tasks += ['arc_easy']
 # eval_tasks += ['lambada_openai']
 # eval_tasks += ['hellaswag','winogrande']
 # eval_tasks += ['lambada_openai','piqa','storycloze_2016','hellaswag','winogrande']
-# eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa','sciq']
 # eval_tasks += ['record','copa']
 # eval_tasks += ['triviaqa']
 # eval_tasks += ['coqa']
