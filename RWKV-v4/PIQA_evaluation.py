@@ -12,7 +12,7 @@ from src.utils import TOKENIZER
 
 current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-ours = False
+ours = True
 
 if ours:
     from src.model_run_ours import RWKV_RNN
@@ -22,7 +22,7 @@ else:
 # Define constants
 # MODEL_NAME = 'RWKV-4-Pile-1B5-20220903-8040'
 if ours:
-    MODEL_NAME = 'trained-35'
+    MODEL_NAME = 'trained-30'
 else:
     MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 

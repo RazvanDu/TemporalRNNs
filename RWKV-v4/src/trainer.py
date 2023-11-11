@@ -85,8 +85,9 @@ class Trainer(LightningLite):
                 #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
 
-                    m2['convert.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (m_cfg.n_embd, config.n_persp*m_cfg.n_embd)),dtype=torch.float)
+                    m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, (config.n_persp-1)*m_cfg.n_embd))
                                                                      , requires_grad=False)
+                    nn.init.constant_(m2['convert.weight'], 1/((config.n_persp-1)*m_cfg.n_embd))
                     m2['convert2.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (config.n_persp, m_cfg.n_embd)),dtype=torch.float)
                                                                      , requires_grad=False)
                     m2['convert3.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, ((config.n_persp-1), config.n_persp*m_cfg.n_embd)),dtype=torch.float)

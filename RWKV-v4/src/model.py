@@ -384,6 +384,7 @@ class GPT(nn.Module):
 
         self.step += 1
         B, T = idx.size()
+        #print("T ", B, " ", T)
         assert T <= self.ctx_len, "Cannot forward, because len(input) > model ctx_len."
 
         x = self.emb(idx)
@@ -410,5 +411,8 @@ class GPT(nn.Module):
         loss = None
         if targets is not None:
             loss = F.cross_entropy(x.view(-1, x.size(-1)), targets.to(x.device).view(-1))
+
+        if targets is None:
+            return x
 
         return L2Wrap.apply(loss, x)
