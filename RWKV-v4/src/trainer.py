@@ -1,7 +1,7 @@
 ########################################################################################################
 # The RWKV Language Model - https://github.com/BlinkDL/RWKV-LM
 ########################################################################################################
-
+import importlib
 import os
 NUM_GPUS = int(os.environ['RWKV_NUM_GPUS'])
 USE_WANDB = (int(os.environ['USE_WANDB']) == 1)
@@ -16,7 +16,7 @@ from pytorch_lightning.lite import LightningLite
 import gc
 import torch.nn as nn
 import numpy as np
-from lm_evaluation import EvalHarnessAdapter
+import lm_evaluation
 
 eval_tasks = ['arc_easy', 'lambada_openai', 'piqa', 'sciq']
 
@@ -241,7 +241,11 @@ class Trainer(LightningLite):
                 #if epoch%5 == 0:
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
-                adapter = EvalHarnessAdapter(model)
+                importlib.reload(lm_evaluation)
+
+                adapter = lm_evaluation.EvalHarnessAdapter(raw_model)
+
+                adapter.model = raw_model
                 results = adapter.run_eval(
                     eval_tasks=eval_tasks,
                     bootstrap_iters=10000,

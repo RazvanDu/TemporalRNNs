@@ -25,7 +25,7 @@ os.environ["RWKV_CUDA_ON"] = '1'
 os.environ['RWKV_FLOAT_MODE'] = 'bf16'
 device = 'cuda'
 
-from lm_evaluation_harness.lm_eval import tasks
+from lm_evaluation_harness.lm_eval import tasks, evaluator
 from lm_evaluation_harness.lm_eval.models.gpt2 import GPT2LM
 from src import model_ours
 from src import model as modell
@@ -41,6 +41,29 @@ n_persp = 4
 
 ########################################################################################################
 
+MODEL_NAME = "/fsx/BlinkDL/HF-MODEL/rwkv-5-world/RWKV-5-World-1.5B-v2-OnlyForTest_14%_trained-20231001-ctx4096"
+
+print(f'Loading model - {MODEL_NAME}')
+if ours:
+    model = model_ours.GPT(model_ours.GPTConfig(vocab_size, ctx_len, model_type=model_type,
+                                                n_layer=n_layer, n_embd=n_embd, n_persp=n_persp))
+else:
+    model = modell.GPT(modell.GPTConfig(vocab_size, ctx_len, model_type=model_type,
+                                        n_layer=n_layer, n_embd=n_embd,
+                                        n_persp=n_persp))
+if ours:
+    MODEL_NAME = 'wikipedia_trained/' + 'trained'
+else:
+    MODEL_NAME = 'weights/' + 'RWKV-4-Pile-169M-20220807-8023'
+
+with torch.no_grad():
+    print('loading', MODEL_NAME)
+    m2 = torch.load(MODEL_NAME + '.pth', map_location='cpu')
+    model.load_state_dict(m2)
+    for param in model.state_dict():
+        model.state_dict()[param].requires_grad = False
+    del m2
+model.to(device)
 #pipeline = PIPELINE(model, "rwkv_vocab_v20230424")
 
 eval_tasks = []
@@ -155,7 +178,6 @@ class EvalHarnessAdapter(GPT2LM):
 
     @torch.no_grad()
     def run_eval(self, eval_tasks=None, num_fewshot=0, bootstrap_iters=2):
-        from lm_evaluation_harness.lm_eval import evaluator
         results = evaluator.evaluate(
             lm=self,
             task_dict=tasks.get_task_dict(eval_tasks),
@@ -166,9 +188,9 @@ class EvalHarnessAdapter(GPT2LM):
         )
         return results
 
-#adapter = EvalHarnessAdapter(model)
-#results = adapter.run_eval(
-#    eval_tasks=eval_tasks,
-#    bootstrap_iters=10000,
-#)
-#print(results['results'])
+adapter = EvalHarnessAdapter(model)
+results = adapter.run_eval(
+    eval_tasks=eval_tasks,
+    bootstrap_iters=10000,
+)
+print(results['results'])
