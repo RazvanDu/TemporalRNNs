@@ -469,6 +469,11 @@ class GPT(nn.Module):
             #x = self.head(x[0])
             #partial = self.head(partial)
 
+            #print("Q ", weightss)
+
+            #for aa in x:
+            #    print("A ", aa)
+
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
 

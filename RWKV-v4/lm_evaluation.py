@@ -52,7 +52,7 @@ else:
                                         n_layer=n_layer, n_embd=n_embd,
                                         n_persp=n_persp))
 if ours:
-    MODEL_NAME = 'wikipedia_trained_good/' + 'trained-40'
+    MODEL_NAME = 'wikipedia_trained/' + 'trained-24'
 else:
     MODEL_NAME = 'weights/' + 'RWKV-4-Pile-169M-20220807-8023'
 
@@ -69,7 +69,7 @@ model.to(device)
 eval_tasks = []
 # eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa',]
 # eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa',]
-eval_tasks += ['lambada_openai','piqa','hellaswag','winogrande','triviaqa','sciq']
+eval_tasks += ['arc_easy', 'lambada_openai', 'piqa', 'sciq']#,'piqa','hellaswag','winogrande','triviaqa','sciq']
 #eval_tasks += ['arc_easy']
 # eval_tasks += ['lambada_openai']
 # eval_tasks += ['hellaswag','winogrande']
@@ -101,8 +101,12 @@ class TokenizerWrapper:
 
 
 class EvalHarnessAdapter(GPT2LM):
-    def __init__(self):
+    def __init__(self, model):
+        #self._max_length = 1024
+        #self._device = 'cuda'
         self.tokenizer = TokenizerWrapper(tokenizer)
+        self.model = model
+        #self.model = model
 
     # def greedy_until(self, requests): # designed for coqa
     #     res = []
@@ -152,7 +156,7 @@ class EvalHarnessAdapter(GPT2LM):
                 logit = 0
 
                 with torch.no_grad():
-                    outputs = model.forward(torch.tensor([src]).cuda(), None)[0]
+                    outputs = self.model.forward(torch.tensor([src]).cuda(), None)[0]
                     #print("TEST ", outputs)
                     for i in range(q_len - 1, len(src) - 1):
                         oo = outputs[i].detach().float()
@@ -184,10 +188,9 @@ class EvalHarnessAdapter(GPT2LM):
         )
         return results
 
-
-adapter = EvalHarnessAdapter()
-results = adapter.run_eval(
-    eval_tasks=eval_tasks,
-    bootstrap_iters=10000,
-)
-print(results['results'])
+#adapter = EvalHarnessAdapter(model)
+#results = adapter.run_eval(
+#    eval_tasks=eval_tasks,
+#    bootstrap_iters=10000,
+#)
+#print(results['results'])

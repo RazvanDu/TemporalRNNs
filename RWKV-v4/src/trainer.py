@@ -16,6 +16,9 @@ from pytorch_lightning.lite import LightningLite
 import gc
 import torch.nn as nn
 import numpy as np
+from lm_evaluation import EvalHarnessAdapter
+
+eval_tasks = ['arc_easy', 'lambada_openai', 'piqa', 'sciq']
 
 logger = logging.getLogger(__name__)
 
@@ -85,7 +88,7 @@ class Trainer(LightningLite):
                 #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
 
-                    m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, (config.n_persp-1)*m_cfg.n_embd))
+                    m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, config.n_persp*m_cfg.n_embd))
                                                                      , requires_grad=False)
                     nn.init.constant_(m2['convert.weight'], 1/((config.n_persp-1)*m_cfg.n_embd))
                     m2['convert2.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (config.n_persp, m_cfg.n_embd)),dtype=torch.float)
@@ -100,7 +103,7 @@ class Trainer(LightningLite):
                             #                                      for _ in range(config.n_persp)], dim=0), requires_grad=False)
                             new_params = [m2[param].clone()]
                             for i in range(1, config.n_persp):
-                               new_params.append(m2[param].clone() + torch.tensor(np.random.normal(0, 0.01, m2[param].size()), dtype=torch.float))
+                               new_params.append(torch.tensor(np.random.normal(1, 1, m2[param].size()), dtype=torch.float))
                             m2[param] = nn.Parameter(torch.stack(new_params, dim=0), requires_grad=False)
                             #for i in range(config.n_persp):
                             #torch.nn.init.xavier_uniform(m2[param])
@@ -237,3 +240,10 @@ class Trainer(LightningLite):
 
                 #if epoch%5 == 0:
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+
+                adapter = EvalHarnessAdapter(model)
+                results = adapter.run_eval(
+                    eval_tasks=eval_tasks,
+                    bootstrap_iters=10000,
+                )
+                logger.info(results['results'])
