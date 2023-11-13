@@ -355,7 +355,7 @@ class GPT(nn.Module):
 
         self.ln_out = nn.LayerNorm(config.n_embd)
         self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
-        self.convert2 = nn.Linear(config.n_embd, config.n_persp, bias=False)
+        self.convert2 = nn.Linear(4*config.n_embd, config.vocab_size, bias=False)
         self.convert3 = nn.Linear(config.n_embd*config.n_persp, config.n_persp-1, bias=False)
         self.softmax = nn.Softmax(dim=2)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
@@ -402,7 +402,7 @@ class GPT(nn.Module):
                     #print(fpn)
                     no_decay.add(fpn)
                     #param_dict[pn] = param_dict[pn][1:4]
-                if 'convert' in fpn:
+                if 'convert' in fpn or 'head' in fpn:
                     no_decay.add(fpn)
 
         param_dict = {pn: p for pn, p in self.named_parameters()}
@@ -462,7 +462,7 @@ class GPT(nn.Module):
 
 
 
-            weightss = self.softmax(self.convert3(torch.cat(x, dim=2)))
+            #weightss = self.softmax(self.convert3(torch.cat(x, dim=2)))
 
             #partial = self.convert(torch.cat(x[1:self.config.n_persp], dim=2))
 
@@ -474,12 +474,18 @@ class GPT(nn.Module):
             #for aa in x:
             #    print("A ", aa)
 
+
+            #x = torch.mean(torch.stack(x), dim=0)
+
+
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
-
+            #x = self.convert2(torch.stack(x))
 
         #for i in range(self.config.n_persp):
         #    x[i] = self.head(x[i])
+
+        x = torch.mean(torch.stack(x), dim=0)
 
         #print("Q ", x.size())
 
@@ -492,8 +498,8 @@ class GPT(nn.Module):
 
 
 
-        partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.config.n_persp)]
-        partial = sum(partial)
+        #partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.config.n_persp)]
+        #partial = sum(partial)
 
 
 
@@ -503,7 +509,7 @@ class GPT(nn.Module):
 
         #print("R ", weightss)
 
-        x = x[0] * 0.75 + 0.25 * partial
+        #x = x[0] * 0.75 + 0.25 * partial
 
         #print(x[0].size())
         #print("R ", weightss)
