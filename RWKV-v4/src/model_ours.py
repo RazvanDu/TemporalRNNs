@@ -356,7 +356,7 @@ class GPT(nn.Module):
         self.ln_out = nn.LayerNorm(config.n_embd)
         self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
         self.convert2 = nn.Linear(4*config.n_embd, config.vocab_size, bias=False)
-        self.convert3 = nn.Linear(config.n_embd*config.n_persp, config.n_persp-1, bias=False)
+        self.convert3 = nn.Linear(config.n_embd, config.n_persp, bias=False)
         self.softmax = nn.Softmax(dim=2)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
 
@@ -462,14 +462,33 @@ class GPT(nn.Module):
 
 
 
+
             #weightss = self.softmax(self.convert3(torch.cat(x, dim=2)))
+            weightss = self.softmax(self.convert3(temp))
+            #print("Q ", weightss)
+            #weightss = torch.argmax(weightss, dim=2)
+            #one_hot_selector = torch.nn.functional.one_hot(weightss.to(torch.int64), num_classes=4)  # Shape: (2, 1024, 4)
+
+            #print("Q ", one_hot_selector.size())
+
+            # Permute to bring the classes dimension to the second position
+            #one_hot_selector = one_hot_selector.permute(0, 2, 1)  # Shape: (2, 4, 1024)
+
+            # Unsqueeze and expand to match the shape of the input tensors
+            #one_hot_selector = one_hot_selector.unsqueeze(-1).expand(-1, -1, -1, 768)  # Shape: (2, 4, 1024, 768)
+
+            #print("S ", one_hot_selector)
+
+            #print("P ", one_hot_selector.size())
+            #print("P ", weightss.size())
 
             #partial = self.convert(torch.cat(x[1:self.config.n_persp], dim=2))
 
             #x = self.head(x[0])
             #partial = self.head(partial)
 
-            #print("Q ", weightss)
+            #print("Q ", weightss.size(), " ", torch.argmax(weightss))
+            #print("Q ", x[0].size(), " ", torch.argmax(weightss))
 
             #for aa in x:
             #    print("A ", aa)
@@ -477,15 +496,30 @@ class GPT(nn.Module):
 
             #x = torch.mean(torch.stack(x), dim=0)
 
+            #print("V ", temp)
+
+            #x = self.head(temp)
+
+            #x = sum(t * one_hot_selector[:, i, :, :] for i, t in enumerate(x))
+
+            #print(x.size())
 
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
+            #x = self.head(x)
             #x = self.convert2(torch.stack(x))
+
+        #weightss = weightss.unsqueeze(-1).expand(-1, -1, x[0].shape[-1])
+
+        #temp = torch.zeros_like(x[0])
+
+
 
         #for i in range(self.config.n_persp):
         #    x[i] = self.head(x[i])
 
-        x = torch.mean(torch.stack(x), dim=0)
+
+        #x = torch.mean(torch.stack(x), dim=0)
 
         #print("Q ", x.size())
 
@@ -494,6 +528,10 @@ class GPT(nn.Module):
         #print("R ", self.convert.weight)
         #print("R2 ", self.convert2.weight)
 
+        print("Q1 ", x[0])
+
+        print("Q2 ", x[1])
+
 
 
 
@@ -501,13 +539,14 @@ class GPT(nn.Module):
         #partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.config.n_persp)]
         #partial = sum(partial)
 
-
+        partial = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(self.config.n_persp)]
+        x = sum(partial)
 
 
 
         #x = torch.mean(torch.stack(x), dim=0)
 
-        #print("R ", weightss)
+        print("R ", weightss)
 
         #x = x[0] * 0.75 + 0.25 * partial
 

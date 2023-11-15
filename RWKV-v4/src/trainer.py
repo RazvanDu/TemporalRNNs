@@ -93,7 +93,7 @@ class Trainer(LightningLite):
                     nn.init.constant_(m2['convert.weight'], 1/((config.n_persp-1)*m_cfg.n_embd))
                     m2['convert2.weight'] = nn.Parameter(torch.zeros((config.vocab_size, 4*m_cfg.n_embd))
                                                                      , requires_grad=False)
-                    m2['convert3.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, ((config.n_persp-1), config.n_persp*m_cfg.n_embd)),dtype=torch.float)
+                    m2['convert3.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (config.n_persp, m_cfg.n_embd)),dtype=torch.float)
                                                                      , requires_grad=False)
 
                     #for i in range(4):
@@ -105,9 +105,12 @@ class Trainer(LightningLite):
                             #m2[param] = nn.Parameter(torch.stack([#m2[param].clone() +
                             #                                      torch.tensor(np.random.normal(1, 1, m2[param].size()),dtype=torch.float)
                             #                                      for _ in range(config.n_persp)], dim=0), requires_grad=False)
-                            new_params = [m2[param].clone()]
-                            for i in range(1, config.n_persp):
-                               new_params.append(torch.tensor(np.random.normal(1, 0.6, m2[param].size()), dtype=torch.float))
+                            #new_params = [m2[param].clone()]
+                            #for i in range(1, config.n_persp):
+                            #   new_params.append(torch.tensor(np.random.normal(1, 0.6, m2[param].size()), dtype=torch.float))
+                            new_params = []
+                            for i in range(config.n_persp):
+                               new_params.append(m2[param].clone())# + torch.tensor(np.random.normal(1, 0.01, m2[param].size()), dtype=torch.float))
                             m2[param] = nn.Parameter(torch.stack(new_params, dim=0), requires_grad=False)
                             #for i in range(config.n_persp):
                             #torch.nn.init.xavier_uniform(m2[param])
