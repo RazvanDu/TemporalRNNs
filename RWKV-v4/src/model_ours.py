@@ -354,8 +354,8 @@ class GPT(nn.Module):
         self.blocks = nn.Sequential(*[Block(config, i) for i in range(config.n_layer)])
 
         self.ln_out = nn.LayerNorm(config.n_embd)
-        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
-        self.convert2 = nn.Linear(4*config.n_embd, config.vocab_size, bias=False)
+        #self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
+        #self.convert2 = nn.Linear(4*config.n_embd, config.vocab_size, bias=False)
         self.convert3 = nn.Linear(config.n_embd, config.n_persp, bias=False)
         self.softmax = nn.Softmax(dim=2)
         self.head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
@@ -464,7 +464,7 @@ class GPT(nn.Module):
 
 
             #weightss = self.softmax(self.convert3(torch.cat(x, dim=2)))
-            weightss = self.softmax(self.convert3(temp))
+            weightss = self.softmax(self.convert3(torch.mean(torch.stack(x), dim=0)))
             #print("Q ", weightss)
             #weightss = torch.argmax(weightss, dim=2)
             #one_hot_selector = torch.nn.functional.one_hot(weightss.to(torch.int64), num_classes=4)  # Shape: (2, 1024, 4)

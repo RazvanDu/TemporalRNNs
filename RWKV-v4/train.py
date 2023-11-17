@@ -161,12 +161,13 @@ assert (batch_size % int(os.environ['RWKV_NUM_GPUS']) == 0)
 # 
 # For L12-D768, set lr_init = 6e-4. For L24-D1024, set lr_init = 4e-4. For L24-D2048, set lr_init = 3e-4.
 
-lr_init = 5e-5
+# 42000 contexts with LR 5e-5 MAX 1e-5 MIN is good?
+lr_init = 3e-5
 lr_final = 1e-5
 
 # the mini-epoch is very short and of fixed length (length = ctx_len * epoch_length_fixed tokens)
-n_epoch = 500
-epoch_length_fixed = (3000 // batch_size) * batch_size # feel free to increase it if you have lots of GPU
+n_epoch = 8
+epoch_length_fixed = (9000 // batch_size) * batch_size # feel free to increase it if you have lots of GPU
 
 # epoch_save_frequency 0 = never, 1 = every mini-epoch, 2 = every two mini-epochs, ...
 epoch_save_frequency = 10
