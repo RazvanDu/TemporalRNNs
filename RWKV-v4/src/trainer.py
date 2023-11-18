@@ -249,8 +249,8 @@ class Trainer(LightningLite):
                 #if epoch%5 == 0:
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
-                if self.avg_loss < best_loss:
-                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-best' + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+                if self.avg_loss < best_loss and epoch+1 <= config.max_epochs:
+                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-best-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
                     best_loss = self.avg_loss
 
                 importlib.reload(lm_evaluation)

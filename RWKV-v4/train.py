@@ -167,7 +167,7 @@ lr_final = 1e-5
 
 # the mini-epoch is very short and of fixed length (length = ctx_len * epoch_length_fixed tokens)
 n_epoch = 8
-epoch_length_fixed = (9000 // batch_size) * batch_size # feel free to increase it if you have lots of GPU
+epoch_length_fixed = (16000 // batch_size) * batch_size # feel free to increase it if you have lots of GPU
 
 # epoch_save_frequency 0 = never, 1 = every mini-epoch, 2 = every two mini-epochs, ...
 epoch_save_frequency = 10
