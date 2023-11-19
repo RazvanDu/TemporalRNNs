@@ -88,8 +88,8 @@ class Trainer(LightningLite):
                 #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
 
-                    #m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, config.n_persp*m_cfg.n_embd))
-                    #                                                 , requires_grad=False)
+                    m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, config.n_persp*m_cfg.n_embd))
+                                                                     , requires_grad=False)
                     #nn.init.constant_(m2['convert.weight'], 1/((config.n_persp-1)*m_cfg.n_embd))
                     #m2['convert2.weight'] = nn.Parameter(torch.zeros((config.vocab_size, 4*m_cfg.n_embd))
                     #                                                 , requires_grad=False)
@@ -246,7 +246,7 @@ class Trainer(LightningLite):
                 raw_model = self.model.module if hasattr(self.model, "module") else self.model
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '.pth') #+ str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
-                #if epoch%5 == 0:
+                #if epoch >= 5:
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
                 if self.avg_loss < best_loss and epoch+1 <= config.max_epochs:

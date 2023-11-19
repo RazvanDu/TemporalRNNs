@@ -354,7 +354,7 @@ class GPT(nn.Module):
         self.blocks = nn.Sequential(*[Block(config, i) for i in range(config.n_layer)])
 
         self.ln_out = nn.LayerNorm(config.n_embd)
-        #self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
+        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
         #self.convert2 = nn.Linear(4*config.n_embd, config.vocab_size, bias=False)
         self.convert3 = nn.Linear(config.n_embd, config.n_persp, bias=False)
         self.softmax = nn.Softmax(dim=2)
@@ -504,8 +504,14 @@ class GPT(nn.Module):
 
             #print(x.size())
 
+            #x = self.head(self.convert(torch.cat(x, dim=2)))
+
             for i in range(self.config.n_persp):
                 x[i] = self.head(x[i])
+
+
+
+
             #x = self.head(x)
             #x = self.convert2(torch.stack(x))
 
@@ -528,9 +534,9 @@ class GPT(nn.Module):
         #print("R ", self.convert.weight)
         #print("R2 ", self.convert2.weight)
 
-        print("Q1 ", x[0])
+        #print("Q1 ", x[0])
 
-        print("Q2 ", x[1])
+        #print("Q2 ", x[1])
 
 
 
@@ -539,6 +545,10 @@ class GPT(nn.Module):
         #partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.config.n_persp)]
         #partial = sum(partial)
 
+
+
+
+        #Q
         partial = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(self.config.n_persp)]
         x = sum(partial)
 

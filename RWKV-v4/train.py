@@ -25,8 +25,8 @@ if False: # True False ---> Set to False if you don't understand it
 
 EXPRESS_PILE_MODE = False # True: express mode for fine-tuning a pile model // False: usual training
 
-EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
-EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
+EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
+EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-430M'
 
 device = 'cuda'
 ours = True
