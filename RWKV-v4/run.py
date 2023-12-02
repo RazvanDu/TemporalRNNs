@@ -45,7 +45,7 @@ elif TOKEN_MODE == 'pile':
     #---> you can set MODEL_NAME to your fine-tuned model <---
 
     if ours:
-        MODEL_NAME = 'trained-10'
+        MODEL_NAME = 'trained-small-2'
     else:
         MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 
@@ -80,7 +80,7 @@ ctx_len = CTX_LEN
 # context = 'A'
 # context = "\nIn the"
 # context = '\nSugar:'
-context = "\nI'm going to the supermarket to buy some "
+context = "\n"
 
 NUM_TRIALS = 999
 LENGTH_PER_TRIAL = 333
@@ -125,6 +125,7 @@ for TRIAL in range(1 if DEBUG_DEBUG else NUM_TRIALS):
         init_state = types.SimpleNamespace()
         for i in range(src_len):
             x = ctx[:i+1]
+            print(tokenizer.tokenizer.decode(x[-1]), end="")
             if i == src_len - 1:
                 init_state.out = model.run(x)
             else:
@@ -133,6 +134,7 @@ for TRIAL in range(1 if DEBUG_DEBUG else NUM_TRIALS):
     else:
         model.load(init_state)
 
+    break
     for i in range(src_len, src_len + (1 if DEBUG_DEBUG else LENGTH_PER_TRIAL)):
         x = ctx[:i+1]
         x = x[-ctx_len:]

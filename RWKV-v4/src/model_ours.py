@@ -354,7 +354,7 @@ class GPT(nn.Module):
         self.blocks = nn.Sequential(*[Block(config, i) for i in range(config.n_layer)])
 
         self.ln_out = nn.LayerNorm(config.n_embd)
-        self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
+        #self.convert = nn.Linear(config.n_embd*config.n_persp, config.n_embd, bias=False)
         #self.convert2 = nn.Linear(4*config.n_embd, config.vocab_size, bias=False)
         self.convert3 = nn.Linear(config.n_embd, config.n_persp, bias=False)
         self.softmax = nn.Softmax(dim=2)
@@ -504,6 +504,7 @@ class GPT(nn.Module):
 
             #print(x.size())
 
+            # TRANSFORMER
             #x = self.head(self.convert(torch.cat(x, dim=2)))
 
             for i in range(self.config.n_persp):
@@ -545,10 +546,9 @@ class GPT(nn.Module):
         #partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.config.n_persp)]
         #partial = sum(partial)
 
+        #x = torch.mean(torch.stack(x), dim=0)
 
-
-
-        #Q
+        #Q !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         partial = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(self.config.n_persp)]
         x = sum(partial)
 
@@ -556,7 +556,7 @@ class GPT(nn.Module):
 
         #x = torch.mean(torch.stack(x), dim=0)
 
-        print("R ", weightss)
+        #print("R ", weightss)
 
         #x = x[0] * 0.75 + 0.25 * partial
 

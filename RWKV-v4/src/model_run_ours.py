@@ -10,6 +10,14 @@ from torch.nn import functional as F
 import torch.nn as nn
 import numpy
 import torch.nn.init as init
+import torch
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
+# Function to calculate cosine similarity
+def cosine_similarity(tensor_a, tensor_b):
+    return torch.nn.functional.cosine_similarity(tensor_a.unsqueeze(0), tensor_b.unsqueeze(0)).item()
+
 
 RWKV_HEAD_QK_DIM = 0
 print(f'\nRWKV_HEAD_QK_DIM {RWKV_HEAD_QK_DIM}\n')
@@ -262,7 +270,7 @@ class RWKV_RNN():  # this is running in FP32 at this moment
 
         self.w = types.SimpleNamespace()
 
-        w = torch.load('wikipedia_trained/' + MODEL_NAME + '.pth',
+        w = torch.load('wikipedia_trained_testing/' + MODEL_NAME + '.pth',
                        map_location=torch.device(RUN_DEVICE))
 
         for x in w.keys():
@@ -329,6 +337,71 @@ class RWKV_RNN():  # this is running in FP32 at this moment
 
             xk = xx[i] * w.time_mix_k[i] + self.xx[name][i] * (1 - w.time_mix_k[i])
             xr = xx[i] * w.time_mix_r[i] + self.xx[name][i] * (1 - w.time_mix_r[i])
+
+            if '3' in name and False:
+
+                tensors = w.time_mix_k
+                # Create a 4x4 matrix to store the similarities
+                similarity_matrix = torch.zeros(4, 4)
+
+                similarity_matrix = torch.zeros(4, 4)
+
+                # Populate the similarity matrix
+                for i in range(4):
+                    for j in range(4):
+                        similarity_matrix[i, j] = cosine_similarity(tensors[i], tensors[j])
+
+                # Normalize the similarity matrix to stretch the range of values between 0 and 1
+                min_val = similarity_matrix.min()
+                max_val = similarity_matrix.max()
+                normalized_similarity_matrix = (similarity_matrix - min_val) / (max_val - min_val)
+
+                # Hardcoded color for the deepest purple used in the colormap
+                factor = 0.9
+                deepest_purple = (63 / 255 / factor, 12 / 255 / factor, 94 / 255 / factor)  # RGB values normalized to [0, 1]
+
+                # Create a lighter shade of the deepest purple for the lowest value
+                lightest_purple = tuple((c + 1) / 5 * 2 for c in deepest_purple)
+
+                # Create a custom colormap
+                colors = [lightest_purple, deepest_purple]
+                custom_cmap = LinearSegmentedColormap.from_list('custom_purple', colors)
+
+                # Create the heatmap
+                plt.figure(figsize=(10, 8))
+                heatmap = plt.imshow(normalized_similarity_matrix, cmap=custom_cmap, interpolation='none',
+                                     aspect='auto')
+                plt.colorbar(heatmap)
+
+                # Remove grid lines
+                plt.grid(False)
+
+                # Adding annotations for normalized values
+                for i in range(4):
+                    for j in range(4):
+                        text_color = 'white' if normalized_similarity_matrix[i, j] < 0.5 else 'black'
+                        plt.text(j, i, f"{normalized_similarity_matrix[i, j]:.2f}", ha='center', va='center',
+                                 color=text_color, fontweight='bold')
+
+                # Set the title and remove the x-axis label
+                plt.title("Normalized Cosine Similarity Matrix", fontsize=16, fontweight='bold')
+                plt.xlabel("")
+
+                # Set the tick labels
+                plt.xticks(range(4), labels=[f'Perspective {i + 1}' for i in range(4)], fontsize=12)
+
+                # Set the y-axis labels to be vertical and centered
+                plt.yticks(range(4), labels=[f'Perspective {i + 1}' for i in range(4)], fontsize=12, va='center')
+
+                # Rotate the y-axis labels to be vertical
+                plt.gca().yaxis.set_tick_params(rotation=90)
+
+                # Save the plot to a file
+                plt.savefig('normalized_cosine_similarity_matrix.png', bbox_inches='tight')
+
+                # Show the plot
+                plt.show()
+
             self.xx[name][i] = xx[i]
 
             r = torch.sigmoid(w.receptance.weight @ xr)
@@ -385,6 +458,7 @@ class RWKV_RNN():  # this is running in FP32 at this moment
 
     def run(self, ctx):
         w = self.w
+
         x = w.emb.weight[ctx[-1]]
 
         temp = x
@@ -445,7 +519,7 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                 x[ctx[i]] += c[i]
         else:
 
-            weightss = self.softmax(w.convert3.weight @ torch.cat([x[i] for i in range(self.n_persp)], dim=0))
+            weightss = self.softmax(w.convert3.weight @ torch.mean(torch.stack(x), dim=0))
 
             #x = torch.mean(torch.stack(x), dim=0)
 
@@ -457,9 +531,9 @@ class RWKV_RNN():  # this is running in FP32 at this moment
         #x = torch.mean(torch.stack(x), dim=0)
         #x = x.cpu().numpy().tolist()
 
-        partial = [x[i] * weightss[..., i - 1].unsqueeze(-1) for i in range(1, self.n_persp)]
+        print(" -> ", weightss)
+
+        partial = [x[i] * weightss[..., i].unsqueeze(-1) for i in range(0, self.n_persp)]
         partial = sum(partial)
 
-        x = x[0] * 0.75 + 0.25 * partial
-
-        return x
+        return partial

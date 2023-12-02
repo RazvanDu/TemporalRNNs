@@ -35,8 +35,8 @@ ours = True
 vocab_size = 50277
 ctx_len = 1024
 model_type = 'RWKV'
-n_layer = 12
-n_embd = 768
+n_layer = 24
+n_embd = 1024
 n_persp = 4
 
 ########################################################################################################
@@ -52,9 +52,9 @@ else:
                                         n_layer=n_layer, n_embd=n_embd,
                                         n_persp=n_persp))
 if ours:
-    MODEL_NAME = 'wikipedia_trained/' + 'trained'
+    MODEL_NAME = 'wikipedia_trained_testing/' + 'trained-medium-4'
 else:
-    MODEL_NAME = 'weights/' + 'RWKV-4-Pile-169M-20220807-8023'
+    MODEL_NAME = 'weights/' + 'RWKV-4-Pile-1B5-20220903-8040'
 
 with torch.no_grad():
     print('loading', MODEL_NAME)
@@ -66,10 +66,16 @@ with torch.no_grad():
 model.to(device)
 #pipeline = PIPELINE(model, "rwkv_vocab_v20230424")
 
-eval_tasks = []
+eval_tasks = ['hellaswag', "winogrande", 'lambada_openai', 'arc_easy', 'arc_challenge', 'hellaswag', 'piqa']
 # eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa',]
 # eval_tasks += ['arc_challenge','arc_easy','headqa','openbookqa',]
-eval_tasks += ['arc_easy', 'lambada_openai', 'piqa', 'sciq']#,'piqa','hellaswag','winogrande','triviaqa','sciq']
+
+
+
+#eval_tasks += ['arc_easy', 'lambada_openai', 'piqa', 'sciq']#,'piqa','hellaswag','winogrande','triviaqa','sciq']
+
+
+
 #eval_tasks += ['arc_easy']
 # eval_tasks += ['lambada_openai']
 # eval_tasks += ['hellaswag','winogrande']

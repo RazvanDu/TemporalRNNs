@@ -25,8 +25,8 @@ if False: # True False ---> Set to False if you don't understand it
 
 EXPRESS_PILE_MODE = False # True: express mode for fine-tuning a pile model // False: usual training
 
-EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-430M-20220808-8066'
-EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-430M'
+EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
+EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
 
 device = 'cuda'
 ours = True
@@ -121,7 +121,7 @@ LOAD_MODEL = False # shall we load the #EPOCH_BEGIN model and continue the train
 
 n_layer = 12
 n_embd = 768
-ctx_len = 768 # increase T_MAX in src/model.py if your ctx_len is longer
+ctx_len = 1024 # increase T_MAX in src/model.py if your ctx_len is longer
 
 model_type = 'RWKV' # 'RWKV' or 'RWKV-ffnPre' (sometimes better)
 
@@ -184,7 +184,7 @@ if EXPRESS_PILE_MODE:
 ### misc stuffs ########################################################################################
 
 if LOAD_MODEL and EPOCH_BEGIN > 0: # we are not saving gradients, so let's have some warmup if we load a model
-    warmup_tokens = 50 * ctx_len * batch_size // int(os.environ['RWKV_NUM_GPUS'])
+    warmup_tokens = 200 * ctx_len * batch_size // int(os.environ['RWKV_NUM_GPUS'])
 else:
     warmup_tokens = 0
 

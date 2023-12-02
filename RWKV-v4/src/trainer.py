@@ -88,7 +88,7 @@ class Trainer(LightningLite):
                 #torch.nn.init.xavier_uniform(m2['convert.weight'])
                 if config.ours:
 
-                    m2['convert.weight'] = nn.Parameter(torch.ones((m_cfg.n_embd, config.n_persp*m_cfg.n_embd))
+                    m2['convert.weight'] = nn.Parameter(torch.tensor(np.random.normal(0, 0.01, (m_cfg.n_embd, config.n_persp*m_cfg.n_embd)),dtype=torch.float)
                                                                      , requires_grad=False)
                     #nn.init.constant_(m2['convert.weight'], 1/((config.n_persp-1)*m_cfg.n_embd))
                     #m2['convert2.weight'] = nn.Parameter(torch.zeros((config.vocab_size, 4*m_cfg.n_embd))
@@ -233,7 +233,7 @@ class Trainer(LightningLite):
 
         self.tokens = 0  # counter used for learning rate decay
         best_loss = 1000
-        for epoch in range(99999999):
+        for epoch in range(16):
 
             run_epoch('train')
             if math.isnan(self.avg_loss):
@@ -244,14 +244,16 @@ class Trainer(LightningLite):
                 log_file.flush()
 
                 raw_model = self.model.module if hasattr(self.model, "module") else self.model
-                torch.save(raw_model.state_dict(), self.config.epoch_save_path + '.pth') #+ str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+                #torch.save(raw_model.state_dict(), self.config.epoch_save_path + '.pth') #+ str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
                 #if epoch >= 5:
                 torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
 
-                if self.avg_loss < best_loss and epoch+1 <= config.max_epochs:
-                    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-best-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
-                    best_loss = self.avg_loss
+                #if self.avg_loss < best_loss and epoch+1 <= config.max_epochs:
+                #    torch.save(raw_model.state_dict(), self.config.epoch_save_path + '-best-' + str(epoch) + '.pth')  # + str(epoch+1+self.EPOCH_BEGIN) + '.pth')
+                #    best_loss = self.avg_loss
+
+                #if epoch >= 7:
 
                 importlib.reload(lm_evaluation)
 
