@@ -4,6 +4,9 @@
 
 import types
 import copy
+
+import matplotlib
+import numpy as np
 import torch
 import math, os
 from torch.nn import functional as F
@@ -354,22 +357,39 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                 # Normalize the similarity matrix to stretch the range of values between 0 and 1
                 min_val = similarity_matrix.min()
                 max_val = similarity_matrix.max()
-                normalized_similarity_matrix = (similarity_matrix - min_val) / (max_val - min_val)
+
+                min_val, max_val = 0.4, 1.0
+                n = 10
+                orig_cmap = plt.cm.Purples
+                colors = orig_cmap(np.linspace(min_val, max_val, n))
+                cmap = matplotlib.colors.LinearSegmentedColormap.from_list("mycmap", colors)
+
+                epsilon = 1e-5  # small value to avoid log(0)
+                #normalized_similarity_matrix = -torch.log(1 - similarity_matrix + epsilon)
+                normalized_similarity_matrix = similarity_matrix
+
+                normalized_similarity_matrix = (
+                                                            normalized_similarity_matrix - normalized_similarity_matrix.min()) / (
+                                                            normalized_similarity_matrix.max() - normalized_similarity_matrix.min())
+
+                #normalized_similarity_matrix = -torch.log(1 - normalized_similarity_matrix + epsilon)
+
+                #normalized_similarity_matrix = (similarity_matrix - min_val) / (max_val - min_val)
 
                 # Hardcoded color for the deepest purple used in the colormap
-                factor = 0.9
-                deepest_purple = (63 / 255 / factor, 12 / 255 / factor, 94 / 255 / factor)  # RGB values normalized to [0, 1]
+                factor = 1
+                #deepest_purple = (63 / 255 / factor, 12 / 255 / factor, 94 / 255 / factor)  # RGB values normalized to [0, 1]
 
                 # Create a lighter shade of the deepest purple for the lowest value
-                lightest_purple = tuple((c + 1) / 5 * 2 for c in deepest_purple)
+                #lightest_purple = tuple((c + 1) / 5 * 2 for c in deepest_purple)
 
                 # Create a custom colormap
-                colors = [lightest_purple, deepest_purple]
-                custom_cmap = LinearSegmentedColormap.from_list('custom_purple', colors)
+                #colors = [lightest_purple, deepest_purple]
+                #custom_cmap = LinearSegmentedColormap.from_list('custom_purple', colors)
 
                 # Create the heatmap
                 plt.figure(figsize=(10, 8))
-                heatmap = plt.imshow(normalized_similarity_matrix, cmap=custom_cmap, interpolation='none',
+                heatmap = plt.imshow(normalized_similarity_matrix, cmap=cmap, interpolation='none',
                                      aspect='auto')
                 plt.colorbar(heatmap)
 
@@ -384,7 +404,6 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                                  color=text_color, fontweight='bold')
 
                 # Set the title and remove the x-axis label
-                plt.title("Normalized Cosine Similarity Matrix", fontsize=16, fontweight='bold')
                 plt.xlabel("")
 
                 # Set the tick labels
