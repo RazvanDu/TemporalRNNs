@@ -29,7 +29,7 @@ EXPRESS_PILE_MODEL_NAME = 'RWKV-4-Pile-169M-20220807-8023'
 EXPRESS_PILE_MODEL_TYPE = 'RWKV-4-Pile-169M'
 
 device = 'cuda'
-ours = True
+ours = False
 
 n_persp = 4
 

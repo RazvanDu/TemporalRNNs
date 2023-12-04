@@ -52,7 +52,7 @@ else:
                                         n_layer=n_layer, n_embd=n_embd,
                                         n_persp=n_persp))
 if ours:
-    MODEL_NAME = 'wikipedia_trained_testing/' + 'trained-medium-4'
+    MODEL_NAME = 'wikipedia_trained_testing/' + 'trained-medium-short-3'
 else:
     MODEL_NAME = 'weights/' + 'RWKV-4-Pile-1B5-20220903-8040'
 

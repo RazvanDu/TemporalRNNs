@@ -341,7 +341,7 @@ class RWKV_RNN():  # this is running in FP32 at this moment
             xk = xx[i] * w.time_mix_k[i] + self.xx[name][i] * (1 - w.time_mix_k[i])
             xr = xx[i] * w.time_mix_r[i] + self.xx[name][i] * (1 - w.time_mix_r[i])
 
-            if '3' in name and False:
+            if '3' in name and True:
 
                 tensors = w.time_mix_k
                 # Create a 4x4 matrix to store the similarities
@@ -391,32 +391,32 @@ class RWKV_RNN():  # this is running in FP32 at this moment
                 plt.figure(figsize=(10, 8))
                 heatmap = plt.imshow(normalized_similarity_matrix, cmap=cmap, interpolation='none',
                                      aspect='auto')
-                plt.colorbar(heatmap)
-
+                cbar = plt.colorbar(heatmap)
+                cbar.ax.tick_params(labelsize=14)  # You can adjust the size as needed
                 # Remove grid lines
                 plt.grid(False)
 
                 # Adding annotations for normalized values
                 for i in range(4):
                     for j in range(4):
-                        text_color = 'white' if normalized_similarity_matrix[i, j] < 0.5 else 'black'
+                        text_color = 'white'
                         plt.text(j, i, f"{normalized_similarity_matrix[i, j]:.2f}", ha='center', va='center',
-                                 color=text_color, fontweight='bold')
+                                 color=text_color, fontweight='bold', fontsize=14)
 
                 # Set the title and remove the x-axis label
                 plt.xlabel("")
 
                 # Set the tick labels
-                plt.xticks(range(4), labels=[f'Perspective {i + 1}' for i in range(4)], fontsize=12)
+                plt.xticks(range(4), labels=[f'Perspective {i + 1}' for i in range(4)], fontsize=14)
 
                 # Set the y-axis labels to be vertical and centered
-                plt.yticks(range(4), labels=[f'Perspective {i + 1}' for i in range(4)], fontsize=12, va='center')
+                plt.yticks(range(4), labels=[f'Perspective {i + 1}' for i in range(4)], fontsize=14, va='center')
 
                 # Rotate the y-axis labels to be vertical
                 plt.gca().yaxis.set_tick_params(rotation=90)
 
                 # Save the plot to a file
-                plt.savefig('normalized_cosine_similarity_matrix.png', bbox_inches='tight')
+                plt.savefig('normalized_cosine_similarity_matrix.png', bbox_inches='tight', dpi=300)
 
                 # Show the plot
                 plt.show()
