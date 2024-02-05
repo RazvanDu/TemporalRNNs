@@ -1,7 +1,3 @@
-Based on the content of the research paper "Enhancing Transformer RNNs with Multiple Temporal Perspectives," here's a suggested README structure for GitHub:
-
----
-
 # Enhancing Transformer RNNs with Multiple Temporal Perspectives
 
 ## Abstract
