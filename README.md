@@ -12,4 +12,11 @@ Our method maintains diverse temporal views of the text, enabling the model to l
 ## Citation
 If you use our work in your research, please cite our paper:
 
-Coming soon.
+@misc{dumitru2024enhancing,
+      title={Enhancing Transformer RNNs with Multiple Temporal Perspectives}, 
+      author={Razvan-Gabriel Dumitru and Darius Peteleaza and Mihai Surdeanu},
+      year={2024},
+      eprint={2402.02625},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
