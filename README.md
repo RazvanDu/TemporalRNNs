@@ -1,22 +1,34 @@
 # Enhancing Transformer RNNs with Multiple Temporal Perspectives
 
+Authors: [Razvan-Gabriel Dumitru](mailto:razvandumm@gmail.com?subject=[GitHub]TemporalRNNs), [Darius Peteleaza](mailto:peteleaza.darius@gmail.com?subject=[GitHub]TemporalRNNs) & [Mihai Surdeanu](mailto:msurdeanu@arizona.edu?subject=[GitHub]TemporalRNNs)
+
+If you wish to contact any of us for any reason, please use the above click-able email links.
+
+The paper was published at the ```ICML 2024 - Next Generation of Sequence Modeling Architectures Workshop - 26 July 2024```.
+
+The detailed paper can be found at https://arxiv.org/abs/2402.02625. Please cite our work if you use it.
+
 ## Abstract
-This project introduces a novel approach to Recurrent Neural Network (RNN) architectures by incorporating multiple temporal perspectives. This method enriches the model's understanding of sequential data, significantly improving context interpretation. By integrating this technique into the Receptance Weighted Key Value (RWKV) architecture, we address its limitation of retaining all historical information within a single hidden state, with only a minimal increase in the number of parameters.
-
-## Introduction
-Transformer networks have achieved remarkable success in various NLP tasks. However, they face challenges with long sequences and computational efficiency. Our work leverages the RWKV architecture, combining Transformer's training advantages with RNN's inference efficiency, and introduces multiple temporal perspectives to enhance language processing capabilities.
-
-## Proposed Approach
-Our method maintains diverse temporal views of the text, enabling the model to learn complex patterns effectively without full pre-training. This approach involves fine-tuning additional parameters dedicated to multiple temporal perspectives, resulting in improved performance across multiple benchmarks.
+We introduce the concept of multiple temporal perspectives, a novel approach applicable to Recurrent Neural Network (RNN) architectures for enhancing their understanding of sequential data. This method involves maintaining diverse temporal views of previously encountered text, significantly enriching the language models' capacity to interpret context. To show the efficacy of this approach, we incorporate it into the Receptance Weighted Key Value (RWKV) architecture, addressing its inherent challenge of retaining all historical information within a single hidden state. Notably, this improvement is achieved with a minimal increase in the number of parameters --even as little as $0.04\%$ of the original number of parameters. Further, the additional parameters necessary for the multiple temporal perspectives are fine-tuned with minimal computational overhead,
+avoiding the need for a full pre-training. The resulting model maintains linear computational complexity during prompt inference, ensuring consistent efficiency across various sequence lengths. The empirical results and ablation studies included in our research validate the effectiveness of our approach, showcasing improved performance across multiple benchmarks.
 
 ## Citation
 If you use our work in your research, please cite our paper:
 
-@misc{dumitru2024enhancing,
+```
+Dumitru, R. G., Peteleaza, D., & Surdeanu, M. (2024). Enhancing Transformer RNNs with Multiple Temporal Perspectives. arXiv preprint arXiv:2402.02625.
+```
+
+### BibTeX
+
+```
+@misc{dumitru2024enhancingtransformerrnnsmultiple,
       title={Enhancing Transformer RNNs with Multiple Temporal Perspectives}, 
       author={Razvan-Gabriel Dumitru and Darius Peteleaza and Mihai Surdeanu},
       year={2024},
       eprint={2402.02625},
       archivePrefix={arXiv},
-      primaryClass={cs.LG}
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2402.02625}, 
 }
+```
