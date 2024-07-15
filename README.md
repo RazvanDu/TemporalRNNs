@@ -12,6 +12,22 @@ The detailed paper can be found at https://arxiv.org/abs/2402.02625. Please cite
 We introduce the concept of multiple temporal perspectives, a novel approach applicable to Recurrent Neural Network (RNN) architectures for enhancing their understanding of sequential data. This method involves maintaining diverse temporal views of previously encountered text, significantly enriching the language models' capacity to interpret context. To show the efficacy of this approach, we incorporate it into the Receptance Weighted Key Value (RWKV) architecture, addressing its inherent challenge of retaining all historical information within a single hidden state. Notably, this improvement is achieved with a minimal increase in the number of parameters --even as little as $0.04\%$ of the original number of parameters. Further, the additional parameters necessary for the multiple temporal perspectives are fine-tuned with minimal computational overhead,
 avoiding the need for a full pre-training. The resulting model maintains linear computational complexity during prompt inference, ensuring consistent efficiency across various sequence lengths. The empirical results and ablation studies included in our research validate the effectiveness of our approach, showcasing improved performance across multiple benchmarks.
 
+## RWKV
+
+The original RWKV model is avaibale at https://github.com/BlinkDL/RWKV-LM.
+
+## Data
+
+The training data set is is publicly available at https://huggingface.co/datasets/wikipedia.
+
+## Evaluation
+
+We evaluated our model’s performance using the [EleutherAI Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness).
+
+## Model Weights
+
+TODO
+
 ## Citation
 If you use our work in your research, please cite our paper:
 
