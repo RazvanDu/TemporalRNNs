@@ -24,10 +24,6 @@ The training data set is is publicly available at https://huggingface.co/dataset
 
 We evaluated our model’s performance using the [EleutherAI Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness).
 
-## Model Weights
-
-TODO
-
 ## Citation
 If you use our work in your research, please cite our paper:
 
